@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Worldpackers — Brandbook</title>
+<meta name="description" content="The Worldpackers brand system: essence, logo, color, typography, icons, mascot, illustration, photography and voice." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================================
+   TOKENS — Figma Foundation (3lHP9jd6bsiUrd5BJIpMCP), Primitives + Semantic
+   (modes Light + Dark). Mirror of ds-tokens.css. Inlined = self-contained.
+   ========================================================================= */
+:root{
+  --blue-extralight:#DFECF2; --blue-light:#7CB3C1; --blue-default:#158CBA; --blue-semidark:#1C6F8F; --blue-dark:#004363;
+  --green-extralight:#DFF0D8; --green-light:#6FC375; --green-default:#28B62C; --green-semidark:#379E3B; --green-dark:#005E00;
+  --red-extralight:#F2DEDE; --red-light:#FC595E; --red-default:#C73D31; --red-semidark:#BF5669; --red-dark:#660B0F;
+  --yellow-extralight:#FDF6E5; --yellow-light:#F7D892; --yellow-default:#FFC842; --yellow-semidark:#F5A623; --yellow-dark:#B37D00;
+  --emerald-extralight:#BFF8F8; --emerald-light:#6DDBDB; --emerald-default:#32A9A9; --emerald-semidark:#0F8A8A; --emerald-dark:#005A5A;
+  --grey-extralight:#F6F7F8; --grey-light:#D9D9D9; --grey-default-concrete:#718696; --grey-semidark-dark-concrete:#4E5C66; --grey-dark:#282B2F; --grey-ultradark:#202124;
+  --white:#FFFFFF; --black:#000000;
+  --g-blue-1:#2547C0; --g-blue-2:#158CBA; --g-em-1:#1C6F8F; --g-em-2:#32A9A9; --g-dark-1:#202124; --g-dark-2:#4E5C66;
+  --gradient-primary:linear-gradient(135deg,var(--g-blue-1),var(--g-blue-2));
+  --gradient-secondary:linear-gradient(135deg,var(--g-em-1),var(--g-em-2));
+
+  --bg-primary:var(--white); --bg-secondary:var(--grey-extralight); --bg-elevated:var(--white);
+  --bg-support:var(--blue-extralight);
+  --text-primary:var(--grey-semidark-dark-concrete); --text-secondary:var(--grey-default-concrete); --text-on:var(--white);
+  --cta-primary:var(--green-default); --cta-link:var(--blue-default); --cta-error:var(--red-default);
+  --border-default:var(--grey-light); --border-focus:var(--blue-light);
+  --brand-primary:var(--blue-default); --brand-secondary:var(--grey-default-concrete);
+  --bg-highlight:var(--blue-default);
+  --cta-on:var(--white); --border-on:var(--white); --brand-on:var(--white);
+  --highlight-primary:var(--green-light); --highlight-secondary:var(--blue-default);
+  /* feedback */
+  --notice-background:var(--green-extralight); --notice-text:var(--green-semidark);
+  --warning-background:var(--yellow-extralight); --warning-text:var(--yellow-semidark);
+  --error-background:var(--red-extralight); --error-text:var(--red-semidark);
+  /* support (dataviz) */
+  --support-red:var(--red-light); --support-yellow:var(--yellow-default); --support-emerald:var(--emerald-default); --support-blue:var(--blue-semidark);
+  /* shadow */
+  --shadow-default:0 2px 8px rgba(217,217,217,.6); --shadow-md:0 4px 16px rgba(80,92,102,.12); --shadow-lg:0 12px 32px rgba(80,92,102,.18);
+  /* system (invert light/dark) */
+  --system-white:var(--white); --system-black:var(--black);
+  --gradient-dark:linear-gradient(135deg,var(--g-dark-1),var(--g-dark-2));
+  --grey-default:var(--grey-default-concrete); --grey-semidark:var(--grey-semidark-dark-concrete);
+  --section-spacing:60px;
+
+  --font:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;
+  --w-light:300; --w-regular:400; --w-bold:700;   /* Source Sans Pro — Light/Regular/Bold ONLY */
+  /* DS type scale — EXACT from Figma Foundation (node 24:446). size · line-height · weight */
+  --type-display-1:50px; --lh-display-1:64px;     /* Display 1 — Bold 700 */
+  --type-display-2:40px; --lh-display-2:50px;     /* Display 2 — Regular 400 */
+  --type-h1:34px; --lh-h1:46px;                   /* H1 — Bold 700 */
+  --type-h2:30px; --lh-h2:38px;                   /* H2 — Regular 400 */
+  --type-h3:24px; --lh-h3:34px;                   /* H3 — Regular 400 */
+  --type-h4:18px; --lh-h4:24px;                   /* H4 — Regular 400 */
+  --type-h5:16px; --lh-h5:20px;                   /* H5 — Regular 400 */
+  --type-body-huge:24px;  --lh-body-huge:36px;    /* Body — Light 300 (body is ALWAYS Light) */
+  --type-body-large:18px; --lh-body-large:26px;
+  --type-body:16px;       --lh-body:22px;
+  --type-body-small:14px; --lh-body-small:20px;
+  --type-caption:12px;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;--s12:48px;--s16:64px;--s20:80px;--s24:96px;
+  --r:5px;            /* WP corner radius — single value */
+  --transition:180ms ease; --maxw:1180px;
+}
+[data-theme="dark"]{
+  color-scheme:dark;
+  --text-primary:var(--white); --text-secondary:var(--grey-extralight);
+  --bg-primary:var(--grey-ultradark); --bg-secondary:var(--grey-dark); --bg-elevated:var(--grey-dark); --bg-support:var(--grey-dark);
+  --border-default:var(--grey-default-concrete); --cta-error:var(--red-light);
+  --notice-text:var(--green-light); --warning-background:var(--grey-dark);
+  --shadow-default:0 2px 8px rgba(0,0,0,.6); --shadow-md:0 4px 16px rgba(0,0,0,.4); --shadow-lg:0 12px 32px rgba(0,0,0,.55);
+  --system-white:var(--black); --system-black:var(--white);
+}
+
+/* icon font — same set as Figma "04. Icons and Assets" */
+@font-face{font-family:'wp-icons';src:url('fonts/worldpackers-icons.ttf') format('truetype');font-display:swap}
+.wpi{font-family:'wp-icons';font-style:normal;font-weight:400;line-height:1;-webkit-font-smoothing:antialiased;display:inline-block}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--font);font-weight:var(--w-light);color:var(--text-primary);background:var(--bg-primary);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+a{color:var(--cta-link);text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s6)}
+/* divider entre seções fica DENTRO do max-width do conteúdo, nunca edge-to-edge */
+section{padding:var(--s20) 0}
+section+section .wrap{border-top:1px solid color-mix(in srgb,var(--border-default) 60%,transparent);padding-top:var(--s20)}
+section+section{padding-top:0}
+.eyebrow{font-size:12px;font-weight:var(--w-bold);letter-spacing:.16em;text-transform:uppercase;color:var(--brand-primary);display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s4)}
+.eyebrow .num{color:var(--text-secondary)}
+h2.title{font-size:clamp(var(--type-h3),4vw,var(--type-h1));font-weight:var(--w-bold);line-height:1.15;letter-spacing:-.01em;color:var(--text-primary);max-width:20ch}
+.lead{font-size:var(--type-body-large);font-weight:var(--w-light);color:var(--text-secondary);max-width:64ch;margin-top:var(--s4);line-height:var(--lh-body-large)}
+.tag-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--w-bold);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r);background:var(--bg-support);color:var(--brand-primary)}
+.tag-badge.m{background:color-mix(in srgb,var(--green-light) 30%,transparent);color:var(--green-semidark)}
+
+/* ---------- TOP NAV (subtle) ---------- */
+header.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-primary) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--border-default) 50%,transparent)}
+.topbar .row{display:flex;align-items:center;gap:var(--s5);height:56px}
+.brandmark{display:flex;align-items:center;gap:11px;flex:none}
+.brandmark img{height:22px;width:auto}
+.brandmark .logo-d{display:none}
+[data-theme="dark"] .brandmark .logo-l{display:none} [data-theme="dark"] .brandmark .logo-d{display:block}
+.brandmark span{font-size:12px;color:var(--text-secondary);font-weight:var(--w-regular);padding-left:11px;border-left:1px solid var(--border-default)}
+nav.sections{margin-left:auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.sections::-webkit-scrollbar{display:none}
+/* menu = comportamento do site real: 14px regular, hover muda cor, active = bold (sem pílula) */
+nav.sections a{font-size:14px;font-weight:var(--w-regular);color:var(--text-primary);padding:6px 9px;white-space:nowrap;transition:color var(--transition)}
+nav.sections a:hover{color:var(--brand-primary)}
+nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
+.toggle{flex:none;width:34px;height:34px;border-radius:var(--r);border:none;background:transparent;color:var(--text-secondary);cursor:pointer;display:grid;place-items:center;transition:color var(--transition),background var(--transition)}
+.toggle:hover{color:var(--brand-primary)}
+.menu-btn{display:none;flex:none;width:34px;height:34px;border-radius:var(--r);border:none;background:transparent;color:var(--text-primary);cursor:pointer;place-items:center}
+.menu-btn:hover{color:var(--brand-primary)}
+/* mobile/tablet: nav vira menu dropdown via hambúrguer */
+@media(max-width:960px){
+  .menu-btn{display:grid}
+  .toggle{margin-left:auto}
+  nav.sections{position:absolute;top:56px;left:0;right:0;margin:0;flex-direction:column;gap:0;background:var(--bg-primary);border-bottom:1px solid var(--border-default);box-shadow:var(--shadow-md);max-height:0;padding:0;overflow:hidden;transition:max-height .28s ease,padding .28s ease}
+  nav.sections.open{max-height:calc(100vh - 56px);overflow:auto;padding:var(--s2) 0}
+  nav.sections a{padding:13px var(--s6);font-size:16px;border-radius:0;width:100%}
+  nav.sections a.active{background:var(--bg-secondary)}
+}
+
+/* ---------- HERO (video + blue filter) ---------- */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;color:#fff;overflow:hidden;background:var(--blue-dark);border-top:none}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+/* filtro de capa PADRÃO do DS (#composition-cover): degradê da marca a 0.7, vertical */
+.hero .tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(21,140,186,.7) 0%,rgba(37,71,192,.7) 100%)}
+.hero .wrap{position:relative;z-index:2;padding-top:var(--s16);padding-bottom:var(--s16);text-align:center}
+.hero .logo-lockup img{height:50px;margin:0 auto var(--s8);filter:drop-shadow(0 2px 12px rgba(0,0,0,.25))}
+.hero h1{font-size:clamp(32px,6vw,var(--type-display-1));font-weight:var(--w-bold);line-height:1.1;letter-spacing:-.015em;margin:0 auto;text-shadow:0 2px 24px rgba(0,30,45,.35)}
+.hero p.sub{font-size:var(--type-body-large);line-height:var(--lh-body-large);font-weight:var(--w-light);max-width:52ch;margin:var(--s6) auto 0;opacity:.96}
+.scrollcue{margin-top:var(--s12);font-size:12px;font-weight:var(--w-bold);letter-spacing:.16em;text-transform:uppercase;opacity:.85;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+
+/* ---------- GRID / CARDS ---------- */
+.grid{display:grid;gap:var(--s4)}
+.cols-2{grid-template-columns:repeat(2,1fr)} .cols-3{grid-template-columns:repeat(3,1fr)} .cols-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr}}
+.card{background:var(--bg-elevated);border:none;border-radius:var(--r);padding:var(--s6);box-shadow:var(--shadow-default)}
+
+/* Mission / Vision / Model — label small, copy is the hero */
+.mvm{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+@media(max-width:760px){.mvm{grid-template-columns:1fr}}
+.mvm .item{background:var(--bg-elevated);border:none;border-radius:var(--r);padding:var(--s6);box-shadow:var(--shadow-default)}
+.mvm .k{font-size:12px;font-weight:var(--w-bold);letter-spacing:.14em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:var(--s3)}
+.mvm p{font-size:var(--type-body);line-height:1.55;color:var(--text-secondary)}
+
+/* values */
+.value-card{text-align:center}
+.value-card .v-ico{display:block;font-size:32px;line-height:1;color:var(--brand-primary);margin:0 auto var(--s4)}
+.value-card h3{font-size:var(--type-h4);font-weight:var(--w-bold);margin-bottom:var(--s2);color:var(--text-primary)}
+.value-card p{color:var(--text-secondary);font-size:16px}
+
+/* ---------- LOGO ---------- */
+.logo-board{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+@media(max-width:760px){.logo-board{grid-template-columns:1fr}}
+.logo-cell{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s8);display:grid;place-items:center;min-height:150px}
+.logo-cell.on-brand{background:var(--brand-primary);border-color:transparent} .logo-cell.on-dark{background:var(--grey-ultradark);border-color:transparent} .logo-cell.on-photo{background:var(--gradient-secondary);border-color:transparent}
+[data-theme="dark"] .logo-cell.on-dark{border-color:color-mix(in srgb,#fff 16%,transparent)}
+.logo-cell img{max-height:54px} .logo-cell.icon img{max-height:72px}
+.clearspace{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center;margin-top:var(--s6)}
+@media(max-width:700px){.clearspace{grid-template-columns:1fr}}
+.cs-visual{border:1px dashed var(--brand-primary);border-radius:var(--r);padding:var(--s10);display:grid;place-items:center;background:var(--bg-secondary)}
+.cs-visual img{height:46px}
+.subhead{font-size:16px;font-weight:var(--w-bold);margin-bottom:var(--s2);color:var(--text-primary)}
+
+/* ---------- COLOR ---------- */
+.fam-label{display:flex;align-items:baseline;justify-content:space-between;margin:var(--s8) 0 var(--s3);gap:var(--s4)}
+.fam-label h4{font-size:16px;font-weight:var(--w-bold)} .fam-label span{font-size:12px;color:var(--text-secondary)}
+.palette{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+@media(max-width:860px){.palette{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.palette{grid-template-columns:repeat(2,1fr)}}
+.swatch{cursor:pointer;border-radius:var(--r);overflow:hidden;border:1px solid var(--border-default);background:var(--bg-elevated);transition:transform var(--transition)}
+.swatch:hover{transform:translateY(-3px)}
+.swatch .chip{height:70px}
+.swatch .meta{padding:8px 9px}
+.swatch .meta .n{font-size:12px;font-weight:var(--w-bold);color:var(--text-primary)}
+.swatch .meta .h{display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:12px;color:var(--text-secondary);text-transform:uppercase}
+.swatch .copied-tag{display:inline-flex;align-items:center;gap:3px;color:var(--green-semidark);font-weight:var(--w-bold);text-transform:none;opacity:0;transform:translateX(-3px);transition:opacity 150ms ease,transform 150ms ease}
+.swatch.copied .copied-tag{opacity:1;transform:none}
+.grad-row{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4);margin-top:var(--s4)}
+@media(max-width:700px){.grad-row{grid-template-columns:1fr}}
+.grad{height:110px;border-radius:var(--r);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--s4);color:#fff;font-weight:var(--w-bold)}
+.grad small{display:block;margin-top:var(--s2);font-weight:var(--w-regular);opacity:.9;font-size:12px}
+.semantic-group{margin-top:var(--s6)}
+.semantic-group h4{font-size:14px;font-weight:var(--w-bold);text-transform:uppercase;letter-spacing:.08em;color:var(--text-secondary);margin-bottom:var(--s2)}
+.tok{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--s3);align-items:center;padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--border-default) 60%,transparent)}
+.tok .name{font-size:14px;font-weight:var(--w-bold)}
+.tok .cell{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-secondary)}
+.copyable{cursor:pointer;border-radius:4px;transition:background var(--transition)}
+.copyable:hover{color:var(--brand-primary)}
+.copyable .copied-tag{display:inline-flex;align-items:center;gap:3px;margin-left:7px;color:var(--green-semidark);font-weight:var(--w-bold);font-size:12px;opacity:0;transform:translateX(-3px);transition:opacity 150ms ease,transform 150ms ease}
+.copyable.copied .copied-tag{opacity:1;transform:none}
+.tok .dot{width:22px;height:22px;border-radius:var(--r);border:1px solid var(--border-default);flex:none}
+.tok .mode-h{font-size:12px;font-weight:var(--w-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);display:flex;align-items:center;gap:4px}
+.ic-s{display:inline-block;vertical-align:-2px}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s8)}
+@media(max-width:700px){.rules{grid-template-columns:1fr}}
+.rule{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s5);display:flex;gap:var(--s4);align-items:flex-start}
+.rule .pill{flex:none;width:40px;height:40px;border-radius:var(--r);display:grid;place-items:center;color:#fff;font-weight:var(--w-bold)}
+.rule h5{font-size:var(--type-body);font-weight:var(--w-bold);margin-bottom:4px} .rule p{font-size:var(--type-body-small);color:var(--text-secondary)}
+
+/* plain-language explainer (for non-designers) */
+.howto{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin:var(--s6) 0 var(--s8);background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s6)}
+@media(max-width:700px){.howto{grid-template-columns:1fr}}
+.howto-card .step{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:var(--w-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:var(--s2)}
+.howto-card .step .no{width:20px;height:20px;border-radius:50%;background:var(--brand-primary);color:#fff;display:grid;place-items:center;font-size:12px}
+.howto-card h5{font-size:16px;font-weight:var(--w-bold);color:var(--text-primary);margin-bottom:6px}
+.howto-card p{font-size:14px;color:var(--text-secondary);line-height:1.55}
+.howto-card .eg{margin-top:var(--s3);font-size:12px;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);border-radius:var(--r);padding:8px 11px}
+.howto-card .eg b{color:var(--text-primary)}
+.howto-why{grid-column:1/-1;font-size:14px;color:var(--text-primary);background:var(--bg-support);border-radius:var(--r);padding:12px 15px;line-height:1.55}
+.howto-why b{color:var(--text-primary);font-weight:var(--w-bold)}
+
+/* ---------- TYPE ---------- */
+.specimen{border:1px solid var(--border-default);border-radius:var(--r);overflow:hidden}
+.spec-row{display:grid;grid-template-columns:190px 1fr;gap:var(--s5);padding:var(--s5);border-bottom:1px solid color-mix(in srgb,var(--border-default) 60%,transparent);align-items:baseline}
+.spec-row:last-child{border-bottom:none}
+.spec-row .meta{font-size:12px;color:var(--text-secondary)} .spec-row .meta b{display:block;color:var(--text-primary);font-size:14px;font-weight:var(--w-bold)}
+.spec-row .sample{color:var(--text-primary);line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:640px){.spec-row{grid-template-columns:1fr;gap:var(--s2)}.spec-row .sample{white-space:normal}}
+.weights{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+@media(max-width:640px){.weights{grid-template-columns:1fr}}
+.weight{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s5)}
+.weight .big{font-size:var(--type-display-2);line-height:1;color:var(--text-primary)} .weight .lbl{margin-top:var(--s3);font-size:12px;color:var(--text-secondary)}
+
+/* ---------- SPACING / SIZES ---------- */
+.split{display:grid;grid-template-columns:1fr;gap:var(--s12);align-items:start;margin-top:var(--s6)}
+@media(max-width:820px){.split{grid-template-columns:1fr;gap:var(--s12)}}
+.scale-row{display:flex;align-items:center;gap:var(--s4);padding:7px 0}
+.scale-row .bar{height:14px;background:var(--brand-primary);border-radius:var(--r)}
+.scale-row .lbl{font-size:12px;color:var(--text-secondary);width:130px}
+.metric{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2) var(--s6);font-size:14px;margin-top:var(--s2)}
+.metric .row{display:flex;justify-content:space-between;border-bottom:1px solid color-mix(in srgb,var(--border-default) 50%,transparent);padding:5px 0}
+.metric .row span:first-child{color:var(--text-secondary)} .metric .row span:last-child{font-weight:var(--w-bold)}
+.radius-demo{display:flex;gap:var(--s5);align-items:flex-end;margin-top:var(--s4)}
+.radius-demo .box{width:96px;height:72px;background:var(--bg-support);border:2px solid var(--brand-primary);border-radius:5px}
+.sizes-row{display:flex;gap:var(--s5);align-items:flex-end;flex-wrap:wrap;margin-top:var(--s4)}
+.sizes-row .av{background:var(--brand-primary);border-radius:50%}
+.sizes-row .ic{background:var(--bg-support);border-radius:var(--r);display:grid;place-items:center;color:var(--brand-primary)}
+.sizes-row figcaption{font-size:12px;color:var(--text-secondary);text-align:center;margin-top:6px}
+.plat-cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--s10);align-items:start;margin-top:var(--s4)}
+@media(max-width:760px){.plat-cols{grid-template-columns:1fr;gap:var(--s8)}}
+.size-label{color:var(--text-secondary);font-size:12px;margin:var(--s5) 0 8px}
+.size-label:first-of-type{margin-top:var(--s2)}
+/* web = azul (default) · mobile = verde */
+.plat.mobile .sizes-row .ic{color:var(--green-default);background:color-mix(in srgb,var(--green-default) 14%,transparent)}
+.plat.mobile .sizes-row .av{background:var(--green-default)}
+.plat.mobile .metric .row span:last-child{color:var(--green-semidark)}
+.sizes-row .s.copyable.copied figcaption{color:var(--green-semidark);font-weight:var(--w-bold)}
+
+/* ---------- ICONS ---------- */
+.icon-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s2)}
+@media(max-width:860px){.icon-grid{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:560px){.icon-grid{grid-template-columns:repeat(3,1fr)}}
+.ico{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s4) var(--s2);text-align:center;transition:var(--transition)}
+.ico:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.ico .wpi{font-size:30px;color:var(--text-primary)} .ico:hover .wpi{color:var(--brand-primary)}
+.ico .n{display:block;font-size:12px;color:var(--text-secondary);margin-top:8px;overflow:hidden;text-overflow:ellipsis}
+.icon-sizes{display:flex;gap:var(--s6);align-items:flex-end;margin-top:var(--s5);padding:var(--s5);border:1px solid var(--border-default);border-radius:var(--r)}
+.icon-sizes .s{text-align:center;color:var(--brand-primary)} .icon-sizes .s figcaption{font-size:12px;color:var(--text-secondary);margin-top:8px}
+/* link pra biblioteca-fonte no Figma */
+/* botão padrão WP — .btn.secondary.size-mid (pill outline) */
+.ds-source{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:var(--s6);height:40px;padding:0 16px;border:1px solid var(--border-default);border-radius:999px;font-family:var(--font);font-size:16px;line-height:22px;font-weight:var(--w-regular);color:var(--text-secondary);background:var(--bg-elevated);transition:border-color var(--transition)}
+.ds-source:hover{border-color:var(--text-secondary)}
+.ds-source svg{flex:none}
+
+/* ---------- MASCOT ---------- */
+.mascot-hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--s10);align-items:center;margin-top:var(--s6)}
+@media(max-width:820px){.mascot-hero{grid-template-columns:1fr}}
+.mascot-stage{background:var(--bg-support);border-radius:var(--r);padding:var(--s10);display:grid;place-items:center;min-height:260px}
+.mascot-stage img{height:210px;filter:drop-shadow(0 14px 26px rgba(0,0,0,.12))}
+.dd{border-radius:var(--r);padding:var(--s5);border:1px solid var(--notice-text);background:var(--notice-background)}
+.dd.do{background:var(--notice-background)}
+.dd .hd{display:flex;align-items:center;gap:9px;font-weight:var(--w-bold);margin-bottom:var(--s3);color:var(--notice-text)}
+.dd ul{list-style:none;display:grid;gap:8px} .dd li{font-size:14px;color:var(--notice-text);padding-left:22px;position:relative}
+.dd li::before{content:"✓";position:absolute;left:0;color:var(--notice-text);font-weight:var(--w-bold)}
+.emotions{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s4);margin-top:var(--s8)}
+@media(max-width:820px){.emotions{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.emotions{grid-template-columns:repeat(2,1fr)}}
+.emotion{background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s4);text-align:center;transition:var(--transition)}
+.emotion:hover{transform:translateY(-4px);border-color:var(--brand-primary)}
+.emotion img{height:84px;margin:0 auto var(--s2)} .emotion span{font-size:12px;color:var(--text-secondary)}
+
+/* ---------- ILLUSTRATION ---------- */
+.illus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+@media(max-width:760px){.illus-grid{grid-template-columns:repeat(2,1fr)}}
+.illus{background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s6);display:grid;place-items:center;min-height:150px}
+.illus img{height:96px}
+
+/* ---------- PHOTOGRAPHY ---------- */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s8)}
+@media(max-width:820px){.photo-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.photo-grid{grid-template-columns:1fr}}
+.photo{position:relative;border-radius:var(--r);overflow:hidden;background:var(--bg-secondary)}
+.photo img{aspect-ratio:4/3;object-fit:cover;width:100%;image-orientation:from-image;transition:transform 400ms ease}
+.photo:hover img{transform:scale(1.05)}
+.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:var(--s5) var(--s4) var(--s3);background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff}
+.photo .cap b{display:block;font-size:16px;font-weight:var(--w-bold)} .photo .cap span{font-size:12px;opacity:.85}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin-top:var(--s6)}
+@media(max-width:700px){.dodont{grid-template-columns:1fr}}
+.dd.dont{background:var(--error-background);border-color:var(--error-text)} .dd.dont .hd{color:var(--error-text)} .dd.dont li{color:var(--error-text)} .dd.dont li::before{content:"✕";color:var(--error-text)}
+
+/* ---------- VOICE ---------- */
+.voice-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6) var(--s5);margin-top:var(--s8)}
+@media(max-width:700px){.voice-list{grid-template-columns:1fr}}
+.vp{border-left:3px solid var(--brand-primary);padding:2px 0 2px var(--s5)}
+.vp h5{font-size:16px;font-weight:var(--w-bold)} .vp p{font-size:14px;color:var(--text-secondary);margin-top:4px}
+.phrases{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s6)}
+.phrase{background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:9px 15px;font-size:14px;font-weight:var(--w-bold)}
+.phrase::before{content:"\201C";color:var(--brand-primary)} .phrase::after{content:"\201D";color:var(--brand-primary)}
+
+/* footer */
+footer.foot{background:var(--blue-dark);color:#fff;border-top:none;padding:var(--s16) 0}
+footer.foot .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:var(--s6)}
+footer.foot img{height:28px;margin-bottom:12px}
+footer.foot p{opacity:.78;font-size:12px;max-width:52ch;line-height:1.5}
+footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opacity:1}
+
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--grey-ultradark);color:#fff;padding:11px 18px;border-radius:var(--r);font-size:14px;font-weight:var(--w-bold);opacity:0;pointer-events:none;transition:all 240ms ease;z-index:99;display:flex;align-items:center;gap:9px}
+#toast svg{color:var(--green-light);flex:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:none}
+/* staggered cascade for card grids */
+.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,.61,.36,1) var(--d,0ms),transform .6s cubic-bezier(.22,.61,.36,1) var(--d,0ms);will-change:opacity,transform}
+.stagger.in>*{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal,.stagger>*{opacity:1!important;transform:none!important}*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap row">
+    <div class="brandmark"><img class="logo-l" src="logos/logo-wp-horizontal-brand.svg" alt="Worldpackers"/><img class="logo-d" src="logos/logo-horizontal-white-transparent.png" alt="Worldpackers"/><span>Brandbook</span></div>
+    <nav class="sections" id="nav">
+      <a href="#essence">Essence</a><a href="#logo">Logo</a><a href="#color">Color</a><a href="#type">Type</a>
+      <a href="#spacing">Spacing</a><a href="#icons">Icons</a><a href="#mascot">Ben</a><a href="#illustration">Illustration</a>
+      <a href="#photography">Photography</a><a href="#voice">Voice</a>
+    </nav>
+    <button class="toggle" id="themeToggle" aria-label="Toggle light / dark"></button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <video class="bg" autoplay muted loop playsinline poster="media/hero-poster.jpg">
+    <source src="media/hero.mp4" type="video/mp4" />
+  </video>
+  <div class="tint"></div>
+  <div class="wrap">
+    <div class="logo-lockup"><img src="logos/logo-horizontal-white-transparent.png" alt="Worldpackers"/></div>
+    <h1>Traveling changes people.<br/>People change the world.</h1>
+    <p class="sub">The Worldpackers brand system — the colors, type, logo, icons, mascot and voice that make us recognizable everywhere we show up.</p>
+    <div class="scrollcue">Scroll to explore ↓</div>
+  </div>
+</section>
+
+<!-- 01 ESSENCE -->
+<section id="essence">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">01</span> Brand essence</div>
+    <h2 class="title">A community built on collaboration and trust.</h2>
+    <p class="lead">Worldpackers connects travelers who exchange their skills for accommodation with hosts all around the world. We make travel more accessible — and more meaningful — by turning every trip into a chance to learn, connect and give back.</p>
+
+    <div class="mvm stagger">
+      <div class="item"><div class="k">Mission</div><p>Enable everyone to safely travel as a volunteer, have transformative experiences, and make a positive impact on the world.</p></div>
+      <div class="item"><div class="k">Vision</div><p>Foster the transformation of the world into a more socially &amp; environmentally sustainable place.</p></div>
+      <div class="item"><div class="k">Model</div><p>Skills for stay. A few hours of help a day in exchange for accommodation — and real cultural immersion.</p></div>
+    </div>
+
+    <div class="fam-label"><h4>Our values</h4><span>What we believe, in everything we build</span></div>
+    <div class="grid cols-4 stagger">
+      <div class="card value-card"><span class="wpi v-ico">&#x35;</span><h3>Community</h3><p>We believe in the power of community. Sharing knowledge and collaborating openly creates meaningful connections.</p></div>
+      <div class="card value-card"><span class="wpi v-ico">&#xE00F;</span><h3>Experiences &amp; Exploration</h3><p>Experiences shape who we are. We value meaningful moments over possessions, and explore the world with open eyes.</p></div>
+      <div class="card value-card"><span class="wpi v-ico">&#x39;</span><h3>Continuous Learning</h3><p>Curiosity fuels growth. We stay humble, keep learning, and seek new perspectives and skills.</p></div>
+      <div class="card value-card"><span class="wpi v-ico">&#x2D;</span><h3>Global Responsibility</h3><p>The world is our home. We treat every place with respect, embrace diverse cultures, and act as responsible global citizens.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 LOGO -->
+<section id="logo">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">02</span> Logo</div>
+    <h2 class="title">A traveler on top of the world.</h2>
+    <p class="lead">Our symbol is a globe carrying a backpacker — a person on top of the world. It pairs with the <b>Worldpackers</b> wordmark in Source Sans Pro Bold. The horizontal lockup is primary; the icon stands alone where space is tight.</p>
+
+    <div class="fam-label"><h4>Lockups</h4><span>Horizontal · Icon · on the brand color</span></div>
+    <div class="logo-board stagger">
+      <div class="logo-cell"><img src="logos/logo-wp-horizontal-brand.svg" alt="Horizontal"/></div>
+      <div class="logo-cell icon"><img src="logos/logo-wp-icon-brand.svg" alt="Icon"/></div>
+      <div class="logo-cell on-brand"><img src="logos/logo-horizontal-white-transparent.png" alt="Reversed on brand"/></div>
+    </div>
+    <div class="fam-label"><h4>Variants</h4><span>One file for every background</span></div>
+    <div class="logo-board stagger">
+      <div class="logo-cell"><img src="logos/logo-wp-horizontal-mono.svg" alt="Mono"/></div>
+      <div class="logo-cell on-dark"><img src="logos/logo-horizontal-white-transparent.png" alt="On dark"/></div>
+      <div class="logo-cell on-photo"><img src="logos/logo-horizontal-white-transparent.png" alt="On color"/></div>
+    </div>
+
+    <div class="clearspace reveal">
+      <div>
+        <div class="subhead">Clear space &amp; minimum size</div>
+        <p style="color:var(--text-secondary);font-size:16px">Keep clear space around the logo equal to the height of the globe symbol. Minimum size: <b>24&nbsp;px</b> tall for the icon, <b>120&nbsp;px</b> wide for the horizontal lockup on screen.</p>
+      </div>
+      <div class="cs-visual"><img src="logos/logo-wp-horizontal-brand.svg" alt="Clear space"/></div>
+    </div>
+    <div class="dodont reveal">
+      <div class="dd do"><div class="hd">✓ Do</div><ul><li>Use the master files at full color, mono or reversed white.</li><li>Give the logo room and strong background contrast.</li><li>Use the icon alone for avatars, app icons and favicons.</li></ul></div>
+      <div class="dd dont"><div class="hd">✕ Don't</div><ul><li>Recolor, add gradients, shadows or outlines.</li><li>Stretch, rotate, or rebuild the wordmark in another font.</li><li>Place it on a busy photo without the reversed version.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 COLOR -->
+<section id="color">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span> Color</div>
+    <h2 class="title">Blue is who we are. Green is what to do.</h2>
+    <p class="lead">A three-tier system from the Figma Foundation: <b>primitives</b> feed <b>semantic tokens</b> which adapt across <b>light &amp; dark</b>. Always build with semantic tokens — never raw hex. Tap any swatch to copy it.</p>
+
+    <div class="howto reveal">
+      <div class="howto-card">
+        <div class="step"><span class="no">1</span> The raw colors</div>
+        <h5>Primitive palette</h5>
+        <p>Every color the brand owns — blue, green, red, yellow, emerald and greys — each in five shades from light to dark. Think of them as the full box of paint: the raw material, not the instructions. You almost never pick these by hand.</p>
+        <div class="eg">e.g. <b>blue-default</b> is the exact blue <b>#158CBA</b></div>
+      </div>
+      <div class="howto-card">
+        <div class="step"><span class="no">2</span> Colors with a job</div>
+        <h5>Semantic colors</h5>
+        <p>Each one is a <b>role</b>, not a shade — “text”, “action button”, “error”, “background”. Behind the scenes it points to a color from the palette, so you name <i>what the color is for</i>, never the hex code. This is what everyone actually uses.</p>
+        <div class="eg">e.g. <b>cta-primary</b> (the action button) → uses <b>green-default</b></div>
+      </div>
+      <p class="howto-why"><b>Why it works this way:</b> change the brand blue in one place and everything that says “use the brand color” updates at once — and dark mode just works, because every role already knows its light value <i>and</i> its dark value. No one has to hunt down hex codes.</p>
+    </div>
+
+    <div class="fam-label"><h4>Primitives</h4><span>Click to copy</span></div>
+    <div id="primitives"></div>
+
+    <div class="fam-label"><h4>Gradients</h4><span>Hero moments &amp; brand atmosphere only</span></div>
+    <div class="grad-row reveal">
+      <div class="grad" style="background:var(--gradient-primary)">gradient-primary<small>#2547C0 → #158CBA</small></div>
+      <div class="grad" style="background:var(--gradient-secondary)">gradient-secondary<small>#1C6F8F → #32A9A9</small></div>
+    </div>
+
+    <div class="fam-label"><h4>Semantic tokens</h4><span><svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg> Light / <svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg> Dark — flips with the theme toggle</span></div>
+    <div id="semantic"></div>
+
+    <div class="rules">
+      <div class="rule"><div class="pill" style="background:var(--blue-default)">B</div><div><h5>Blue · #158CBA — Identity</h5><p>The brand color. Logo, links, focus, brand surfaces.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--green-default)">A</div><div><h5>Green · #28B62C — Action</h5><p>Primary buttons and the single most important action.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--grey-default-concrete)">N</div><div><h5>Concrete greys — Text &amp; surface</h5><p>Body text, borders, backgrounds. Calm and neutral.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--yellow-default);color:var(--grey-dark)">F</div><div><h5>Red / Yellow / Emerald — Feedback</h5><p>Error, warning, success &amp; data. Functional only.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 TYPE -->
+<section id="type">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span> Typography</div>
+    <h2 class="title">One voice in type: Source Sans Pro.</h2>
+    <p class="lead">A single, friendly, highly legible typeface across web, iOS and Android. Three weights do all the work: Light&nbsp;300, Regular&nbsp;400, Bold&nbsp;700.</p>
+
+    <div class="weights stagger">
+      <div class="weight"><div class="big" style="font-weight:300">Aa</div><div class="lbl"><b>Light · 300</b><br/>Large display &amp; subtitles</div></div>
+      <div class="weight"><div class="big" style="font-weight:400">Aa</div><div class="lbl"><b>Regular · 400</b><br/>Body &amp; UI default</div></div>
+      <div class="weight"><div class="big" style="font-weight:700">Aa</div><div class="lbl"><b>Bold · 700</b><br/>Headings &amp; emphasis</div></div>
+    </div>
+
+    <div class="fam-label"><h4><span class="tag-badge">Web</span>&nbsp; Type scale</h4><span>size / line-height · from Foundation</span></div>
+    <div class="specimen reveal" id="specimen"></div>
+
+    <div class="fam-label"><h4><span class="tag-badge m">Mobile</span>&nbsp; Type scale</h4><span>Foundation · mode “Mobile” · line-height 120%</span></div>
+    <div class="specimen reveal" id="specimen-m"></div>
+  </div>
+</section>
+
+<!-- 05 SPACING / SIZES -->
+<section id="spacing">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span> Spacing &amp; sizing</div>
+    <h2 class="title">A 5-point rhythm. One 5px radius.</h2>
+    <p class="lead">Web spacing is built on a <b>5px</b> base. Corner radius is a single value — <b>5px</b> — everywhere.</p>
+
+    <div class="split">
+      <div class="plat web">
+        <div class="plat-cols">
+          <div>
+            <div class="fam-label"><h4><span class="tag-badge">Web</span>&nbsp; Spacing</h4><span>base 5px · tap to copy</span></div>
+            <div id="spacing-web"></div>
+          </div>
+          <div>
+            <div class="fam-label"><h4><span class="tag-badge">Web</span>&nbsp; Sizes</h4><span>icon · avatar</span></div>
+            <div class="size-label">Icon — px</div>
+            <div class="sizes-row" id="web-icons"></div>
+            <div class="size-label">Avatar — px</div>
+            <div class="sizes-row" id="web-avatars"></div>
+            <div class="fam-label" style="margin-top:var(--s8)"><h4>Corner radius</h4><span>single value</span></div>
+            <div class="radius-demo"><div class="box"></div><div style="color:var(--text-secondary);font-size:14px">radius · <b style="color:var(--text-primary)">5&nbsp;px</b><br/><span style="font-size:12px">used on every surface</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="plat mobile">
+        <div class="plat-cols">
+          <div>
+            <div class="fam-label"><h4><span class="tag-badge m">Mobile</span>&nbsp; Spacing</h4><span>Android dp · iOS pt</span></div>
+            <div class="metric" id="mobile-spacing"></div>
+          </div>
+          <div>
+            <div class="fam-label"><h4><span class="tag-badge m">Mobile</span>&nbsp; Sizes</h4><span>shared Android · iOS</span></div>
+            <div class="size-label">Icon — px</div>
+            <div class="sizes-row" id="mob-icons"></div>
+            <div class="size-label">Avatar — px</div>
+            <div class="sizes-row" id="mob-avatars"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 ICONS -->
+<section id="icons">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">06</span> Iconography</div>
+    <h2 class="title">A custom icon language.</h2>
+    <p class="lead">Worldpackers ships a custom icon set (<b>324 glyphs</b>) for everything from work-exchange to hostels, meals and community — from the <b>04. Icons &amp; Assets</b> library. A representative selection below.</p>
+
+    <div class="icon-sizes reveal">
+      <div class="s"><span class="wpi" style="font-size:12px">&#xE017;</span><figcaption>12</figcaption></div>
+      <div class="s"><span class="wpi" style="font-size:16px">&#xE017;</span><figcaption>16</figcaption></div>
+      <div class="s"><span class="wpi" style="font-size:20px">&#xE017;</span><figcaption>20</figcaption></div>
+      <div class="s"><span class="wpi" style="font-size:24px">&#xE017;</span><figcaption>24</figcaption></div>
+      <div class="s"><span class="wpi" style="font-size:32px">&#xE017;</span><figcaption>32</figcaption></div>
+      <div class="s"><span class="wpi" style="font-size:40px">&#xE017;</span><figcaption>40</figcaption></div>
+      <div class="s"><span class="wpi" style="font-size:48px">&#xE017;</span><figcaption>48</figcaption></div>
+      <div style="margin-left:auto;color:var(--text-secondary);font-size:14px;align-self:center">Single-color · 12 / 16 / 20 / 24 / 32 / 40 / 48 · uses <span style="font-weight:var(--w-bold);color:var(--text-primary)">icon</span> tokens</div>
+    </div>
+
+    <div class="icon-grid stagger" id="icon-grid" style="margin-top:var(--s6)"></div>
+    <a class="ds-source" href="https://www.figma.com/design/PK9WXf4tRrNk7GABwWMwf9/Assets---Externo?node-id=4377-281" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Open the full icon library in Figma</a>
+  </div>
+</section>
+
+<!-- 07 MASCOT -->
+<section id="mascot">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">07</span> Mascot</div>
+    <h2 class="title">Meet Ben, the cat.</h2>
+    <div class="mascot-hero">
+      <div class="mascot-stage reveal"><img src="illustrations/ben/ben-happy.svg" alt="Ben the cat"/></div>
+      <div>
+        <p class="lead" style="margin-top:0">Ben is our friendly guide — the warm, human face of the product. He welcomes, encourages, explains and celebrates: onboarding, empty states, tips and wins. He gives Worldpackers personality without ever getting in the way of the task.</p>
+        <div class="dd do" style="margin-top:var(--s5)"><div class="hd">✓ Use Ben for</div><ul><li>Onboarding &amp; first-time empty states</li><li>Encouragement, tips &amp; celebrations</li><li>Lightening friendly, low-stakes moments</li></ul></div>
+      </div>
+    </div>
+    <div class="fam-label"><h4>Emotional range</h4><span>Always the circle-avatar treatment</span></div>
+    <div class="emotions stagger">
+      <div class="emotion"><img src="illustrations/ben/ben-excited.svg" alt=""/><span>Excited</span></div>
+      <div class="emotion"><img src="illustrations/ben/ben-cool.svg" alt=""/><span>Cool</span></div>
+      <div class="emotion"><img src="illustrations/ben/ben-question.svg" alt=""/><span>Curious</span></div>
+      <div class="emotion"><img src="illustrations/ben/ben-check.svg" alt=""/><span>Approving</span></div>
+      <div class="emotion"><img src="illustrations/ben/ben-attention.svg" alt=""/><span>Heads-up</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 ILLUSTRATION -->
+<section id="illustration">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">08</span> Illustration</div>
+    <h2 class="title">Flat, friendly, on-brand.</h2>
+    <p class="lead">Three families work together: <b>Ben</b> (mascot), <b>People</b> (travelers and hosts) and <b>Elements</b> (objects of the journey). All share clean flat shapes, generous rounding and the brand palette — never line art.</p>
+
+    <div class="fam-label"><h4>People</h4><span>Diverse, in motion, mid-journey</span></div>
+    <div class="illus-grid stagger">
+      <div class="illus"><img src="illustrations/pessoas/girl-with-backpack.svg" alt="Traveler with backpack"/></div>
+      <div class="illus"><img src="illustrations/pessoas/girl-with-badge.svg" alt="Traveler with badge"/></div>
+      <div class="illus"><img src="illustrations/pessoas/amanda.svg" alt="Person"/></div>
+      <div class="illus"><img src="illustrations/pessoas/eco.svg" alt="Eco"/></div>
+    </div>
+    <div class="fam-label"><h4>Elements</h4><span>Flat objects of the trip</span></div>
+    <div class="illus-grid stagger">
+      <div class="illus"><img src="illustrations/elementos/bag-big.svg" alt="Backpack"/></div>
+      <div class="illus"><img src="illustrations/elementos/calendar.svg" alt="Calendar"/></div>
+      <div class="illus"><img src="illustrations/elementos/community.svg" alt="Community"/></div>
+      <div class="illus"><img src="illustrations/elementos/food.svg" alt="Food"/></div>
+    </div>
+    <a class="ds-source" href="https://www.figma.com/design/PK9WXf4tRrNk7GABwWMwf9/Assets---Externo?node-id=71-0" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Open the illustration library in Figma</a>
+  </div>
+</section>
+
+<!-- 09 PHOTOGRAPHY -->
+<section id="photography">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">09</span> Photography</div>
+    <h2 class="title">Real people. Real places. Real moments.</h2>
+    <p class="lead">Documentary, never staged. Natural light, candid framing, genuine connection — across six worlds, from traveler portraits to the landscapes and communities they live in.</p>
+
+    <div class="photo-grid stagger">
+      <div class="photo"><img src="worldpackers_images/worldpackers_images/002024492_redouane/listing_452_img_02.jpg" alt="" loading="lazy"/><div class="cap"><b>Traveler portraits</b><span>The faces of the community</span></div></div>
+      <div class="photo"><img src="worldpackers_images/worldpackers_images/007042475_sadhu/listing_112_img_03.jpeg" alt="" loading="lazy"/><div class="cap"><b>Traveler groups</b><span>Connection &amp; togetherness</span></div></div>
+      <div class="photo"><img src="worldpackers_images/worldpackers_images/005792183_francis/listing_082_img_04.jpg" alt="" loading="lazy"/><div class="cap"><b>Social activities</b><span>Collaboration in action</span></div></div>
+      <div class="photo"><img src="worldpackers_images/worldpackers_images/003438910_diego/listing_615_img_02.jpg" alt="" loading="lazy"/><div class="cap"><b>Ecological activities</b><span>Hands-on impact</span></div></div>
+      <div class="photo"><img src="worldpackers_images/worldpackers_images/005638202_daniel/listing_059_img_01.jpeg" alt="" loading="lazy"/><div class="cap"><b>Natural landscapes</b><span>The world as our home</span></div></div>
+      <div class="photo"><img src="worldpackers_images/worldpackers_images/000706682_miriam/listing_180_img_03.jpg" alt="" loading="lazy"/><div class="cap"><b>Urban landscapes &amp; stays</b><span>Hostels, cities, the places we live</span></div></div>
+    </div>
+    <div class="dodont reveal">
+      <div class="dd do"><div class="hd">✓ Do</div><ul><li>Show authentic people and unposed moments</li><li>Embrace diversity of people, places &amp; cultures</li><li>Favor natural light and a sense of place</li></ul></div>
+      <div class="dd dont"><div class="hd">✕ Don't</div><ul><li>Use generic, posed corporate stock</li><li>Over-filter or heavily color-grade</li><li>Crop people out of their context</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 VOICE -->
+<section id="voice">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">10</span> Voice &amp; tone</div>
+    <h2 class="title">We talk like a trusted friend who's been there.</h2>
+    <p class="lead">Warm, human and encouraging. We speak as <b>we</b> to <b>you</b>, always informal, always optimistic — inspiring action without hype, honest about what travel really takes.</p>
+
+    <div class="voice-list reveal">
+      <div class="vp"><h5>Human, not corporate</h5><p>Plain, warm language. Contractions, real talk, zero jargon.</p></div>
+      <div class="vp"><h5>Encouraging &amp; empowering</h5><p>"You can." We make the world feel reachable.</p></div>
+      <div class="vp"><h5>Purpose-driven</h5><p>Impact, transformation and community over features.</p></div>
+      <div class="vp"><h5>Inclusive &amp; global</h5><p>Everyone is welcome. Every place, culture and budget respected.</p></div>
+      <div class="vp"><h5>Honest &amp; trustworthy</h5><p>Real reviews, real safety, real expectations.</p></div>
+      <div class="vp"><h5>Adventurous, but grounded</h5><p>Excitement about the world, balanced with practical guidance.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div>
+      <img src="logos/logo-horizontal-white-transparent.png" alt="Worldpackers"/>
+      <p>Brandbook — living document. Brand content from worldpackers.com · color &amp; type tokens from the Figma Foundation · icons from 04. Icons &amp; Assets.</p>
+    </div>
+    <p class="big">Traveling changes people.<br/>People change the world.</p>
+  </div>
+</footer>
+
+<div id="toast"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg><span>Copied!</span></div>
+
+<script>
+const root=document.documentElement, tBtn=document.getElementById('themeToggle');
+const SUN='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg>';
+const MOON='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>';
+function applyTheme(t){root.setAttribute('data-theme',t);tBtn.innerHTML=t==='dark'?SUN:MOON;try{localStorage.setItem('wp-bb-theme',t)}catch(e){}}
+applyTheme((()=>{try{return localStorage.getItem('wp-bb-theme')}catch(e){return null}})()||'light');
+tBtn.addEventListener('click',()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+const menuBtn=document.getElementById('menuBtn'),navEl=document.getElementById('nav');
+menuBtn.addEventListener('click',()=>{const open=navEl.classList.toggle('open');menuBtn.setAttribute('aria-expanded',open);});
+navEl.addEventListener('click',e=>{if(e.target.closest('a')){navEl.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}});
+
+const toast=document.getElementById('toast'),toastTxt=toast.querySelector('span');let tT;
+function copy(t,el){
+  navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{});
+  toastTxt.textContent=t+' copied';toast.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>toast.classList.remove('show'),1500);
+  if(el){document.querySelectorAll('.copied').forEach(s=>{s.classList.remove('copied');clearTimeout(s._ct);});el.classList.add('copied');el._ct=setTimeout(()=>el.classList.remove('copied'),1500);}
+}
+const TAG='<span class="copied-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Copied</span>';
+
+const primitives=[
+  {name:'Blue',role:'Brand / identity',steps:[['extralight','#DFECF2'],['light','#7CB3C1'],['default','#158CBA'],['semidark','#1C6F8F'],['dark','#004363']]},
+  {name:'Green',role:'Action / CTA',steps:[['extralight','#DFF0D8'],['light','#6FC375'],['default','#28B62C'],['semidark','#379E3B'],['dark','#005E00']]},
+  {name:'Red',role:'Error',steps:[['extralight','#F2DEDE'],['light','#FC595E'],['default','#C73D31'],['semidark','#BF5669'],['dark','#660B0F']]},
+  {name:'Yellow',role:'Warning',steps:[['extralight','#FDF6E5'],['light','#F7D892'],['default','#FFC842'],['semidark','#F5A623'],['dark','#B37D00']]},
+  {name:'Emerald',role:'Support / data',steps:[['extralight','#BFF8F8'],['light','#6DDBDB'],['default','#32A9A9'],['semidark','#0F8A8A'],['dark','#005A5A']]},
+  {name:'Neutral',role:'Text & surfaces',steps:[['extralight','#F6F7F8'],['light','#D9D9D9'],['concrete','#718696'],['dark-concrete','#4E5C66'],['dark','#282B2F'],['ultradark','#202124']]}
+];
+const semantic=[
+  {group:'Background',tokens:[['background-primary','#FFFFFF','#202124'],['background-secondary','#F6F7F8','#282B2F'],['background-elevated','#FFFFFF','#282B2F'],['background-support','#DFECF2','#282B2F']]},
+  {group:'Text',tokens:[['text-primary','#4E5C66','#FFFFFF'],['text-secondary','#718696','#F6F7F8'],['text-on','#FFFFFF','#FFFFFF']]},
+  {group:'CTA',tokens:[['cta-primary','#28B62C','#28B62C'],['cta-link','#158CBA','#158CBA'],['cta-error','#C73D31','#FC595E']]},
+  {group:'Brand',tokens:[['brand-primary','#158CBA','#158CBA'],['brand-secondary','#718696','#718696']]},
+  {group:'Border',tokens:[['border-default','#D9D9D9','#718696'],['border-focus','#7CB3C1','#7CB3C1']]},
+  {group:'Feedback',tokens:[['notice-text','#379E3B','#6FC375'],['warning-text','#F5A623','#F5A623'],['error-text','#BF5669','#BF5669']]}
+];
+const typeWeb=[['Display 1','50 / 64',50,700],['Display 2','40 / 50',40,400],['H1','34 / 46',34,700],['H2','30 / 38',30,400],['H3','24 / 34',24,400],['H4','18 / 24',18,400],['H5','16 / 20',16,400],['Body Huge','24 / 36',24,300],['Body Large','18 / 26',18,300],['Body','16 / 22',16,300],['Body Small','14 / 20',14,300]];
+const typeMob=[['H1','24',24,700],['H2','20',20,400],['H3','17',17,700],['H4','17',17,400],['H5','15',15,400],['H6','12',12,400],['Body','17',17,300],['Small Body','15',15,300],['Caption','12',12,300]];
+const spacingWeb=[['spacing-xs',5],['spacing-sm',10],['spacing-sm+',15],['spacing-md',20],['spacing-lg',30],['spacing-xl',40]];
+const icons=[['work-exchange',0x21],['community',0x35],['hostel',0xE017],['eco',0x2E],['earth',0x2D],['beach',0x76],['hiking',0xE00F],['hands-on',0xE008],['farm',0x5B],['family',0x40],['cooking',0x38],['meals',0xE03A],['breakfast',0x42],['courses',0x39],['language-classes',0xE023],['bike',0x41],['backpack',0x6B],['bed',0x78],['calendar',0x44],['chat',0x4D],['check',0x4E],['heart',0xE00C],['help',0xE00E],['gift',0xE004],['money',0xE03F],['location',0xE030],['instagram',0xE01E],['facebook',0x3D]];
+
+let ph='';primitives.forEach(f=>{ph+=`<div class="fam-label" style="margin-top:var(--s6)"><h4>${f.name}</h4><span>${f.role}</span></div><div class="palette">`;f.steps.forEach(([n,hex])=>{ph+=`<div class="swatch" onclick="copy('${hex}',this)" title="Copy ${hex}"><div class="chip" style="background:${hex}"></div><div class="meta"><div class="n">${f.name.toLowerCase()}-${n}</div><div class="h">${hex}<span class="copied-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Copied</span></div></div></div>`;});ph+='</div>';});
+document.getElementById('primitives').innerHTML=ph;
+
+let sh='';semantic.forEach(g=>{sh+=`<div class="semantic-group"><h4>${g.group}</h4><div class="tok" style="border-bottom-width:2px"><div class="name"></div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg> Light</div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg> Dark</div></div>`;g.tokens.forEach(([n,l,d])=>{sh+=`<div class="tok"><div class="name copyable" onclick="copy('${n}',this)" title="Copy ${n}">${n}${TAG}</div><div class="cell copyable" onclick="copy('${l}',this)" title="Copy ${l}"><span class="dot" style="background:${l}"></span>${l}${TAG}</div><div class="cell copyable" onclick="copy('${d}',this)" title="Copy ${d}"><span class="dot" style="background:${d}"></span>${d}${TAG}</div></div>`;});sh+='</div>';});
+document.getElementById('semantic').innerHTML=sh;
+
+function spec(arr){return arr.map(([name,meta,px,wt])=>`<div class="spec-row copyable" onclick="copy('${px}px',this)" title="Copy ${px}px"><div class="meta"><b>${name}</b>${meta} px · ${wt===300?'Light':wt===700?'Bold':'Regular'}${TAG}</div><div class="sample" style="font-size:${Math.min(px,52)}px;font-weight:${wt}">Traveling changes people</div></div>`).join('');}
+document.getElementById('specimen').innerHTML=spec(typeWeb);
+document.getElementById('specimen-m').innerHTML=spec(typeMob);
+
+let sw='';spacingWeb.forEach(([n,v])=>{sw+=`<div class="scale-row copyable" onclick="copy('${v}px',this)" title="Copy ${v}px"><div class="lbl">--${n} · ${v}px${TAG}</div><div class="bar" style="width:${v*2}px"></div></div>`;});
+document.getElementById('spacing-web').innerHTML=sw;
+
+function sizeRow(arr,cls){return arr.map(n=>`<figure class="s copyable" onclick="copy('${n}px',this)" title="Copy ${n}px"><div class="${cls}" style="width:${n}px;height:${n}px"></div><figcaption>${n}</figcaption></figure>`).join('');}
+document.getElementById('web-icons').innerHTML=sizeRow([12,16,20,24,32,40,48],'ic');
+document.getElementById('web-avatars').innerHTML=sizeRow([20,40,60,80,100],'av');
+document.getElementById('mob-icons').innerHTML=sizeRow([12,16,24,32],'ic');
+document.getElementById('mob-avatars').innerHTML=sizeRow([28,36,45,60,80],'av');
+const mobileSpacing=[['nano','2 · 2'],['micro','4 · 5'],['small','8 · 10'],['default','16 · 20'],['large','24 · 30'],['huge','32 · 40'],['giant','48 · 50'],['screen pad','16 · 20']];
+document.getElementById('mobile-spacing').innerHTML=mobileSpacing.map(([k,v])=>`<div class="row copyable" onclick="copy('${v}',this)" title="Copy ${v}"><span>${k}</span><span>${v}${TAG}</span></div>`).join('');
+
+let ig='';icons.forEach(([n,c])=>{ig+=`<div class="ico"><span class="wpi">${String.fromCodePoint(c)}</span><span class="n">${n}</span></div>`;});
+document.getElementById('icon-grid').innerHTML=ig;
+
+const links=[...document.querySelectorAll('nav.sections a')];
+const navObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=links.find(x=>x.getAttribute('href')==='#'+e.target.id);if(a)a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>navObs.observe(s));
+/* consistência: todo filho direto de seção que ainda não anima recebe reveal */
+document.querySelectorAll('section:not(.hero) > .wrap > *').forEach(el=>{if(!el.classList.contains('reveal')&&!el.classList.contains('stagger'))el.classList.add('reveal');});
+document.querySelectorAll('.stagger').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--d',Math.min(i*70,560)+'ms'));});
+const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal,.stagger').forEach(el=>revObs.observe(el));
+</script>
+</body>
+</html>
