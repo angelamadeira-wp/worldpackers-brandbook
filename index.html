@@ -4,7 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Worldpackers — Brandbook</title>
-<meta name="description" content="The Worldpackers brand system: essence, logo, color, typography, icons, mascot, illustration, photography and voice." />
+<meta name="description" content="The Worldpackers brand and product system: essence, logo, color, typography, spacing, icons, mascot, illustration, photography, voice and the component library you build with." />
+<link rel="icon" href="logos/logo-wp-icon-brand.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
@@ -48,23 +49,30 @@
   --grey-default:var(--grey-default-concrete); --grey-semidark:var(--grey-semidark-dark-concrete);
   --section-spacing:60px;
 
-  --font:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;
-  --w-light:300; --w-regular:400; --w-bold:700;   /* Source Sans Pro — Light/Regular/Bold ONLY */
-  /* DS type scale — EXACT from Figma Foundation (node 24:446). size · line-height · weight */
-  --type-display-1:50px; --lh-display-1:64px;     /* Display 1 — Bold 700 */
-  --type-display-2:40px; --lh-display-2:50px;     /* Display 2 — Regular 400 */
-  --type-h1:34px; --lh-h1:46px;                   /* H1 — Bold 700 */
-  --type-h2:30px; --lh-h2:38px;                   /* H2 — Regular 400 */
-  --type-h3:24px; --lh-h3:34px;                   /* H3 — Regular 400 */
-  --type-h4:18px; --lh-h4:24px;                   /* H4 — Regular 400 */
-  --type-h5:16px; --lh-h5:20px;                   /* H5 — Regular 400 */
-  --type-body-huge:24px;  --lh-body-huge:36px;    /* Body — Light 300 (body is ALWAYS Light) */
-  --type-body-large:18px; --lh-body-large:26px;
-  --type-body:16px;       --lh-body:22px;
-  --type-body-small:14px; --lh-body-small:20px;
-  --type-caption:12px;
+  --font:'Source Sans 3',system-ui,sans-serif;
+  --w-light:300; --w-regular:400; --w-medium:500; --w-semibold:600; --w-bold:700;
+  /* "Source Sans 3" é o nome canônico do DS novo (ADR 2026-08-06-003). Light 300 sobrevive
+     só no nativo legado — no DS novo o corpo é Regular 400. */
+  /* Escala do DS novo — packages/ui/src/styles/{typography,tokens}.css.
+     Os valores abaixo são o passo @md (768px+); o passo mobile vive na tabela da seção 04. */
+  --type-display-1:48px; --lh-display-1:52px;     /* heading-4xl @md — Bold 700 */
+  --type-display-2:40px; --lh-display-2:46px;     /* heading-3xl @md — Bold 700 */
+  --type-h1:36px; --lh-h1:40px;                   /* heading-2xl @md — Bold 700 */
+  --type-h2:30px; --lh-h2:36px;                   /* heading-xl @md — SemiBold 600 */
+  --type-h3:24px; --lh-h3:32px;                   /* heading-lg @md — SemiBold 600 */
+  --type-h4:20px; --lh-h4:28px;                   /* heading-md @md — SemiBold 600 */
+  --type-h5:18px; --lh-h5:28px;                   /* heading-sm @md — SemiBold 600 */
+  --type-body-huge:24px;  --lh-body-huge:32px;    /* body-lg @md — Regular 400 */
+  --type-body-large:18px; --lh-body-large:28px;   /* body-md — Regular 400 */
+  --type-body:16px;       --lh-body:24px;         /* body-sm — o corpo padrão */
+  --type-body-small:14px; --lh-body-small:20px;   /* body-xs */
+  --type-caption:12px;    --lh-caption:16px;      /* text-xs */
   --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;--s12:48px;--s16:64px;--s20:80px;--s24:96px;
-  --r:5px;            /* WP corner radius — single value */
+  /* Raio do DS novo: escala de 10 degraus. O valor único de 5px não existe mais.
+     O chrome desta página passa a usar o degrau mais usado nos componentes (rounded-sm). */
+  --r:6px;
+  --r-none:0px; --r-xs:2px; --r-sm:6px; --r-md:8px; --r-lg:10px; --r-xl:14px;
+  --r-2xl:18px; --r-3xl:22px; --r-4xl:26px; --r-full:9999px;
   --transition:180ms ease; --maxw:1180px;
 }
 [data-theme="dark"]{
@@ -77,13 +85,9 @@
   --system-white:var(--black); --system-black:var(--white);
 }
 
-/* icon font — same set as Figma "04. Icons and Assets" */
-@font-face{font-family:'wp-icons';src:url('fonts/worldpackers-icons.ttf') format('truetype');font-display:swap}
-.wpi{font-family:'wp-icons';font-style:normal;font-weight:400;line-height:1;-webkit-font-smoothing:antialiased;display:inline-block}
-
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{font-family:var(--font);font-weight:var(--w-light);color:var(--text-primary);background:var(--bg-primary);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+body{font-family:var(--font);font-weight:var(--w-regular);color:var(--text-primary);background:var(--bg-primary);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
 a{color:var(--cta-link);text-decoration:none}
 img{max-width:100%;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s6)}
@@ -94,7 +98,7 @@ section+section{padding-top:0}
 .eyebrow{font-size:12px;font-weight:var(--w-bold);letter-spacing:.16em;text-transform:uppercase;color:var(--brand-primary);display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s4)}
 .eyebrow .num{color:var(--text-secondary)}
 h2.title{font-size:clamp(var(--type-h3),4vw,var(--type-h1));font-weight:var(--w-bold);line-height:1.15;letter-spacing:-.01em;color:var(--text-primary);max-width:20ch}
-.lead{font-size:var(--type-body-large);font-weight:var(--w-light);color:var(--text-secondary);max-width:64ch;margin-top:var(--s4);line-height:var(--lh-body-large)}
+.lead{font-size:var(--type-body-large);font-weight:var(--w-regular);color:var(--text-secondary);max-width:64ch;margin-top:var(--s4);line-height:var(--lh-body-large)}
 .tag-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--w-bold);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r);background:var(--bg-support);color:var(--brand-primary)}
 .tag-badge.m{background:color-mix(in srgb,var(--green-light) 30%,transparent);color:var(--green-semidark)}
 
@@ -134,7 +138,7 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 .hero .wrap{position:relative;z-index:2;padding-top:var(--s16);padding-bottom:var(--s16);text-align:center}
 .hero .logo-lockup img{height:50px;margin:0 auto var(--s8);filter:drop-shadow(0 2px 12px rgba(0,0,0,.25))}
 .hero h1{font-size:clamp(32px,6vw,var(--type-display-1));font-weight:var(--w-bold);line-height:1.1;letter-spacing:-.015em;margin:0 auto;text-shadow:0 2px 24px rgba(0,30,45,.35)}
-.hero p.sub{font-size:var(--type-body-large);line-height:var(--lh-body-large);font-weight:var(--w-light);max-width:52ch;margin:var(--s6) auto 0;opacity:.96}
+.hero p.sub{font-size:var(--type-body-large);line-height:var(--lh-body-large);font-weight:var(--w-regular);max-width:52ch;margin:var(--s6) auto 0;opacity:.96}
 .scrollcue{margin-top:var(--s12);font-size:12px;font-weight:var(--w-bold);letter-spacing:.16em;text-transform:uppercase;opacity:.85;display:inline-flex;gap:8px;align-items:center;justify-content:center}
 
 /* ---------- GRID / CARDS ---------- */
@@ -153,14 +157,27 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 
 /* values */
 .value-card{text-align:center}
-.value-card .v-ico{display:block;font-size:32px;line-height:1;color:var(--brand-primary);margin:0 auto var(--s4)}
+.value-card .v-ico{display:block;color:var(--brand-primary);margin:0 auto var(--s4)}
 .value-card h3{font-size:var(--type-h4);font-weight:var(--w-bold);margin-bottom:var(--s2);color:var(--text-primary)}
 .value-card p{color:var(--text-secondary);font-size:16px}
 
 /* ---------- LOGO ---------- */
 .logo-board{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
 @media(max-width:760px){.logo-board{grid-template-columns:1fr}}
-.logo-cell{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s8);display:grid;place-items:center;min-height:150px}
+.logo-cell{position:relative;border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s8);display:grid;place-items:center;min-height:150px}
+.dl{position:absolute;right:8px;bottom:8px;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;
+  border-radius:var(--r-full);border:1px solid var(--border-default);background:var(--bg-elevated);
+  color:var(--text-secondary);font-size:11px;font-weight:var(--w-semibold);letter-spacing:.03em;
+  opacity:0;transition:opacity var(--transition),border-color var(--transition),color var(--transition)}
+.logo-cell:hover .dl,.dl:focus-visible{opacity:1}
+.dl:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+@media(hover:none){.dl{opacity:1}}
+.files{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);margin-top:var(--s2)}
+@media(max-width:760px){.files{grid-template-columns:1fr}}
+.file{display:block;border:1px solid var(--border-default);border-radius:var(--r);padding:12px 15px;transition:border-color var(--transition)}
+.file:hover{border-color:var(--brand-primary)}
+.file b{display:block;font-size:13px;font-weight:var(--w-semibold);color:var(--text-primary)}
+.file span{display:block;font-size:11.5px;color:var(--text-secondary);margin-top:3px}
 .logo-cell.on-brand{background:var(--brand-primary);border-color:transparent} .logo-cell.on-dark{background:var(--grey-ultradark);border-color:transparent} .logo-cell.on-photo{background:var(--gradient-secondary);border-color:transparent}
 [data-theme="dark"] .logo-cell.on-dark{border-color:color-mix(in srgb,#fff 16%,transparent)}
 .logo-cell img{max-height:54px} .logo-cell.icon img{max-height:72px}
@@ -173,9 +190,33 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 /* ---------- COLOR ---------- */
 .fam-label{display:flex;align-items:baseline;justify-content:space-between;margin:var(--s8) 0 var(--s3);gap:var(--s4)}
 .fam-label h4{font-size:16px;font-weight:var(--w-bold)} .fam-label span{font-size:12px;color:var(--text-secondary)}
+.fam-label .spacer{flex:1}
+.copy-all{flex:none;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border:1px solid var(--border-default);border-radius:var(--r-full);background:var(--bg-elevated);color:var(--text-secondary);font-family:var(--font);font-size:12px;font-weight:var(--w-semibold);cursor:pointer;transition:border-color var(--transition),color var(--transition)}
+.copy-all:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.copy-all.copied{border-color:var(--green-semidark);color:var(--green-semidark)}
+.copy-all svg{flex:none}
+.grad{cursor:pointer}
+.ico{cursor:pointer}
+.ico.copied{border-color:var(--green-semidark);color:var(--green-semidark)}
+.ico.copied .n{color:var(--green-semidark)}
 .palette{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 @media(max-width:860px){.palette{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.palette{grid-template-columns:repeat(2,1fr)}}
+.fam-head{display:flex;align-items:baseline;gap:var(--s3);margin:var(--s6) 0 7px}
+.fam-head h5{font-size:14px;font-weight:var(--w-bold);color:var(--text-primary);font-variant-numeric:tabular-nums}
+.fam-head span{font-size:12px;color:var(--text-secondary)}
+.ramp{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+@media(max-width:900px){.ramp{grid-template-columns:repeat(6,1fr)}}
+@media(max-width:560px){.ramp{grid-template-columns:repeat(3,1fr)}}
+.ramp .step{position:relative;appearance:none;border:1px solid var(--border-default);background:var(--bg-elevated);border-radius:var(--r);padding:0 0 6px;cursor:pointer;font-family:var(--font);text-align:center;overflow:hidden;transition:transform var(--transition),border-color var(--transition)}
+.ramp .step:hover{transform:translateY(-3px);border-color:var(--brand-primary)}
+.ramp .step .sw{display:block;height:46px;border-bottom:1px solid color-mix(in srgb,var(--border-default) 55%,transparent)}
+.ramp .step b{display:block;font-size:12px;font-weight:var(--w-semibold);color:var(--text-primary);margin-top:5px;font-variant-numeric:tabular-nums}
+.ramp .step i{display:block;font-style:normal;font-size:9.5px;letter-spacing:.01em;color:var(--text-secondary);text-transform:uppercase}
+.ramp .step.is-main{border-color:var(--brand-primary);box-shadow:inset 0 0 0 1px var(--brand-primary)}
+.ramp .step.is-main b::after{content:" ★";color:var(--brand-primary);font-size:9px;vertical-align:1px}
+.ramp .step.copied{border-color:var(--green-semidark)}
+.ramp .step.copied b{color:var(--green-semidark)}
 .swatch{cursor:pointer;border-radius:var(--r);overflow:hidden;border:1px solid var(--border-default);background:var(--bg-elevated);transition:transform var(--transition)}
 .swatch:hover{transform:translateY(-3px)}
 .swatch .chip{height:70px}
@@ -184,22 +225,31 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 .swatch .meta .h{display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:12px;color:var(--text-secondary);text-transform:uppercase}
 .swatch .copied-tag{display:inline-flex;align-items:center;gap:3px;color:var(--green-semidark);font-weight:var(--w-bold);text-transform:none;opacity:0;transform:translateX(-3px);transition:opacity 150ms ease,transform 150ms ease}
 .swatch.copied .copied-tag{opacity:1;transform:none}
-.grad-row{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4);margin-top:var(--s4)}
-@media(max-width:700px){.grad-row{grid-template-columns:1fr}}
-.grad{height:110px;border-radius:var(--r);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--s4);color:#fff;font-weight:var(--w-bold)}
-.grad small{display:block;margin-top:var(--s2);font-weight:var(--w-regular);opacity:.9;font-size:12px}
+.grad-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+@media(max-width:860px){.grad-row{grid-template-columns:1fr}}
+.grad-card p{font-size:11.5px;line-height:1.5;color:var(--text-secondary);margin-top:9px}
+.grad{position:relative;overflow:hidden;height:120px;border-radius:var(--r);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--s4);color:#fff;font-weight:var(--w-bold);cursor:pointer}
+.grad b{font-size:14px}
+.grad small{display:block;margin-top:6px;font-weight:var(--w-regular);opacity:.92;font-size:11px;letter-spacing:.01em}
+.grad.copied{outline:2px solid var(--green-semidark);outline-offset:2px}
 .semantic-group{margin-top:var(--s6)}
 .semantic-group h4{font-size:14px;font-weight:var(--w-bold);text-transform:uppercase;letter-spacing:.08em;color:var(--text-secondary);margin-bottom:var(--s2)}
 .tok{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--s3);align-items:center;padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--border-default) 60%,transparent)}
 .tok .name{font-size:14px;font-weight:var(--w-bold)}
 .tok .cell{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-secondary)}
+/* Selo de "Copied" para os alvos gráficos (swatch, gradiente, ícone, raio),
+   onde não cabe a tag inline usada nas linhas de token. Mesmo vocabulário visual. */
+.cbadge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:5px;
+  background:color-mix(in srgb,var(--bg-elevated) 92%,transparent);color:var(--green-semidark);
+  font-size:11px;font-weight:var(--w-bold);letter-spacing:.02em;
+  opacity:0;pointer-events:none;transition:opacity 140ms ease}
+.cbadge svg{flex:none}
+.copied>.cbadge,.copied .cbadge{opacity:1}
 .copyable{cursor:pointer;border-radius:4px;transition:background var(--transition)}
 .copyable:hover{color:var(--brand-primary)}
 .copyable .copied-tag{display:inline-flex;align-items:center;gap:3px;margin-left:7px;color:var(--green-semidark);font-weight:var(--w-bold);font-size:12px;opacity:0;transform:translateX(-3px);transition:opacity 150ms ease,transform 150ms ease}
 .copyable.copied .copied-tag{opacity:1;transform:none}
 .tok .dot{width:22px;height:22px;border-radius:var(--r);border:1px solid var(--border-default);flex:none}
-.tok .mode-h{font-size:12px;font-weight:var(--w-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);display:flex;align-items:center;gap:4px}
-.ic-s{display:inline-block;vertical-align:-2px}
 .rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s8)}
 @media(max-width:700px){.rules{grid-template-columns:1fr}}
 .rule{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s5);display:flex;gap:var(--s4);align-items:flex-start}
@@ -240,7 +290,15 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 .metric .row{display:flex;justify-content:space-between;border-bottom:1px solid color-mix(in srgb,var(--border-default) 50%,transparent);padding:5px 0}
 .metric .row span:first-child{color:var(--text-secondary)} .metric .row span:last-child{font-weight:var(--w-bold)}
 .radius-demo{display:flex;gap:var(--s5);align-items:flex-end;margin-top:var(--s4)}
-.radius-demo .box{width:96px;height:72px;background:var(--bg-support);border:2px solid var(--brand-primary);border-radius:5px}
+.radius-demo .box{width:96px;height:72px;background:var(--bg-support);border:2px solid var(--brand-primary);border-radius:var(--r-sm)}
+.radius-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);margin-top:var(--s4)}
+@media(max-width:560px){.radius-scale{grid-template-columns:repeat(3,1fr)}}
+.radius-scale .rr{position:relative;cursor:pointer;text-align:center}
+.radius-scale .rr .b{height:54px;background:var(--bg-support);border:2px solid var(--brand-primary);border-bottom:none;border-radius:var(--rv) var(--rv) 0 0;transition:background var(--transition)}
+.radius-scale .rr:hover .b{background:color-mix(in srgb,var(--brand-primary) 18%,transparent)}
+.radius-scale .rr figcaption{font-size:11px;color:var(--text-secondary);margin-top:6px;line-height:1.35}
+.radius-scale .rr figcaption b{display:block;color:var(--text-primary);font-weight:var(--w-semibold)}
+.radius-scale .rr.copied figcaption b{color:var(--green-semidark)}
 .sizes-row{display:flex;gap:var(--s5);align-items:flex-end;flex-wrap:wrap;margin-top:var(--s4)}
 .sizes-row .av{background:var(--brand-primary);border-radius:50%}
 .sizes-row .ic{background:var(--bg-support);border-radius:var(--r);display:grid;place-items:center;color:var(--brand-primary)}
@@ -259,16 +317,26 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 .icon-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s2)}
 @media(max-width:860px){.icon-grid{grid-template-columns:repeat(5,1fr)}}
 @media(max-width:560px){.icon-grid{grid-template-columns:repeat(3,1fr)}}
-.ico{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s4) var(--s2);text-align:center;transition:var(--transition)}
+.ico{position:relative;display:block;overflow:hidden;border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s4) var(--s2) 26px;text-align:center;transition:border-color var(--transition),color var(--transition)}
+.dlbadge{position:absolute;left:0;right:0;bottom:0;height:22px;display:flex;align-items:center;justify-content:center;gap:4px;
+  font-size:10px;font-weight:var(--w-bold);letter-spacing:.08em;color:var(--text-secondary);
+  background:var(--bg-secondary);border-top:1px solid color-mix(in srgb,var(--border-default) 55%,transparent);
+  opacity:0;transition:opacity var(--transition)}
+.ico:hover .dlbadge,.ico:focus-visible .dlbadge{opacity:1;color:var(--brand-primary)}
+@media(hover:none){.dlbadge{opacity:1}}
 .ico:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
-.ico .wpi{font-size:30px;color:var(--text-primary)} .ico:hover .wpi{color:var(--brand-primary)}
+.ico>svg{color:var(--text-primary);display:block;margin:0 auto} .ico:hover>svg{color:var(--brand-primary)}
+.dlbadge svg{margin:0;flex:none}
 .ico .n{display:block;font-size:12px;color:var(--text-secondary);margin-top:8px;overflow:hidden;text-overflow:ellipsis}
 .icon-sizes{display:flex;gap:var(--s6);align-items:flex-end;margin-top:var(--s5);padding:var(--s5);border:1px solid var(--border-default);border-radius:var(--r)}
-.icon-sizes .s{text-align:center;color:var(--brand-primary)} .icon-sizes .s figcaption{font-size:12px;color:var(--text-secondary);margin-top:8px}
+.icon-sizes{flex-wrap:wrap}
+.icon-sizes .s{text-align:center;color:var(--brand-primary)} .icon-sizes .s svg{display:block;margin:0 auto} .icon-sizes .s figcaption{font-size:12px;color:var(--text-secondary);margin-top:8px}
 /* link pra biblioteca-fonte no Figma */
 /* botão padrão WP — .btn.secondary.size-mid (pill outline) */
 .ds-source{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:var(--s6);height:40px;padding:0 16px;border:1px solid var(--border-default);border-radius:999px;font-family:var(--font);font-size:16px;line-height:22px;font-weight:var(--w-regular);color:var(--text-secondary);background:var(--bg-elevated);transition:border-color var(--transition)}
 .ds-source:hover{border-color:var(--text-secondary)}
+.ds-source.primary{color:var(--brand-primary);border-color:var(--brand-primary);margin-right:var(--s3)}
+.ds-source.primary:hover{background:var(--bg-support)}
 .ds-source svg{flex:none}
 
 /* ---------- MASCOT ---------- */
@@ -306,6 +374,8 @@ nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
 .dodont{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin-top:var(--s6)}
 @media(max-width:700px){.dodont{grid-template-columns:1fr}}
 .dd.dont{background:var(--error-background);border-color:var(--error-text)} .dd.dont .hd{color:var(--error-text)} .dd.dont li{color:var(--error-text)} .dd.dont li::before{content:"✕";color:var(--error-text)}
+
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--bg-secondary);padding:1px 5px;border-radius:var(--r-xs)}
 
 /* ---------- VOICE ---------- */
 .voice-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6) var(--s5);margin-top:var(--s8)}
@@ -378,10 +448,10 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
 
     <div class="fam-label"><h4>Our values</h4><span>What we believe, in everything we build</span></div>
     <div class="grid cols-4 stagger">
-      <div class="card value-card"><span class="wpi v-ico">&#x35;</span><h3>Community</h3><p>We believe in the power of community. Sharing knowledge and collaborating openly creates meaningful connections.</p></div>
-      <div class="card value-card"><span class="wpi v-ico">&#xE00F;</span><h3>Experiences &amp; Exploration</h3><p>Experiences shape who we are. We value meaningful moments over possessions, and explore the world with open eyes.</p></div>
-      <div class="card value-card"><span class="wpi v-ico">&#x39;</span><h3>Continuous Learning</h3><p>Curiosity fuels growth. We stay humble, keep learning, and seek new perspectives and skills.</p></div>
-      <div class="card value-card"><span class="wpi v-ico">&#x2D;</span><h3>Global Responsibility</h3><p>The world is our home. We treat every place with respect, embrace diverse cultures, and act as responsible global citizens.</p></div>
+      <div class="card value-card"><svg class="v-ico" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /> <path d="M16 3.13a4 4 0 0 1 0 7.75" /> <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg><h3>Community</h3><p>We believe in the power of community. Sharing knowledge and collaborating openly creates meaningful connections.</p></div>
+      <div class="card value-card"><svg class="v-ico" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18l-6.921 -14.612a2.3 2.3 0 0 0 -4.158 0l-6.921 14.612" /> <path d="M7.5 11l2 2.5l2.5 -2.5l2 3l2.5 -2" /></svg><h3>Experiences &amp; Exploration</h3><p>Experiences shape who we are. We value meaningful moments over possessions, and explore the world with open eyes.</p></div>
+      <div class="card value-card"><svg class="v-ico" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" /> <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" /></svg><h3>Continuous Learning</h3><p>Curiosity fuels growth. We stay humble, keep learning, and seek new perspectives and skills.</p></div>
+      <div class="card value-card"><svg class="v-ico" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M3.6 9h16.8" /> <path d="M3.6 15h16.8" /> <path d="M11.5 3a17 17 0 0 0 0 18" /> <path d="M12.5 3a17 17 0 0 1 0 18" /></svg><h3>Global Responsibility</h3><p>The world is our home. We treat every place with respect, embrace diverse cultures, and act as responsible global citizens.</p></div>
     </div>
   </div>
 </section>
@@ -391,19 +461,27 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
   <div class="wrap">
     <div class="eyebrow"><span class="num">02</span> Logo</div>
     <h2 class="title">A traveler on top of the world.</h2>
-    <p class="lead">Our symbol is a globe carrying a backpacker — a person on top of the world. It pairs with the <b>Worldpackers</b> wordmark in Source Sans Pro Bold. The horizontal lockup is primary; the icon stands alone where space is tight.</p>
+    <p class="lead">Our symbol is a globe carrying a backpacker — a person on top of the world. It pairs with the <b>Worldpackers</b> wordmark in Source Sans 3 Bold. The horizontal lockup is primary; the icon stands alone where space is tight.</p>
 
     <div class="fam-label"><h4>Lockups</h4><span>Horizontal · Icon · on the brand color</span></div>
     <div class="logo-board stagger">
-      <div class="logo-cell"><img src="logos/logo-wp-horizontal-brand.svg" alt="Horizontal"/></div>
-      <div class="logo-cell icon"><img src="logos/logo-wp-icon-brand.svg" alt="Icon"/></div>
-      <div class="logo-cell on-brand"><img src="logos/logo-horizontal-white-transparent.png" alt="Reversed on brand"/></div>
+      <div class="logo-cell"><img src="logos/logo-wp-horizontal-brand.svg" alt="Horizontal"/><a class="dl" href="logos/logo-wp-horizontal-brand.svg" download title="Download SVG"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell icon"><img src="logos/logo-wp-icon-brand.svg" alt="Icon"/><a class="dl" href="logos/logo-wp-icon-brand.svg" download title="Download SVG"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell on-brand"><img src="logos/logo-horizontal-white-transparent.png" alt="Reversed on brand"/><a class="dl" href="logos/logo-horizontal-white-transparent.png" download title="Download PNG"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>PNG</a></div>
     </div>
     <div class="fam-label"><h4>Variants</h4><span>One file for every background</span></div>
     <div class="logo-board stagger">
-      <div class="logo-cell"><img src="logos/logo-wp-horizontal-mono.svg" alt="Mono"/></div>
-      <div class="logo-cell on-dark"><img src="logos/logo-horizontal-white-transparent.png" alt="On dark"/></div>
-      <div class="logo-cell on-photo"><img src="logos/logo-horizontal-white-transparent.png" alt="On color"/></div>
+      <div class="logo-cell"><img src="logos/logo-wp-horizontal-mono.svg" alt="Mono"/><a class="dl" href="logos/logo-wp-horizontal-mono.svg" download title="Download SVG"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell on-dark"><img src="logos/logo-horizontal-white-transparent.png" alt="On dark"/><a class="dl" href="logos/logo-horizontal-white-transparent.png" download title="Download PNG"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>PNG</a></div>
+      <div class="logo-cell on-photo"><img src="logos/logo-horizontal-white-transparent.png" alt="On color"/><a class="dl" href="logos/logo-horizontal-white-transparent.png" download title="Download PNG"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>PNG</a></div>
+    </div>
+
+    <div class="fam-label"><h4>Files</h4><span>click to download</span></div>
+    <div class="files">
+      <a class="file" href="logos/logo-wp-horizontal-brand.svg" download><b>logo-wp-horizontal-brand.svg</b><span>Horizontal · full colour · #158CBA · 34 KB</span></a>
+      <a class="file" href="logos/logo-wp-icon-brand.svg" download><b>logo-wp-icon-brand.svg</b><span>Icon only · full colour · #158CBA · 23 KB</span></a>
+      <a class="file" href="logos/logo-wp-horizontal-mono.svg" download><b>logo-wp-horizontal-mono.svg</b><span>Horizontal · one colour · #718696 · 34 KB</span></a>
+      <a class="file" href="logos/logo-horizontal-white-transparent.png" download><b>logo-horizontal-white-transparent.png</b><span>Reversed white · PNG only, no SVG exists · 5 KB</span></a>
     </div>
 
     <div class="clearspace reveal">
@@ -425,42 +503,43 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
   <div class="wrap">
     <div class="eyebrow"><span class="num">03</span> Color</div>
     <h2 class="title">Blue is who we are. Green is what to do.</h2>
-    <p class="lead">A three-tier system from the Figma Foundation: <b>primitives</b> feed <b>semantic tokens</b> which adapt across <b>light &amp; dark</b>. Always build with semantic tokens — never raw hex. Tap any swatch to copy it.</p>
+    <p class="lead">Two layers. The <b>brand palette</b> is what Worldpackers owns; the <b>semantic tokens</b> of the design system are what you actually build with, and every one of them carries a light <i>and</i> a dark value. Always build with semantic tokens — never raw hex. Tap any swatch to copy it.</p>
 
     <div class="howto reveal">
       <div class="howto-card">
         <div class="step"><span class="no">1</span> The raw colors</div>
-        <h5>Primitive palette</h5>
-        <p>Every color the brand owns — blue, green, red, yellow, emerald and greys — each in five shades from light to dark. Think of them as the full box of paint: the raw material, not the instructions. You almost never pick these by hand.</p>
-        <div class="eg">e.g. <b>blue-default</b> is the exact blue <b>#158CBA</b></div>
+        <h5>Base palette</h5>
+        <p>Every colour the system owns, organised as Tailwind families and numeric steps. Think of it as the full box of paint: the raw material, not the instructions. You almost never pick these by hand — only a handful of components reference a step directly.</p>
+        <div class="eg">e.g. <b>tailwind colors/blue/700 (main)</b> is <b>#158CBA</b> — the one constant across every generation</div>
       </div>
       <div class="howto-card">
         <div class="step"><span class="no">2</span> Colors with a job</div>
-        <h5>Semantic colors</h5>
-        <p>Each one is a <b>role</b>, not a shade — “text”, “action button”, “error”, “background”. Behind the scenes it points to a color from the palette, so you name <i>what the color is for</i>, never the hex code. This is what everyone actually uses.</p>
-        <div class="eg">e.g. <b>cta-primary</b> (the action button) → uses <b>green-default</b></div>
+        <h5>Semantic tokens</h5>
+        <p>Each one is a <b>role</b>, not a shade — “foreground”, “primary action”, “destructive”, “muted”. Behind the scenes it points to a color, so you name <i>what the color is for</i>, never the hex code. These names come from the design system and are identical in React, Rails, Compose and SwiftUI.</p>
+        <div class="eg">e.g. <b>primary-cta</b> (the action button) → <b>#239F27</b> in light <i>and</i> dark</div>
       </div>
-      <p class="howto-why"><b>Why it works this way:</b> change the brand blue in one place and everything that says “use the brand color” updates at once — and dark mode just works, because every role already knows its light value <i>and</i> its dark value. No one has to hunt down hex codes.</p>
+      <p class="howto-why"><b>Why it works this way:</b> change the brand blue in one place and everything that says “use the brand color” updates at once — and dark mode just works, because every role already knows its light value <i>and</i> its dark value. No one has to hunt down hex codes. The single source is <b>packages/tokens/tokens.json</b>, generated from Figma; every platform reads from it.</p>
     </div>
 
-    <div class="fam-label"><h4>Primitives</h4><span>Click to copy</span></div>
+    <div class="fam-label"><h4>Base palette</h4><span>135 colours · 13 families · click any step to copy</span></div>
+    <p style="font-size:13px;color:var(--text-secondary);margin:0 0 var(--s2);max-width:78ch">The Figma collection <b>“1. TailwindCSS”</b>. Named the Tailwind way — <code>tailwind colors/&lt;family&gt;/&lt;step&gt;</code>, eleven steps from 50 to 950, with <b>★</b> marking each family's main step — but the values are Worldpackers', not Tailwind's stock ones. Only <b>amber</b>, <b>purple</b> and <b>neutral</b> are stock Tailwind, step for step; the other ten are Worldpackers'. The collection is <b>single-mode</b>: one value per step, and dark mode reuses it — which is why there is a separate <b>neutral (dark mode)</b> ramp instead of a dark variant of <b>gray</b>.</p>
     <div id="primitives"></div>
 
-    <div class="fam-label"><h4>Gradients</h4><span>Hero moments &amp; brand atmosphere only</span></div>
-    <div class="grad-row reveal">
-      <div class="grad" style="background:var(--gradient-primary)">gradient-primary<small>#2547C0 → #158CBA</small></div>
-      <div class="grad" style="background:var(--gradient-secondary)">gradient-secondary<small>#1C6F8F → #32A9A9</small></div>
-    </div>
+    <div class="fam-label"><h4>Gradients</h4><span>paint styles · click to copy the CSS</span></div>
+    <p style="font-size:13px;color:var(--text-secondary);margin:0 0 var(--s3);max-width:78ch">Three styles, all <b>linear and vertical, top to bottom</b>, and every stop is a step of the base palette — no loose hex. They carry the brand on success and celebration screens, the Android splash, full headers and landing covers.</p>
+    <div class="grad-row reveal" id="gradients"></div>
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:var(--s3);max-width:78ch">In the dark theme the primary and the secondary collapse into the <b>same</b> pair — there is one dark gradient, not two.</p>
 
     <div class="fam-label"><h4>Semantic tokens</h4><span><svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg> Light / <svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg> Dark — flips with the theme toggle</span></div>
     <div id="semantic"></div>
 
     <div class="rules">
       <div class="rule"><div class="pill" style="background:var(--blue-default)">B</div><div><h5>Blue · #158CBA — Identity</h5><p>The brand color. Logo, links, focus, brand surfaces.</p></div></div>
-      <div class="rule"><div class="pill" style="background:var(--green-default)">A</div><div><h5>Green · #28B62C — Action</h5><p>Primary buttons and the single most important action.</p></div></div>
-      <div class="rule"><div class="pill" style="background:var(--grey-default-concrete)">N</div><div><h5>Concrete greys — Text &amp; surface</h5><p>Body text, borders, backgrounds. Calm and neutral.</p></div></div>
+      <div class="rule"><div class="pill" style="background:#239F27">A</div><div><h5>Green · #239F27 — Action</h5><p>Primary buttons and the single most important action. Production still ships <b>#28B62C</b> on web and Android and <b>#2BBE2D</b> on iOS — three greens, one role.</p></div></div>
+      <div class="rule"><div class="pill" style="background:#677581">N</div><div><h5>Neutrals — Text &amp; surface</h5><p>Body text <b>#4E5C66</b>, secondary text <b>#677581</b>, borders <b>#CFD6DB</b>, surfaces <b>#F5F7F8</b>.</p></div></div>
       <div class="rule"><div class="pill" style="background:var(--yellow-default);color:var(--grey-dark)">F</div><div><h5>Red / Yellow / Emerald — Feedback</h5><p>Error, warning, success &amp; data. Functional only.</p></div></div>
     </div>
+
   </div>
 </section>
 
@@ -468,20 +547,25 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
 <section id="type">
   <div class="wrap">
     <div class="eyebrow"><span class="num">04</span> Typography</div>
-    <h2 class="title">One voice in type: Source Sans Pro.</h2>
-    <p class="lead">A single, friendly, highly legible typeface across web, iOS and Android. Three weights do all the work: Light&nbsp;300, Regular&nbsp;400, Bold&nbsp;700.</p>
+    <h2 class="title">One voice in type: Source Sans 3.</h2>
+    <p class="lead">A single, friendly, highly legible typeface across web, iOS and Android. <b>Source Sans 3</b> is the canonical name — “Source Sans Pro” is the old release and appears only in legacy native code. Four weights carry the system.</p>
 
     <div class="weights stagger">
-      <div class="weight"><div class="big" style="font-weight:300">Aa</div><div class="lbl"><b>Light · 300</b><br/>Large display &amp; subtitles</div></div>
-      <div class="weight"><div class="big" style="font-weight:400">Aa</div><div class="lbl"><b>Regular · 400</b><br/>Body &amp; UI default</div></div>
-      <div class="weight"><div class="big" style="font-weight:700">Aa</div><div class="lbl"><b>Bold · 700</b><br/>Headings &amp; emphasis</div></div>
+      <div class="weight"><div class="big" style="font-weight:400">Aa</div><div class="lbl"><b>Regular · 400</b><br/>Body copy &amp; UI default</div></div>
+      <div class="weight"><div class="big" style="font-weight:500">Aa</div><div class="lbl"><b>Medium · 500</b><br/>Smallest heading, mobile step</div></div>
+      <div class="weight"><div class="big" style="font-weight:600">Aa</div><div class="lbl"><b>SemiBold · 600</b><br/>Headings &amp; subtitles</div></div>
+      <div class="weight"><div class="big" style="font-weight:700">Aa</div><div class="lbl"><b>Bold · 700</b><br/>Display headings</div></div>
     </div>
 
-    <div class="fam-label"><h4><span class="tag-badge">Web</span>&nbsp; Type scale</h4><span>size / line-height · from Foundation</span></div>
+    <div class="fam-label"><h4>Semantic scale</h4><span>class · mobile → @md 768px · weight</span></div>
+    <p style="font-size:13px;color:var(--text-secondary);margin:0 0 var(--s3);max-width:74ch">You do not pick a pixel size. You pick a <b>role</b> — <code>heading-lg</code>, <code>body-sm</code> — and the class carries its own responsive step. Same names in every platform.</p>
     <div class="specimen reveal" id="specimen"></div>
 
-    <div class="fam-label"><h4><span class="tag-badge m">Mobile</span>&nbsp; Type scale</h4><span>Foundation · mode “Mobile” · line-height 120%</span></div>
-    <div class="specimen reveal" id="specimen-m"></div>
+    <div class="fam-label"><h4>Subtitles</h4><span>SemiBold 600 · sits between heading and body</span></div>
+    <div class="specimen reveal" id="specimen-s"></div>
+
+    <div class="fam-label"><h4>Layout classes</h4><span>the rhythm that comes with the type</span></div>
+    <div class="metric" id="layout-classes"></div>
   </div>
 </section>
 
@@ -489,14 +573,14 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
 <section id="spacing">
   <div class="wrap">
     <div class="eyebrow"><span class="num">05</span> Spacing &amp; sizing</div>
-    <h2 class="title">A 5-point rhythm. One 5px radius.</h2>
-    <p class="lead">Web spacing is built on a <b>5px</b> base. Corner radius is a single value — <b>5px</b> — everywhere.</p>
+    <h2 class="title">A 4-point rhythm. A radius for every surface.</h2>
+    <p class="lead">Spacing is built on a <b>4px</b> base — every step is a multiple of it. Corner radius is no longer a single value: the system ships a <b>ten-step scale</b>, and 5px is not one of them.</p>
 
     <div class="split">
       <div class="plat web">
         <div class="plat-cols">
           <div>
-            <div class="fam-label"><h4><span class="tag-badge">Web</span>&nbsp; Spacing</h4><span>base 5px · tap to copy</span></div>
+            <div class="fam-label"><h4><span class="tag-badge">Web</span>&nbsp; Spacing</h4><span>base 4px · tap to copy</span></div>
             <div id="spacing-web"></div>
           </div>
           <div>
@@ -505,8 +589,9 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
             <div class="sizes-row" id="web-icons"></div>
             <div class="size-label">Avatar — px</div>
             <div class="sizes-row" id="web-avatars"></div>
-            <div class="fam-label" style="margin-top:var(--s8)"><h4>Corner radius</h4><span>single value</span></div>
-            <div class="radius-demo"><div class="box"></div><div style="color:var(--text-secondary);font-size:14px">radius · <b style="color:var(--text-primary)">5&nbsp;px</b><br/><span style="font-size:12px">used on every surface</span></div></div>
+            <div class="fam-label" style="margin-top:var(--s8)"><h4>Corner radius</h4><span>ten steps · tap to copy</span></div>
+            <div class="radius-scale" id="radius-scale"></div>
+            <p style="font-size:12px;color:var(--text-secondary);margin-top:var(--s3);max-width:44ch"><b style="color:var(--text-primary)">Buttons are the exception.</b> Every button variant, size and state is a full pill — <code>rounded-full</code> — not a step on this scale. Read the component, not the token.</p>
           </div>
         </div>
       </div>
@@ -533,22 +618,16 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
 <section id="icons">
   <div class="wrap">
     <div class="eyebrow"><span class="num">06</span> Iconography</div>
-    <h2 class="title">A custom icon language.</h2>
-    <p class="lead">Worldpackers ships a custom icon set (<b>324 glyphs</b>) for everything from work-exchange to hostels, meals and community — from the <b>04. Icons &amp; Assets</b> library. A representative selection below.</p>
+    <h2 class="title">One icon language: Tabler.</h2>
+    <p class="lead">The design system ships <b>Tabler 3.46.0</b> — <b>6,184 icons</b> (5,130 outline, 1,054 filled) across 41 categories, vendored into the repository so nothing is fetched at runtime. Outline is the default; filled is for selected and active states. A representative selection below.</p>
 
-    <div class="icon-sizes reveal">
-      <div class="s"><span class="wpi" style="font-size:12px">&#xE017;</span><figcaption>12</figcaption></div>
-      <div class="s"><span class="wpi" style="font-size:16px">&#xE017;</span><figcaption>16</figcaption></div>
-      <div class="s"><span class="wpi" style="font-size:20px">&#xE017;</span><figcaption>20</figcaption></div>
-      <div class="s"><span class="wpi" style="font-size:24px">&#xE017;</span><figcaption>24</figcaption></div>
-      <div class="s"><span class="wpi" style="font-size:32px">&#xE017;</span><figcaption>32</figcaption></div>
-      <div class="s"><span class="wpi" style="font-size:40px">&#xE017;</span><figcaption>40</figcaption></div>
-      <div class="s"><span class="wpi" style="font-size:48px">&#xE017;</span><figcaption>48</figcaption></div>
-      <div style="margin-left:auto;color:var(--text-secondary);font-size:14px;align-self:center">Single-color · 12 / 16 / 20 / 24 / 32 / 40 / 48 · uses <span style="font-weight:var(--w-bold);color:var(--text-primary)">icon</span> tokens</div>
-    </div>
+    <div class="icon-sizes reveal" id="icon-sizes"></div>
+    <p style="font-size:13px;color:var(--text-secondary);margin-top:var(--s4);max-width:74ch">Download the whole library below, or click any single icon to get its SVG. Drawn on a <b>24×24</b> grid with a <b>2px</b> stroke and round caps and joins. Single-colour: the stroke is <code>currentColor</code>, so an icon inherits the text colour of whatever it sits in — never hard-code a fill. Below 24px the stroke stays 2px; it is not scaled down.</p>
 
     <div class="icon-grid stagger" id="icon-grid" style="margin-top:var(--s6)"></div>
-    <a class="ds-source" href="https://www.figma.com/design/PK9WXf4tRrNk7GABwWMwf9/Assets---Externo?node-id=4377-281" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Open the full icon library in Figma</a>
+    <a class="ds-source primary" href="icons/tabler-icons-3.46.0-svg.zip" download><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>Download all 6,184 as SVG (2.7 MB .zip)</a>
+    <a class="ds-source" href="https://tabler.io/icons" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Browse all 6,184 icons</a>
+    <p style="font-size:12px;color:var(--text-secondary);margin-top:var(--s4);max-width:74ch">The legacy Worldpackers icon font is still shipped by the apps in production today. It is not part of the new system, and nothing new should be built with it.</p>
   </div>
 </section>
 
@@ -640,11 +719,13 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
   </div>
 </section>
 
+
+
 <footer class="foot">
   <div class="wrap">
     <div>
       <img src="logos/logo-horizontal-white-transparent.png" alt="Worldpackers"/>
-      <p>Brandbook — living document. Brand content from worldpackers.com · color &amp; type tokens from the Figma Foundation · icons from 04. Icons &amp; Assets.</p>
+      <p>Brandbook — living document. Brand content from worldpackers.com · base palette, gradients and semantic tokens read from the Figma file <b>Design System Worldpackers</b> · type scale and radius measured in the design system monorepo · icons from Tabler 3.46.0.<br/>Last updated 17 September 2026.</p>
     </div>
     <p class="big">Traveling changes people.<br/>People change the world.</p>
   </div>
@@ -670,52 +751,155 @@ function copy(t,el){
   toastTxt.textContent=t+' copied';toast.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>toast.classList.remove('show'),1500);
   if(el){document.querySelectorAll('.copied').forEach(s=>{s.classList.remove('copied');clearTimeout(s._ct);});el.classList.add('copied');el._ct=setTimeout(()=>el.classList.remove('copied'),1500);}
 }
+const CB='<span class="cbadge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Copied</span>';
 const TAG='<span class="copied-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Copied</span>';
 
+/* Paint styles do arquivo do DS (846TBAvKcegMbCmPcNb1En). Lineares, verticais, topo -> base. */
+const gradients=[
+  {name:'Gradient/brand-primary',stops:[['blue/700 (main)','#158CBA'],['indigo/700 (main)','#2547C0']],
+   note:'1:1 with production — iOS gradient-prim-*, KMP blueGradient, monolith $blue-gradient-first/last. The indigo family was created for this stop: #2547C0 had no home, and the WP blue ramp is cyan (hue 231 against the target’s 266).'},
+  {name:'Gradient/brand-secondary',stops:[['emerald/600 (main)','#32A9A9'],['blue/800','#0F6485']],
+   note:'Production runs #32A9A9 → #1C6F8F; blue/800 sits ΔE 4.5 from it. 100% token.'},
+  {name:'Gradient/brand-dark',stops:[['neutral (dark mode)/600','#525252'],['neutral (dark mode)/800','#262626']],
+   note:'The only dark gradient. Production runs #4E5C66 → #202124; neutral/600 sits ΔE 7.8 from the top — the cost of moving off the gray ramp is the blue cast of that grey.'}
+];
 const primitives=[
-  {name:'Blue',role:'Brand / identity',steps:[['extralight','#DFECF2'],['light','#7CB3C1'],['default','#158CBA'],['semidark','#1C6F8F'],['dark','#004363']]},
-  {name:'Green',role:'Action / CTA',steps:[['extralight','#DFF0D8'],['light','#6FC375'],['default','#28B62C'],['semidark','#379E3B'],['dark','#005E00']]},
-  {name:'Red',role:'Error',steps:[['extralight','#F2DEDE'],['light','#FC595E'],['default','#C73D31'],['semidark','#BF5669'],['dark','#660B0F']]},
-  {name:'Yellow',role:'Warning',steps:[['extralight','#FDF6E5'],['light','#F7D892'],['default','#FFC842'],['semidark','#F5A623'],['dark','#B37D00']]},
-  {name:'Emerald',role:'Support / data',steps:[['extralight','#BFF8F8'],['light','#6DDBDB'],['default','#32A9A9'],['semidark','#0F8A8A'],['dark','#005A5A']]},
-  {name:'Neutral',role:'Text & surfaces',steps:[['extralight','#F6F7F8'],['light','#D9D9D9'],['concrete','#718696'],['dark-concrete','#4E5C66'],['dark','#282B2F'],['ultradark','#202124']]}
+  {name:"blue",role:"Brand / identity",steps:[["50","#F1FAFD"],["100","#DFF3FB"],["200","#BFE8F8"],["300","#91D7F3"],["400","#63C6EE"],["500","#35B6E9"],["600","#18A1D8"],["700 (main)","#158CBA"],["800","#0F6485"],["900","#0A455C"],["950","#062937"]]},
+  {name:"green",role:"Action / CTA",steps:[["50","#F2FCF3"],["100","#E2F9E2"],["200","#C4F2C6"],["300","#9BE99D"],["400","#71E075"],["500","#47D74C"],["600","#28B62C"],["700 (main)","#239F27"],["800","#1B791E"],["900","#125415"],["950","#0B320C"]]},
+  {name:"indigo",role:"Brand gradient, second stop",steps:[["50","#F5F8FF"],["100","#E3ECFF"],["200","#C5D7FF"],["300","#9BB9FF"],["400","#749BFF"],["500","#537FFF"],["600","#3560ED"],["700 (main)","#2547C0"],["800","#19338A"],["900","#102361"],["950","#08143B"]]},
+  {name:"red",role:"Error / destructive",steps:[["50","#FCF3F3"],["100","#F8E4E2"],["200","#F1C9C6"],["300","#E7A39C"],["400","#DD7C73"],["500","#D3564A"],["600 (main)","#C73D31"],["700","#9C3026"],["800","#77241D"],["900","#521914"],["950","#310F0C"]]},
+  {name:"yellow",role:"Warning",steps:[["50","#FEF9F0"],["100","#FDF1DD"],["200","#FCE3BB"],["300","#F9CF8A"],["400","#F7BB59"],["500 (main)","#F5A623"],["600","#E5910B"],["700","#B97509"],["800","#8D5A07"],["900","#613E05"],["950","#3A2503"]]},
+  {name:"amber",role:"Rating star",steps:[["50","#FFFBEB"],["100","#FEF3C7"],["200","#FDE68A"],["300","#FCD34D"],["400","#FBBF24"],["500","#F59E0B"],["600","#D97706"],["700","#B45309"],["800","#92400E"],["900","#78350F"],["950","#451A03"]]},
+  {name:"emerald",role:"Support / data",steps:[["50","#F3FBFB"],["100","#E4F7F7"],["200","#C8EFEF"],["300","#A1E3E3"],["400","#79D7D7"],["500","#52CBCB"],["600 (main)","#32A9A9"],["700","#2D9595"],["800","#227272"],["900","#174F4F"],["950","#0E2F2F"]]},
+  {name:"rose",role:"Support / data",steps:[["50","#FDF2F5"],["100","#FAE0E7"],["200","#F5C2CE"],["300","#EE96AC"],["400","#E76A89"],["500 (main)","#E1476D"],["600","#CE224D"],["700","#A71B3E"],["800","#7F152F"],["900","#580E21"],["950","#350914"]]},
+  {name:"orange",role:"Support / data",steps:[["50","#FEF6F1"],["100","#FCE9DE"],["200","#FAD3BD"],["300","#F6B48E"],["400","#F2955F"],["500 (main)","#EF7C39"],["600","#DE5D12"],["700","#B34B0F"],["800","#89390B"],["900","#5E2708"],["950","#391805"]]},
+  {name:"purple",role:"Support / data",steps:[["50","#FAF5FF"],["100","#F3E8FF"],["200","#E9D5FF"],["300","#D8B4FE"],["400","#C084FC"],["500","#A855F7"],["600","#9333EA"],["700","#7E22CE"],["800","#6B21A8"],["900","#581C87"],["950","#3B0764"]]},
+  {name:"gray",role:"Text & surfaces \u2014 light theme",steps:[["50","#F5F7F8"],["100","#E8ECEF"],["200","#CFD6DB"],["300","#ABB6BE"],["400","#7E8C97"],["500","#677581"],["600","#4E5C66"],["700 (main)","#3F4A52"],["800","#2D353B"],["900","#1D2226"],["950","#121518"]]},
+  {name:"neutral (dark mode)",role:"The dark-theme ramp",steps:[["50","#FAFAFA"],["100","#F5F5F5"],["200","#E5E5E5"],["300","#D4D4D4"],["400","#A3A3A3"],["500","#737373"],["600","#525252"],["700","#404040"],["800","#262626"],["900","#171717"],["950","#0A0A0A"]]},
+  {name:"base",role:"\u26a0 \u201ctransparent\u201d is white @20%, not transparent",steps:[["white","#FFFFFF"],["black","#000000"],["transparent","#FFFFFF33"]]}
 ];
+/* Tokens semânticos — packages/ui/src/styles/tokens.css, :root e .dark.
+   Os mesmos nomes e os mesmos pares chegam ao Swift e ao Compose pelo mesmo gerador. */
 const semantic=[
-  {group:'Background',tokens:[['background-primary','#FFFFFF','#202124'],['background-secondary','#F6F7F8','#282B2F'],['background-elevated','#FFFFFF','#282B2F'],['background-support','#DFECF2','#282B2F']]},
-  {group:'Text',tokens:[['text-primary','#4E5C66','#FFFFFF'],['text-secondary','#718696','#F6F7F8'],['text-on','#FFFFFF','#FFFFFF']]},
-  {group:'CTA',tokens:[['cta-primary','#28B62C','#28B62C'],['cta-link','#158CBA','#158CBA'],['cta-error','#C73D31','#FC595E']]},
-  {group:'Brand',tokens:[['brand-primary','#158CBA','#158CBA'],['brand-secondary','#718696','#718696']]},
-  {group:'Border',tokens:[['border-default','#D9D9D9','#718696'],['border-focus','#7CB3C1','#7CB3C1']]},
-  {group:'Feedback',tokens:[['notice-text','#379E3B','#6FC375'],['warning-text','#F5A623','#F5A623'],['error-text','#BF5669','#BF5669']]}
+  {group:'Surface',tokens:[['background','#FFFFFF','#171717'],['card','#FFFFFF','#262626'],['popover','#FFFFFF','#262626'],['secondary','#F5F7F8','#262626'],['muted','#F5F7F8','#262626'],['accent','#F1FAFD','#062937'],['tooltip','#2D353B','#F5F5F5']]},
+  {group:'Text',tokens:[['foreground','#4E5C66','#FAFAFA'],['muted-foreground','#677581','#D4D4D4'],['card-foreground','#4E5C66','#FAFAFA'],['accent-foreground','#158CBA','#DFF3FB'],['primary-foreground','#FFFFFF','#FFFFFF'],['tooltip-foreground','#FFFFFF','#FFFFFF']]},
+  {group:'Action',tokens:[['primary','#158CBA','#158CBA'],['primary-cta','#239F27','#239F27'],['primary-cta-foreground','#FFFFFF','#FFFFFF'],['ring','#158CBA','#18A1D8']]},
+  {group:'Line',tokens:[['border','#CFD6DB','#404040'],['input','#CFD6DB','#404040'],['ring-offset','#FFFFFF','#171717']]},
+  {group:'Feedback',tokens:[['destructive','#C73D31','#C73D31'],['destructive-foreground','#FCF3F3','#FCF3F3'],['success-foreground','#239F27','#28B62C'],['warning-foreground','#F5A623','#F5A623'],['error-foreground','#C73D31','#D3564A']]},
+  {group:'Tag',tokens:[['tag-blue','#F1FAFD','#262626'],['tag-emerald','#F3FBFB','#262626'],['tag-rose','#FDF2F5','#262626']]},
+  {group:'Chart',tokens:[['chart-1','#158CBA','#35B6E9'],['chart-2','#32A9A9','#52CBCB'],['chart-3','#F5A623','#F7BB59'],['chart-4','#C73D31','#DD7C73'],['chart-5','#28B62C','#47D74C']]},
+  {group:'Sidebar',tokens:[['sidebar','#FFFFFF','#171717'],['sidebar-foreground','#4E5C66','#FAFAFA'],['sidebar-primary','#158CBA','#158CBA'],['sidebar-accent','#E8ECEF','#262626'],['sidebar-border','#CFD6DB','#404040']]}
 ];
-const typeWeb=[['Display 1','50 / 64',50,700],['Display 2','40 / 50',40,400],['H1','34 / 46',34,700],['H2','30 / 38',30,400],['H3','24 / 34',24,400],['H4','18 / 24',18,400],['H5','16 / 20',16,400],['Body Huge','24 / 36',24,300],['Body Large','18 / 26',18,300],['Body','16 / 22',16,300],['Body Small','14 / 20',14,300]];
-const typeMob=[['H1','24',24,700],['H2','20',20,400],['H3','17',17,700],['H4','17',17,400],['H5','15',15,400],['H6','12',12,400],['Body','17',17,300],['Small Body','15',15,300],['Caption','12',12,300]];
-const spacingWeb=[['spacing-xs',5],['spacing-sm',10],['spacing-sm+',15],['spacing-md',20],['spacing-lg',30],['spacing-xl',40]];
-const icons=[['work-exchange',0x21],['community',0x35],['hostel',0xE017],['eco',0x2E],['earth',0x2D],['beach',0x76],['hiking',0xE00F],['hands-on',0xE008],['farm',0x5B],['family',0x40],['cooking',0x38],['meals',0xE03A],['breakfast',0x42],['courses',0x39],['language-classes',0xE023],['bike',0x41],['backpack',0x6B],['bed',0x78],['calendar',0x44],['chat',0x4D],['check',0x4E],['heart',0xE00C],['help',0xE00E],['gift',0xE004],['money',0xE03F],['location',0xE030],['instagram',0xE01E],['facebook',0x3D]];
+/* Escala semântica: [classe, mobile px/lh, @md px/lh, peso mobile, peso @md, px de amostra] */
+const typeScale=[
+  ['heading-4xl','40 / 46','48 / 52',700,700,44],
+  ['heading-3xl','36 / 40','40 / 46',700,700,38],
+  ['heading-2xl','30 / 36','36 / 36',700,700,33],
+  ['heading-xl','24 / 32','30 / 36',600,600,27],
+  ['heading-lg','20 / 28','24 / 32',600,600,24],
+  ['heading-md','18 / 28','20 / 28',600,600,20],
+  ['heading-sm','16 / 24','18 / 28',600,600,18],
+  ['heading-xs','14 / 20','16 / 24',500,600,16],
+  ['body-lg','20 / 28','24 / 32',400,400,24],
+  ['body-md','18 / 28','—',400,400,18],
+  ['body-sm','16 / 24','—',400,400,16],
+  ['body-xs','14 / 20','—',400,400,14]
+];
+const typeSub=[
+  ['subtitle-xl','24 / 32','30 / 36',600,600,27],
+  ['subtitle-lg','20 / 28','24 / 32',600,600,24],
+  ['subtitle-md','18 / 28','—',600,600,18],
+  ['subtitle-sm','16 / 24','—',600,600,16],
+  ['subtitle-xs','14 / 20','—',600,600,14]
+];
+const layoutClasses=[
+  ['container-padding-x','16 → 24 px'],['section-padding-y','64 → 96 px'],
+  ['section-title-gap-sm','16 px'],['section-title-gap-md','16 → 20 px'],
+  ['section-title-gap-lg','16 → 20 px'],['section-title-gap-xl','20 → 24 px'],
+  ['breakpoint md','768 px'],['tracking','normal, on every class']
+];
+const spacingWeb=[['1',4],['2',8],['3',12],['4',16],['5',20],['6',24],['8',32],['10',40],['12',48],['16',64]];
+const radiusScale=[['none',0],['xs',2],['sm',6],['md',8],['lg',10],['xl',14],['2xl',18],['3xl',22],['4xl',26],['full',9999]];
+const icons=[
+  ["work exchange","briefcase","<path d=\"M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9\" /> <path d=\"M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2\" /> <path d=\"M12 12l0 .01\" /> <path d=\"M3 13a20 20 0 0 0 18 0\" />"],
+  ["community","users","<path d=\"M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" /> <path d=\"M21 21v-2a4 4 0 0 0 -3 -3.85\" />"],
+  ["hostel","building-community","<path d=\"M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8\" /> <path d=\"M13 7l0 .01\" /> <path d=\"M17 7l0 .01\" /> <path d=\"M17 11l0 .01\" /> <path d=\"M17 15l0 .01\" />"],
+  ["eco","leaf","<path d=\"M5 21c.5 -4.5 2.5 -8 7 -10\" /> <path d=\"M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3l.014 0\" />"],
+  ["world","world","<path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M3.6 9h16.8\" /> <path d=\"M3.6 15h16.8\" /> <path d=\"M11.5 3a17 17 0 0 0 0 18\" /> <path d=\"M12.5 3a17 17 0 0 1 0 18\" />"],
+  ["beach","beach","<path d=\"M17.553 16.75a7.5 7.5 0 0 0 -10.606 0\" /> <path d=\"M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196\" /> <path d=\"M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196\" /> <path d=\"M15 9l-3 5.196\" /> <path d=\"M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 1 .25\" />"],
+  ["hiking","mountain","<path d=\"M3 20h18l-6.921 -14.612a2.3 2.3 0 0 0 -4.158 0l-6.921 14.612\" /> <path d=\"M7.5 11l2 2.5l2.5 -2.5l2 3l2.5 -2\" />"],
+  ["hands-on","tools","<path d=\"M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4\" /> <path d=\"M14.5 5.5l4 4\" /> <path d=\"M12 8l-5 -5l-4 4l5 5\" /> <path d=\"M7 8l-1.5 1.5\" /> <path d=\"M16 12l5 5l-4 4l-5 -5\" /> <path d=\"M16 17l-1.5 1.5\" />"],
+  ["farm","plant-2","<path d=\"M2 9a10 10 0 1 0 20 0\" /> <path d=\"M12 19a10 10 0 0 1 10 -10\" /> <path d=\"M2 9a10 10 0 0 1 10 10\" /> <path d=\"M12 4a9.7 9.7 0 0 1 2.99 7.5\" /> <path d=\"M9.01 11.5a9.7 9.7 0 0 1 2.99 -7.5\" />"],
+  ["home","home","<path d=\"M5 12l-2 0l9 -9l9 9l-2 0\" /> <path d=\"M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7\" /> <path d=\"M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6\" />"],
+  ["cooking","chef-hat","<path d=\"M12 3c1.918 0 3.52 1.35 3.91 3.151a4 4 0 0 1 2.09 7.723l0 7.126h-12v-7.126a4 4 0 1 1 2.092 -7.723a4 4 0 0 1 3.908 -3.151\" /> <path d=\"M6.161 17.009l11.839 -.009\" />"],
+  ["meals","tools-kitchen-2","<path d=\"M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12m0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3\" />"],
+  ["breakfast","coffee","<path d=\"M3 14c.83 .642 2.077 1.017 3.5 1c1.423 .017 2.67 -.358 3.5 -1c.83 -.642 2.077 -1.017 3.5 -1c1.423 -.017 2.67 .358 3.5 1\" /> <path d=\"M8 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2\" /> <path d=\"M12 3a2.4 2.4 0 0 0 -1 2a2.4 2.4 0 0 0 1 2\" /> <path d=\"M3 10h14v5a6 6 0 0 1 -6 6h-2a6 6 0 0 1 -6 -6v-5\" /> <path d=\"M16.746 16.726a3 3 0 1 0 .252 -5.555\" />"],
+  ["courses","school","<path d=\"M22 9l-10 -4l-10 4l10 4l10 -4v6\" /> <path d=\"M6 10.6v5.4a6 3 0 0 0 12 0v-5.4\" />"],
+  ["languages","language","<path d=\"M9 6.371c0 4.418 -2.239 6.629 -5 6.629\" /> <path d=\"M4 6.371h7\" /> <path d=\"M5 9c0 2.144 2.252 3.908 6 4\" /> <path d=\"M12 20l4 -9l4 9\" /> <path d=\"M19.1 18h-6.2\" /> <path d=\"M6.694 3l.793 .582\" />"],
+  ["bike","bike","<path d=\"M2 18a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M16 18a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M12 19v-4l-3 -3l5 -4l2 3h3\" /> <path d=\"M13.007 5a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" />"],
+  ["backpack","backpack","<path d=\"M5 18v-6a6 6 0 0 1 6 -6h2a6 6 0 0 1 6 6v6a3 3 0 0 1 -3 3h-8a3 3 0 0 1 -3 -3\" /> <path d=\"M10 6v-1a2 2 0 1 1 4 0v1\" /> <path d=\"M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4\" /> <path d=\"M11 10h2\" />"],
+  ["bed","bed","<path d=\"M5 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" /> <path d=\"M22 17v-3h-20\" /> <path d=\"M2 8v9\" /> <path d=\"M12 14h10v-2a3 3 0 0 0 -3 -3h-7v5\" />"],
+  ["calendar","calendar-event","<path d=\"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12\" /> <path d=\"M16 3l0 4\" /> <path d=\"M8 3l0 4\" /> <path d=\"M4 11l16 0\" /> <path d=\"M8 15h2v2h-2l0 -2\" />"],
+  ["chat","message-circle","<path d=\"M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1\" />"],
+  ["check","check","<path d=\"M5 12l5 5l10 -10\" />"],
+  ["heart","heart","<path d=\"M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" />"],
+  ["help","help-circle","<path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" /> <path d=\"M12 16v.01\" /> <path d=\"M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483\" />"],
+  ["gift","gift","<path d=\"M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2\" /> <path d=\"M12 8l0 13\" /> <path d=\"M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7\" /> <path d=\"M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5\" />"],
+  ["money","coin","<path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\" /> <path d=\"M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1\" /> <path d=\"M12 7v10\" />"],
+  ["location","map-pin","<path d=\"M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0\" />"],
+  ["instagram","brand-instagram","<path d=\"M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4l0 -8\" /> <path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M16.5 7.5v.01\" />"],
+  ["facebook","brand-facebook","<path d=\"M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3\" />"]
+];
 
-let ph='';primitives.forEach(f=>{ph+=`<div class="fam-label" style="margin-top:var(--s6)"><h4>${f.name}</h4><span>${f.role}</span></div><div class="palette">`;f.steps.forEach(([n,hex])=>{ph+=`<div class="swatch" onclick="copy('${hex}',this)" title="Copy ${hex}"><div class="chip" style="background:${hex}"></div><div class="meta"><div class="n">${f.name.toLowerCase()}-${n}</div><div class="h">${hex}<span class="copied-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>Copied</span></div></div></div>`;});ph+='</div>';});
+let ph='';primitives.forEach(f=>{
+  ph+=`<div class="fam-head"><h5>${f.name}</h5><span>${f.role}</span></div><div class="ramp">`;
+  f.steps.forEach(([st,hex])=>{
+    const main=st.includes('(main)'), num=st.replace(' (main)','');
+    ph+=`<button class="step${main?' is-main':''}" onclick="copy('${hex}',this)" title="tailwind colors/${f.name}/${st} — ${hex}"><span class="sw" style="background:${hex}"></span><b>${num}</b><i>${hex}</i>${CB}</button>`;
+  });
+  ph+='</div>';
+});
 document.getElementById('primitives').innerHTML=ph;
+
+document.getElementById('gradients').innerHTML=gradients.map(g=>{
+  const css=`linear-gradient(180deg, ${g.stops[0][1]} 0%, ${g.stops[1][1]} 100%)`;
+  return `<div class="grad-card"><div class="grad" style="background:${css}" onclick="copy('${css}',this)" title="Copy the CSS"><b>${g.name}</b><small>${g.stops.map(st=>st[0]+' · '+st[1]).join('  →  ')}</small>${CB}</div><p>${g.note}</p></div>`;
+}).join('');
 
 let sh='';semantic.forEach(g=>{sh+=`<div class="semantic-group"><h4>${g.group}</h4><div class="tok" style="border-bottom-width:2px"><div class="name"></div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg> Light</div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg> Dark</div></div>`;g.tokens.forEach(([n,l,d])=>{sh+=`<div class="tok"><div class="name copyable" onclick="copy('${n}',this)" title="Copy ${n}">${n}${TAG}</div><div class="cell copyable" onclick="copy('${l}',this)" title="Copy ${l}"><span class="dot" style="background:${l}"></span>${l}${TAG}</div><div class="cell copyable" onclick="copy('${d}',this)" title="Copy ${d}"><span class="dot" style="background:${d}"></span>${d}${TAG}</div></div>`;});sh+='</div>';});
 document.getElementById('semantic').innerHTML=sh;
 
-function spec(arr){return arr.map(([name,meta,px,wt])=>`<div class="spec-row copyable" onclick="copy('${px}px',this)" title="Copy ${px}px"><div class="meta"><b>${name}</b>${meta} px · ${wt===300?'Light':wt===700?'Bold':'Regular'}${TAG}</div><div class="sample" style="font-size:${Math.min(px,52)}px;font-weight:${wt}">Traveling changes people</div></div>`).join('');}
-document.getElementById('specimen').innerHTML=spec(typeWeb);
-document.getElementById('specimen-m').innerHTML=spec(typeMob);
+const WN={400:'Regular',500:'Medium',600:'SemiBold',700:'Bold'};
+function spec(arr){return arr.map(([cls,mob,desk,wm,wd,px])=>{
+  const w = wm===wd ? WN[wm] : `${WN[wm]} → ${WN[wd]}`;
+  const d = desk==='—' ? 'no step' : `@md ${desk}`;
+  return `<div class="spec-row copyable" onclick="copy('${cls}',this)" title="Copy ${cls}"><div class="meta"><b>${cls}</b>${mob} · ${d}<br/>${w}${TAG}</div><div class="sample" style="font-size:${px}px;font-weight:${wd}">Traveling changes people</div></div>`;}).join('');}
+document.getElementById('specimen').innerHTML=spec(typeScale);
+document.getElementById('specimen-s').innerHTML=spec(typeSub);
+document.getElementById('layout-classes').innerHTML=layoutClasses.map(([k,v])=>`<div class="row copyable" onclick="copy('${k}',this)" title="Copy ${k}"><span>${k}</span><span>${v}${TAG}</span></div>`).join('');
 
-let sw='';spacingWeb.forEach(([n,v])=>{sw+=`<div class="scale-row copyable" onclick="copy('${v}px',this)" title="Copy ${v}px"><div class="lbl">--${n} · ${v}px${TAG}</div><div class="bar" style="width:${v*2}px"></div></div>`;});
+let sw='';spacingWeb.forEach(([n,v])=>{sw+=`<div class="scale-row copyable" onclick="copy('${v}px',this)" title="Copy ${v}px"><div class="lbl">${n} · ${v}px${TAG}</div><div class="bar" style="width:${Math.max(v*2.6,12)}px"></div></div>`;});
 document.getElementById('spacing-web').innerHTML=sw;
+
+document.getElementById('radius-scale').innerHTML=radiusScale.map(([n,v])=>{
+  const shown = v===9999?'pill':v+'px';
+  return `<figure class="rr copyable" onclick="copy('${shown}',this)" title="Copy ${shown}" style="--rv:${v===9999?'27px':v+'px'}"><div class="b"></div><figcaption><b>${n}</b>${shown}</figcaption>${CB}</figure>`;}).join('');
 
 function sizeRow(arr,cls){return arr.map(n=>`<figure class="s copyable" onclick="copy('${n}px',this)" title="Copy ${n}px"><div class="${cls}" style="width:${n}px;height:${n}px"></div><figcaption>${n}</figcaption></figure>`).join('');}
 document.getElementById('web-icons').innerHTML=sizeRow([12,16,20,24,32,40,48],'ic');
 document.getElementById('web-avatars').innerHTML=sizeRow([20,40,60,80,100],'av');
 document.getElementById('mob-icons').innerHTML=sizeRow([12,16,24,32],'ic');
 document.getElementById('mob-avatars').innerHTML=sizeRow([28,36,45,60,80],'av');
-const mobileSpacing=[['nano','2 · 2'],['micro','4 · 5'],['small','8 · 10'],['default','16 · 20'],['large','24 · 30'],['huge','32 · 40'],['giant','48 · 50'],['screen pad','16 · 20']];
+const mobileSpacing=[['base unit','4 dp · 4 pt'],['scale','same as web'],['source','derived from the React layer'],['own mobile scale','none — by design']];
 document.getElementById('mobile-spacing').innerHTML=mobileSpacing.map(([k,v])=>`<div class="row copyable" onclick="copy('${v}',this)" title="Copy ${v}"><span>${k}</span><span>${v}${TAG}</span></div>`).join('');
 
-let ig='';icons.forEach(([n,c])=>{ig+=`<div class="ico"><span class="wpi">${String.fromCodePoint(c)}</span><span class="n">${n}</span></div>`;});
-document.getElementById('icon-grid').innerHTML=ig;
+const SVG=b=>`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${b}</svg>`;
+const DLB='<span class="dlbadge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</span>';
+document.getElementById('icon-grid').innerHTML=icons.map(([label,tabler,body])=>`<a class="ico" href="icons/${tabler}.svg" download title="Download ${tabler}.svg">${SVG(body)}<span class="n">${label}</span>${DLB}</a>`).join('');
+const CHECK=icons.find(i=>i[1]==='check')[2];
+document.getElementById('icon-sizes').innerHTML=[12,16,20,24,32,40,48].map(n=>`<figure class="s"><svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CHECK}</svg><figcaption>${n}</figcaption></figure>`).join('')+`<div style="margin-left:auto;color:var(--text-secondary);font-size:14px;align-self:center">Outline · 12 / 16 / 20 / 24 / 32 / 40 / 48 · stroke is <span style="font-weight:var(--w-semibold);color:var(--text-primary)">currentColor</span></div>`;
+
+
 
 const links=[...document.querySelectorAll('nav.sections a')];
 const navObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=links.find(x=>x.getAttribute('href')==='#'+e.target.id);if(a)a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
@@ -723,8 +907,85 @@ document.querySelectorAll('section[id]').forEach(s=>navObs.observe(s));
 /* consistência: todo filho direto de seção que ainda não anima recebe reveal */
 document.querySelectorAll('section:not(.hero) > .wrap > *').forEach(el=>{if(!el.classList.contains('reveal')&&!el.classList.contains('stagger'))el.classList.add('reveal');});
 document.querySelectorAll('.stagger').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--d',Math.min(i*70,560)+'ms'));});
-const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
+const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting||e.boundingClientRect.top<0){e.target.classList.add('in');revObs.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal,.stagger').forEach(el=>revObs.observe(el));
+/* Rede de segurança. O IntersectionObserver não dispara para quem passou INTEIRO
+   fora de vista — rolagem rápida, pulo por âncora, restauração de scroll, ou
+   simplesmente ir direto ao fim. Sem isso o elemento fica em opacity:0 para sempre
+   e o conteúdo aparece cortado. Varre o que já está acima da dobra e o libera. */
+function sweepReveal(){
+  document.querySelectorAll('.reveal:not(.in),.stagger:not(.in)').forEach(el=>{
+    if(el.getBoundingClientRect().top < innerHeight*0.92){el.classList.add('in');revObs.unobserve(el);}
+  });
+}
+let sweepT;
+addEventListener('scroll',()=>{clearTimeout(sweepT);sweepT=setTimeout(sweepReveal,90);},{passive:true});
+addEventListener('resize',sweepReveal,{passive:true});
+addEventListener('load',()=>{sweepReveal();setTimeout(sweepReveal,400);});
+sweepReveal();
+
+/* ---------- copiar em bloco ----------
+   Cada fam-label ganha um botão que leva o bloco inteiro para a área de transferência,
+   no formato em que o bloco é útil: CSS para tokens, lista para escalas e nomes. */
+const COPY_ICO='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>';
+const DONE_ICO='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+function copyAll(btn,label,text){
+  navigator.clipboard&&navigator.clipboard.writeText(text).catch(()=>{});
+  toastTxt.textContent=label+' copied';toast.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>toast.classList.remove('show'),1600);
+  btn.classList.add('copied');btn.innerHTML=DONE_ICO+'Copied';
+  clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=COPY_ICO+btn.dataset.lbl;},1600);
+}
+const norm=t=>t.replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim();
+function addCopyAll(headText,btnLabel,toastLabel,fn){
+  const lab=[...document.querySelectorAll('.fam-label')].find(l=>l.querySelector('h4')&&norm(l.querySelector('h4').textContent).startsWith(norm(headText)));
+  if(!lab)return;
+  const sp=document.createElement('span');sp.className='spacer';lab.insertBefore(sp,lab.children[1]||null);
+  const b=document.createElement('button');b.className='copy-all';b.dataset.lbl=btnLabel;b.innerHTML=COPY_ICO+btnLabel;
+  b.addEventListener('click',()=>copyAll(b,toastLabel,fn()));
+  lab.appendChild(b);
+}
+const pad=(k,w)=>k+' '.repeat(Math.max(1,w-k.length));
+
+addCopyAll('Base palette','Copy all 135','Base palette',()=>
+  primitives.map(f=>`# ${f.name} — ${f.role}\n`+f.steps.map(([k,h])=>`tailwind colors/${f.name}/${k}  ${h}`).join('\n')).join('\n\n'));
+addCopyAll('Gradients','Copy as CSS','Gradients',()=>
+  gradients.map(g=>`/* ${g.name} — ${g.stops.map(st=>st[0]).join(' -> ')} */\nlinear-gradient(180deg, ${g.stops[0][1]} 0%, ${g.stops[1][1]} 100%);`).join('\n\n'));
+
+addCopyAll('Semantic tokens','Copy as CSS','Semantic tokens',()=>{
+  const all=semantic.flatMap(g=>g.tokens);
+  const w=Math.max(...all.map(t=>t[0].length))+3;
+  return ':root {\n'+semantic.map(g=>`  /* ${g.group} */\n`+g.tokens.map(([k,l])=>`  ${pad('--'+k+':',w)}${l};`).join('\n')).join('\n')+
+  '\n}\n\n.dark {\n'+semantic.map(g=>`  /* ${g.group} */\n`+g.tokens.map(([k,,d])=>`  ${pad('--'+k+':',w)}${d};`).join('\n')).join('\n')+'\n}';
+});
+
+addCopyAll('Semantic scale','Copy scale','Type scale',()=>{
+  const w=Math.max(...typeScale.map(t=>t[0].length))+2;
+  return typeScale.map(([c,m,d,wm,wd])=>`${pad(c,w)}${pad(m,10)}${pad(d==='—'?'(no md step)':'@md '+d,16)}${wm===wd?WN[wm]:WN[wm]+' -> '+WN[wd]}`).join('\n');
+});
+addCopyAll('Subtitles','Copy scale','Subtitles',()=>{
+  const w=Math.max(...typeSub.map(t=>t[0].length))+2;
+  return typeSub.map(([c,m,d,wm,wd])=>`${pad(c,w)}${pad(m,10)}${pad(d==='—'?'(no md step)':'@md '+d,16)}${WN[wd]}`).join('\n');
+});
+addCopyAll('Layout classes','Copy all','Layout classes',()=>{
+  const w=Math.max(...layoutClasses.map(t=>t[0].length))+2;
+  return layoutClasses.map(([k,v])=>pad(k,w)+v).join('\n');});
+
+addCopyAll('Corner radius','Copy scale','Radius scale',()=>
+  radiusScale.map(([k,v])=>`--radius-${pad(k+':',7)}${v===9999?'9999px':(v/16)+'rem'}  /* ${v===9999?'pill':v+'px'} */`).join('\n')+
+  '\n\n/* Buttons are rounded-full in every variant, size and state. */');
+
+/* Spacing e ícones: os fam-labels trazem badge dentro do h4, então casam pelo prefixo do texto. */
+addCopyAll('Web Spacing','Copy scale','Spacing scale',()=>
+  spacingWeb.map(([k,v])=>`${pad(k,4)}${v}px`).join('\n'));
+
+(function(){
+  const grid=document.getElementById('icon-grid');
+  if(!grid)return;
+  const b=document.createElement('button');b.className='copy-all';b.dataset.lbl='Copy icon names';b.innerHTML=COPY_ICO+'Copy icon names';
+  b.style.margin='var(--s5) 0 0';
+  b.addEventListener('click',()=>copyAll(b,'Icon names',icons.map(i=>i[1]).join('\n')));
+  grid.parentNode.insertBefore(b,grid);
+})();
 </script>
 </body>
 </html>
