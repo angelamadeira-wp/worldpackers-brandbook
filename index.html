@@ -587,6 +587,11 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 /* minmax(0,1fr) + min-width:0: sem isso o min-content da célula (bolinha + hex + selo
    "Copied") empurra a tabela e a página ganha 13px de rolagem lateral a 390px. */
 .tok .cell{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);color:var(--muted-foreground);min-width:0;position:relative}
+.tok .val{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.tok .hex{font-family:var(--font-mono);font-size:var(--text-xs)}
+/* O nome da família vem do Figma como "neutral (dark mode)" — longo de propósito.
+   Deixa quebrar em vez de cortar: no mobile 19 dos 76 rótulos não cabiam numa linha. */
+.tok .prim{font-size:var(--text-xs);transform:scale(.92);transform-origin:left center;color:color-mix(in srgb,var(--muted-foreground) 70%,transparent);overflow-wrap:anywhere}
 /* Selo de "Copied" para os alvos gráficos (swatch, gradiente, ícone, raio),
    onde não cabe a tag inline usada nas linhas de token. Mesmo vocabulário visual. */
 .cbadge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:var(--spacing-1);
@@ -1213,7 +1218,17 @@ document.getElementById('gradients').innerHTML=gradients.map(g=>{
   return `<div class="grad-card"><div class="grad" style="background:${css}" onclick="copy('${css}',this)" title="Copy the CSS"><b>${g.name}</b><small>${g.stops.map(st=>st[0]+' · '+st[1]).join('  →  ')}</small>${CB}</div></div>`;
 }).join('');
 
-let sh='';semantic.forEach(g=>{sh+=`<div class="semantic-group"><h4>${g.group}</h4><div class="tok" style="border-bottom-width:2px"><div class="name"></div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg> Light</div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg> Dark</div></div>`;g.tokens.forEach(([n,l,d])=>{sh+=`<div class="tok"><div class="name copyable" onclick="copy('${n}',this)" title="Copy ${n}">${n}${TAG}</div><div class="cell copyable" onclick="copy('${l}',this)" title="Copy ${l}"><span class="dot" style="background:${l}"></span>${l}${TAG}</div><div class="cell copyable" onclick="copy('${d}',this)" title="Copy ${d}"><span class="dot" style="background:${d}"></span>${d}${TAG}</div></div>`;});sh+='</div>';});
+/* Mapa hex -> passo da paleta, montado do próprio array primitives: a tabela
+   semântica passa a dizer QUAL primitivo cada token referencia, em vez de só
+   o hex. Se a paleta mudar, o rótulo acompanha sozinho. */
+const SUN_S='<svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>';
+const MOON_S='<svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>';
+const PRIM_DE={};primitives.forEach(f=>f.steps.forEach(([k,h])=>{const nome=`${f.name}/${k.split(' ')[0]}`;if(!PRIM_DE[h.toUpperCase()])PRIM_DE[h.toUpperCase()]=nome;}));
+const primDe=h=>PRIM_DE[String(h).toUpperCase()]||'';
+const celula=v=>`<div class="cell copyable" onclick="copy('${v}',this)" title="Copy ${v}">`+
+  `<span class="dot" style="background:${v}"></span>`+
+  `<span class="val"><span class="hex">${v}</span><span class="prim">${primDe(v)}</span></span>${TAG}</div>`;
+let sh='';semantic.forEach(g=>{sh+=`<div class="semantic-group"><h4>${g.group}</h4><div class="tok" style="border-bottom-width:2px"><div class="name"></div><div class="mode-h">${SUN_S} Light</div><div class="mode-h">${MOON_S} Dark</div></div>`;g.tokens.forEach(([n,l,d])=>{sh+=`<div class="tok"><div class="name copyable" onclick="copy('${n}',this)" title="Copy ${n}">${n}${TAG}</div>`+celula(l)+celula(d)+`</div>`;});sh+='</div>';});
 document.getElementById('semantic').innerHTML=sh;
 
 const WN={400:'Regular',500:'Medium',600:'SemiBold',700:'Bold'};
