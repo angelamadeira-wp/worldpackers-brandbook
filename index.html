@@ -576,7 +576,6 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .swatch.copied .copied-tag{opacity:1;transform:none}
 .grad-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-4)}
 @media(max-width:860px){.grad-row{grid-template-columns:1fr}}
-.grad-card p{font-size:var(--text-xs);line-height:1.5;color:var(--muted-foreground);margin-top:9px}
 .grad{position:relative;overflow:hidden;height:120px;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--spacing-4);color:var(--white);font-weight:var(--font-weight-bold);cursor:pointer}
 .grad b{font-size:var(--text-sm)}
 .grad small{display:block;margin-top:6px;font-weight:var(--font-weight-normal);opacity:.92;font-size:var(--text-xs);letter-spacing:.01em}
@@ -1107,12 +1106,9 @@ const TAG='<span class="copied-tag"><svg width="12" height="12" viewBox="0 0 24 
 
 /* Paint styles do arquivo do DS (846TBAvKcegMbCmPcNb1En). Lineares, verticais, topo -> base. */
 const gradients=[
-  {name:'Gradient/brand-primary',stops:[['blue/700 (main)','#158CBA'],['indigo/700 (main)','#2547C0']],
-   note:'1:1 with production — iOS gradient-prim-*, KMP blueGradient, monolith $blue-gradient-first/last. The indigo family was created for this stop: #2547C0 had no home, and the WP blue ramp is cyan (hue 231 against the target’s 266).'},
-  {name:'Gradient/brand-secondary',stops:[['emerald/600 (main)','#32A9A9'],['blue/800','#0F6485']],
-   note:'Production runs #32A9A9 → #1C6F8F; blue/800 sits ΔE 4.5 from it. 100% token.'},
-  {name:'Gradient/brand-dark',stops:[['neutral (dark mode)/600','#525252'],['neutral (dark mode)/800','#262626']],
-   note:'The only dark gradient. Production runs #4E5C66 → #202124; neutral/600 sits ΔE 7.8 from the top — the cost of moving off the gray ramp is the blue cast of that grey.'}
+  {name:'Gradient/brand-primary',stops:[['blue/700 (main)','#158CBA'],['indigo/700 (main)','#2547C0']]},
+  {name:'Gradient/brand-secondary',stops:[['emerald/600 (main)','#32A9A9'],['blue/800','#0F6485']]},
+  {name:'Gradient/brand-dark',stops:[['neutral (dark mode)/600','#525252'],['neutral (dark mode)/800','#262626']]}
 ];
 const primitives=[
   {name:"blue",role:"Brand / identity",steps:[["50","#F1FAFD"],["100","#DFF3FB"],["200","#BFE8F8"],["300","#91D7F3"],["400","#63C6EE"],["500","#35B6E9"],["600","#18A1D8"],["700 (main)","#158CBA"],["800","#0F6485"],["900","#0A455C"],["950","#062937"]]},
@@ -1214,7 +1210,7 @@ document.getElementById('primitives').innerHTML=ph;
 
 document.getElementById('gradients').innerHTML=gradients.map(g=>{
   const css=`linear-gradient(180deg, ${g.stops[0][1]} 0%, ${g.stops[1][1]} 100%)`;
-  return `<div class="grad-card"><div class="grad" style="background:${css}" onclick="copy('${css}',this)" title="Copy the CSS"><b>${g.name}</b><small>${g.stops.map(st=>st[0]+' · '+st[1]).join('  →  ')}</small>${CB}</div><p>${g.note}</p></div>`;
+  return `<div class="grad-card"><div class="grad" style="background:${css}" onclick="copy('${css}',this)" title="Copy the CSS"><b>${g.name}</b><small>${g.stops.map(st=>st[0]+' · '+st[1]).join('  →  ')}</small>${CB}</div></div>`;
 }).join('');
 
 let sh='';semantic.forEach(g=>{sh+=`<div class="semantic-group"><h4>${g.group}</h4><div class="tok" style="border-bottom-width:2px"><div class="name"></div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg> Light</div><div class="mode-h"><svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg> Dark</div></div>`;g.tokens.forEach(([n,l,d])=>{sh+=`<div class="tok"><div class="name copyable" onclick="copy('${n}',this)" title="Copy ${n}">${n}${TAG}</div><div class="cell copyable" onclick="copy('${l}',this)" title="Copy ${l}"><span class="dot" style="background:${l}"></span>${l}${TAG}</div><div class="cell copyable" onclick="copy('${d}',this)" title="Copy ${d}"><span class="dot" style="background:${d}"></span>${d}${TAG}</div></div>`;});sh+='</div>';});
