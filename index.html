@@ -254,6 +254,9 @@
   --gradient-brand-dark:linear-gradient(180deg,var(--neutral-600) 0%,var(--neutral-800) 100%);
   /* Capa: superfície sob a foto + véu de marca a 70% para o texto ter contraste. */
   --cover-surface:var(--blue-900);
+  /* Rodapé é FAIXA DE MARCA: não acompanha o tema, senão no dark ele empata com
+     --background (#171717) e o bloco some. Fica azul profundo nos dois modos. */
+  --footer-surface:var(--blue-900);
   --scrim-from:color-mix(in srgb,var(--blue-700) 70%,transparent);
   --scrim-to:color-mix(in srgb,var(--indigo-700) 70%,transparent);
   --gradient-cover-scrim:linear-gradient(180deg,var(--scrim-from) 0%,var(--scrim-to) 100%);
@@ -737,7 +740,7 @@ code{font-family:var(--font-mono);font-size:var(--code-font-scale);background:va
 .phrase::before{content:"\201C";color:var(--primary)} .phrase::after{content:"\201D";color:var(--primary)}
 
 /* footer */
-footer.foot{background:var(--cover-surface);color:var(--white);border-top:none;padding:var(--spacing-16) 0}
+footer.foot{background:var(--footer-surface);color:var(--white);border-top:none;padding:var(--spacing-16) 0}
 footer.foot .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:var(--spacing-6)}
 footer.foot img{height:28px;margin-bottom:12px}
 footer.foot p{opacity:.78;font-size:var(--text-xs);max-width:52ch;line-height:1.5}
@@ -1071,7 +1074,7 @@ footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);op
   <div class="wrap">
     <div>
       <img src="logos/logo-wp-horizontal-white.svg" alt="Worldpackers"/>
-      <p>Brandbook — living document. Brand content from worldpackers.com · base palette, gradients and semantic tokens read from the Figma file <b>Design System Worldpackers</b> · type scale and radius measured in the design system monorepo · icons from Tabler 3.46.0.<br/>Last updated 17 September 2026.</p>
+      <p>Brandbook — living document. Brand content from worldpackers.com · base palette, gradients and semantic tokens read from the Figma file <b>Design System Worldpackers</b> · type scale and radius measured in the design system monorepo · icons from Tabler 3.46.0.<br/>Last updated 20 September 2026.</p>
     </div>
     <p class="big">Traveling changes people.<br/>People change the world.</p>
   </div>
@@ -1250,11 +1253,26 @@ document.getElementById('icon-sizes').innerHTML=[12,16,20,24,32,40,48].map(n=>`<
 const links=[...document.querySelectorAll('nav.sections a')];
 const navObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=links.find(x=>x.getAttribute('href')==='#'+e.target.id);if(a)a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
 document.querySelectorAll('section[id]').forEach(s=>navObs.observe(s));
-/* consistência: todo filho direto de seção que ainda não anima recebe reveal */
-document.querySelectorAll('section:not(.hero) > .wrap > *').forEach(el=>{if(!el.classList.contains('reveal')&&!el.classList.contains('stagger'))el.classList.add('reveal');});
+/* UMA gramática de entrada para a página inteira:
+   - bloco de texto ou peça única  -> .reveal   (entra inteiro)
+   - coleção (grid/flex, 3+ filhos) -> .stagger (os filhos entram em cascata)
+   Antes metade das grades entrava como bloco e a outra metade em cascata; era
+   isso que fazia a rolagem parecer irregular. */
+const wrapKids=[...document.querySelectorAll('section:not(.hero) > .wrap > *')];
+wrapKids.forEach(el=>{
+  if(el.classList.contains('reveal')||el.classList.contains('stagger'))return;
+  el.classList.add('reveal');
+});
+/* promove para cascata todo bloco de topo que na verdade é uma coleção */
+wrapKids.forEach(el=>{
+  if(el.classList.contains('stagger'))return;
+  const d=getComputedStyle(el).display;
+  if((d==='grid'||d==='flex')&&el.children.length>=3){el.classList.remove('reveal');el.classList.add('stagger');}
+});
 /* Um passo só de cascata para a página inteira, capa incluída. */
 const STAGGER_STEP=70, STAGGER_CAP=560;
-document.querySelectorAll('.stagger').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--d',Math.min(i*STAGGER_STEP,STAGGER_CAP)+'ms'));});
+const setDelays=g=>[...g.children].forEach((c,i)=>c.style.setProperty('--d',Math.min(i*STAGGER_STEP,STAGGER_CAP)+'ms'));
+document.querySelectorAll('.stagger').forEach(setDelays);
 /* A capa está acima da dobra: revela no load, não por interseção. */
 requestAnimationFrame(()=>document.querySelector('.hero .stagger')?.classList.add('in'));
 const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting||e.boundingClientRect.top<0){e.target.classList.add('in');revObs.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
