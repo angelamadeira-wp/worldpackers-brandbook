@@ -21,7 +21,14 @@
      3. escalas      — radius / text / leading / peso / sombra / blur / breakpoint
      4. chrome       — o que é da PÁGINA e não do DS, marcado como tal
 
-   Regra desta página: nenhum valor literal fora deste bloco.
+   Regra desta página, e o que ela NÃO promete:
+     · cor, tamanho de fonte, raio e duração não aparecem literais fora daqui — isso
+       é varrido e vale 0 ocorrências;
+     · largura, altura, line-height e letter-spacing AINDA são literais no corpo do
+       CSS (136 px, 11 line-heights, 13 letter-spacings). As escalas que os absorveriam
+       (--wpui-tracking-*, --leading-*, --blur-*) estão espelhadas aqui mas quase não
+       são consumidas. Não acredite que a página é token-clean: ela é token-clean nas
+       quatro primeiras coisas.
    ========================================================================= */
 
 /* ---------- 1. PRIMITIVOS ---------- */
@@ -393,6 +400,8 @@
   --t-fast:var(--motion-fast) var(--ease-standard);
   --t-base:var(--motion-base) var(--ease-standard);
   --t-slow:var(--motion-slow) var(--ease-standard);
+  /* altura da topbar: o menu mobile e o scroll-padding derivam dela */
+  --topbar-h:calc(var(--spacing) * 14);
   --reveal-shift:var(--spacing-6);
   /* <code> inline: escala relativa ao texto que o cerca — o DS não tem passo
      abaixo de --text-xs, e um chip de código não pode crescer dentro de um rótulo. */
@@ -401,7 +410,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--topbar-h) + var(--spacing-4))}
 body{font-family:var(--font-sans);font-weight:var(--font-weight-normal);color:var(--foreground);background:var(--background);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background var(--t-base),color var(--t-base)}
 a{color:var(--primary);text-decoration:none}
 img{max-width:100%;display:block}
@@ -419,7 +428,7 @@ h2.title{font-size:clamp(var(--text-2xl),4vw,var(--text-4xl));font-weight:var(--
 
 /* ---------- TOP NAV (subtle) ---------- */
 header.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--background) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
-.topbar .row{display:flex;align-items:center;gap:var(--spacing-5);height:56px}
+.topbar .row{display:flex;align-items:center;gap:var(--spacing-5);height:var(--topbar-h)}
 .brandmark{display:flex;align-items:center;gap:var(--spacing-3);flex:none}
 .brandmark img{height:22px;width:auto}
 .brandmark .logo-d{display:none}
@@ -464,8 +473,8 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 @media(max-width:960px){
   .menu-btn{display:grid}
   .toggle{margin-left:auto}
-  nav.sections{position:absolute;top:56px;left:0;right:0;margin:0;flex-direction:column;gap:0;background:var(--background);border-bottom:1px solid var(--border);box-shadow:var(--shadow-md);max-height:0;padding:0;overflow:hidden;transition:max-height var(--t-slow),padding var(--t-slow)}
-  nav.sections.open{max-height:calc(100vh - 56px);overflow:auto;padding:var(--spacing-2) 0}
+  nav.sections{position:absolute;top:var(--topbar-h);left:0;right:0;margin:0;flex-direction:column;gap:0;background:var(--background);border-bottom:1px solid var(--border);box-shadow:var(--shadow-md);max-height:0;padding:0;overflow:hidden;transition:max-height var(--t-slow),padding var(--t-slow)}
+  nav.sections.open{max-height:calc(100vh - var(--topbar-h));overflow:auto;padding:var(--spacing-2) 0}
   nav.sections a{padding:13px var(--spacing-6);font-size:var(--text-base);border-radius:var(--radius-none);width:100%}
   nav.sections a.active{background:var(--secondary)}
 }
@@ -483,15 +492,14 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 
 /* ---------- GRID / CARDS ---------- */
 .grid{display:grid;gap:var(--spacing-4)}
-.cols-2{grid-template-columns:repeat(2,1fr)} .cols-3{grid-template-columns:repeat(3,1fr)} .cols-4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:860px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr}}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.cols-4{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.cols-4{grid-template-columns:1fr}}
 .card{background:var(--card);border:none;border-radius:var(--radius-sm);padding:var(--spacing-6);box-shadow:var(--shadow-sm)}
 
 /* Mission / Vision / Model — label small, copy is the hero */
 .mvm{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-6)}
 @media(max-width:760px){.mvm{grid-template-columns:1fr}}
-.mvm .item{background:var(--card);border:none;border-radius:var(--radius-sm);padding:var(--spacing-6);box-shadow:var(--shadow-sm)}
 .mvm .k{font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:var(--spacing-3)}
 .mvm p{font-size:var(--text-base);line-height:1.55;color:var(--muted-foreground)}
 
@@ -502,7 +510,6 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .value-card p{color:var(--muted-foreground);font-size:var(--text-base)}
 
 /* ---------- LOGO ---------- */
-.logo-board{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4)}
 @media(max-width:760px){.logo-board{grid-template-columns:1fr}}
 .logo-matrix{display:grid;grid-template-columns:96px 1fr 200px;gap:var(--spacing-3);align-items:stretch;margin-top:var(--spacing-2)}
 @media(max-width:760px){.logo-matrix{grid-template-columns:1fr;gap:var(--spacing-2)}}
@@ -521,14 +528,7 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .logo-cell:hover .dl,.dl:focus-visible{opacity:1}
 .dl:hover{border-color:var(--primary);color:var(--primary)}
 @media(hover:none){.dl{opacity:1}}
-.files{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--spacing-3);margin-top:var(--spacing-2)}
-@media(max-width:760px){.files{grid-template-columns:1fr}}
-.file{display:block;border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-3) var(--spacing-4);transition:border-color var(--t-base)}
-.file:hover{border-color:var(--primary)}
-.file b{display:block;font-size:var(--text-sm);font-weight:var(--font-weight-semibold);color:var(--foreground)}
-.file span{display:block;font-size:var(--text-xs);color:var(--muted-foreground);margin-top:3px}
-.logo-cell.on-brand{background:var(--primary);border-color:transparent} .logo-cell.on-dark{background:var(--neutral-900);border-color:transparent} .logo-cell.on-photo{background:var(--gradient-brand-secondary);border-color:transparent}
-[data-theme="dark"] .logo-cell.on-dark{border-color:color-mix(in srgb,var(--white) 16%,transparent)}
+.logo-cell.on-brand{background:var(--primary);border-color:transparent}
 .logo-cell img{max-height:54px} .logo-cell.icon img{max-height:72px}
 .clearspace{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-5);align-items:center;margin-top:var(--spacing-6)}
 @media(max-width:700px){.clearspace{grid-template-columns:1fr}}
@@ -548,9 +548,6 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .ico{cursor:pointer}
 .ico.copied{border-color:var(--success-foreground);color:var(--success-foreground)}
 .ico.copied .n{color:var(--success-foreground)}
-.palette{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--spacing-2)}
-@media(max-width:860px){.palette{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.palette{grid-template-columns:repeat(2,1fr)}}
 .fam-head{display:flex;align-items:baseline;gap:var(--spacing-3);margin:var(--spacing-6) 0 7px}
 .fam-head h5{font-size:var(--text-sm);font-weight:var(--font-weight-bold);color:var(--foreground);font-variant-numeric:tabular-nums}
 .fam-head span{font-size:var(--text-xs);color:var(--muted-foreground)}
@@ -566,16 +563,8 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .ramp .step.is-main b::after{content:" ★";color:var(--primary);font-size:var(--text-xs);vertical-align:1px}
 .ramp .step.copied{border-color:var(--success-foreground)}
 .ramp .step.copied b{color:var(--success-foreground)}
-.swatch{cursor:pointer;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);background:var(--card);transition:transform var(--t-base)}
-.swatch:hover{transform:translateY(-3px)}
-.swatch .chip{height:70px}
-.swatch .meta{padding:var(--spacing-2) var(--spacing-2)}
-.swatch .meta .n{font-size:var(--text-xs);font-weight:var(--font-weight-bold);color:var(--foreground)}
-.swatch .meta .h{display:flex;align-items:center;flex-wrap:wrap;gap:var(--spacing-1);font-size:var(--text-xs);color:var(--muted-foreground);text-transform:uppercase}
-.swatch .copied-tag{display:inline-flex;align-items:center;gap:var(--spacing-1);color:var(--success-foreground);font-weight:var(--font-weight-bold);text-transform:none;opacity:0;transform:translateX(-3px);transition:opacity var(--t-fast),transform var(--t-fast)}
-.swatch.copied .copied-tag{opacity:1;transform:none}
-.grad-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-4)}
-@media(max-width:860px){.grad-row{grid-template-columns:1fr}}
+/* mesma grade de 3 colunas; os pontos de colapso seguem diferentes de propósito */
+.grad-row,@media(max-width:860px){.grad-row{grid-template-columns:1fr}}
 .grad{position:relative;overflow:hidden;height:120px;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--spacing-4);color:var(--white);font-weight:var(--font-weight-bold);cursor:pointer}
 .grad b{font-size:var(--text-sm)}
 .grad small{display:block;margin-top:6px;font-weight:var(--font-weight-normal);opacity:.92;font-size:var(--text-xs);letter-spacing:.01em}
@@ -631,22 +620,18 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .spec-row .meta{font-size:var(--text-xs);color:var(--muted-foreground)} .spec-row .meta b{display:block;color:var(--foreground);font-size:var(--text-sm);font-weight:var(--font-weight-bold)}
 .spec-row .sample{color:var(--foreground);line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:640px){.spec-row{grid-template-columns:1fr;gap:var(--spacing-2)}.spec-row .sample{white-space:normal}}
-.weights{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-4)}
 @media(max-width:640px){.weights{grid-template-columns:1fr}}
 .weight{border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-5)}
 .weight .big{font-size:var(--text-5xl);line-height:1;color:var(--foreground)} .weight .lbl{margin-top:var(--spacing-3);font-size:var(--text-xs);color:var(--muted-foreground)}
 
 /* ---------- SPACING / SIZES ---------- */
 .split{display:grid;grid-template-columns:1fr;gap:var(--spacing-12);align-items:start;margin-top:var(--spacing-6)}
-@media(max-width:820px){.split{grid-template-columns:1fr;gap:var(--spacing-12)}}
 .scale-row{display:flex;align-items:center;gap:var(--spacing-4);padding:var(--spacing-2) 0}
 .scale-row .bar{height:14px;background:var(--primary);border-radius:var(--radius-sm)}
 .scale-row .lbl{font-size:var(--text-xs);color:var(--muted-foreground);width:130px}
 .metric{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-2) var(--spacing-6);font-size:var(--text-sm);margin-top:var(--spacing-2)}
 .metric .row{display:flex;justify-content:space-between;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent);padding:var(--spacing-1) 0}
 .metric .row span:first-child{color:var(--muted-foreground)} .metric .row span:last-child{font-weight:var(--font-weight-bold)}
-.radius-demo{display:flex;gap:var(--spacing-5);align-items:flex-end;margin-top:var(--spacing-4)}
-.radius-demo .box{width:96px;height:72px;background:var(--accent);border:2px solid var(--primary);border-radius:var(--radius-sm)}
 .radius-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--spacing-3);margin-top:var(--spacing-4)}
 @media(max-width:560px){.radius-scale{grid-template-columns:repeat(3,1fr)}}
 .radius-scale .rr{position:relative;cursor:pointer;text-align:center}
@@ -703,7 +688,6 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
    o título é sempre --foreground e a descrição sempre --muted-foreground; só o
    ícone recebe o tom da variante. rounded-lg, px-3 py-2.5, text-sm, gap-0.5. */
 .dd{border-radius:var(--radius-lg);padding:calc(var(--spacing) * 2.5) var(--spacing-3);border:1px solid var(--success-foreground);background:var(--success);font-size:var(--text-sm);text-align:left}
-.dd.do{background:var(--success)}
 .dd .hd{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-base);font-weight:var(--font-weight-normal);margin-bottom:calc(var(--spacing) * 0.5);color:var(--foreground)}
 /* slot de ícone do Alert: o glifo é decorativo, sai do texto e vira ::before */
 .dd .hd::before{content:"✓";color:var(--success-foreground);font-weight:var(--font-weight-medium)}
@@ -742,9 +726,6 @@ code{font-family:var(--font-mono);font-size:var(--code-font-scale);background:va
 @media(max-width:700px){.voice-list{grid-template-columns:1fr}}
 .vp{border-left:3px solid var(--primary);padding:2px 0 2px var(--spacing-5)}
 .vp h5{font-size:var(--text-base);font-weight:var(--font-weight-bold)} .vp p{font-size:var(--text-sm);color:var(--muted-foreground);margin-top:4px}
-.phrases{display:flex;flex-wrap:wrap;gap:var(--spacing-2);margin-top:var(--spacing-6)}
-.phrase{background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-2) var(--spacing-4);font-size:var(--text-sm);font-weight:var(--font-weight-bold)}
-.phrase::before{content:"\201C";color:var(--primary)} .phrase::after{content:"\201D";color:var(--primary)}
 
 /* footer */
 footer.foot{background:var(--footer-surface);color:var(--white);border-top:none;padding:var(--spacing-16) 0}
@@ -801,9 +782,9 @@ footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);op
     <p class="lead">Worldpackers connects travelers who exchange their skills for accommodation with hosts all around the world. We make travel more accessible — and more meaningful — by turning every trip into a chance to learn, connect and give back.</p>
 
     <div class="mvm stagger">
-      <div class="item"><div class="k">Mission</div><p>Enable everyone to safely travel as a volunteer, have transformative experiences, and make a positive impact on the world.</p></div>
-      <div class="item"><div class="k">Vision</div><p>Foster the transformation of the world into a more socially &amp; environmentally sustainable place.</p></div>
-      <div class="item"><div class="k">Model</div><p>Skills for stay. A few hours of help a day in exchange for accommodation — and real cultural immersion.</p></div>
+      <div class="item card"><div class="k">Mission</div><p>Enable everyone to safely travel as a volunteer, have transformative experiences, and make a positive impact on the world.</p></div>
+      <div class="item card"><div class="k">Vision</div><p>Foster the transformation of the world into a more socially &amp; environmentally sustainable place.</p></div>
+      <div class="item card"><div class="k">Model</div><p>Skills for stay. A few hours of help a day in exchange for accommodation — and real cultural immersion.</p></div>
     </div>
 
     <div class="fam-label"><h4>Our values</h4><span>What we believe, in everything we build</span></div>
@@ -1090,8 +1071,19 @@ footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);op
 
 <script>
 const root=document.documentElement, tBtn=document.getElementById('themeToggle');
-const SUN='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>';
-const MOON='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>';
+/* Um lugar só para a geometria do Tabler que o chrome usa. Antes o mesmo path
+   aparecia até 5 vezes: trocar o set significava editar cada cópia à mão, e a
+   que escapasse ficava com o glifo velho sem ninguém ver. */
+const P={
+  check:'<path d="M5 12l5 5l10 -10" />',
+  sun:'<path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />',
+  moon:'<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" />',
+  download:'<path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" />',
+  copy:'<path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />'
+};
+const ico=(nome,n=24,cls='')=>`<svg${cls?` class="${cls}"`:''} width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[nome]}</svg>`;
+const SUN=ico('sun',19);
+const MOON=ico('moon',19);
 function applyTheme(t){root.setAttribute('data-theme',t);tBtn.innerHTML=t==='dark'?SUN:MOON;try{localStorage.setItem('wp-bb-theme',t)}catch(e){}}
 applyTheme((()=>{try{return localStorage.getItem('wp-bb-theme')}catch(e){return null}})()||'light');
 tBtn.addEventListener('click',()=>applyTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
@@ -1101,13 +1093,17 @@ menuBtn.addEventListener('click',()=>{const open=navEl.classList.toggle('open');
 navEl.addEventListener('click',e=>{if(e.target.closest('a')){navEl.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}});
 
 const toast=document.getElementById('toast'),toastTxt=toast.querySelector('span');let tT;
+/* só um alvo fica em .copied por vez — guardar o último evita varrer um documento
+   com centenas de células copiáveis a cada clique */
+let ultimoCopiado=null;
 function copy(t,el){
   navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{});
   toastTxt.textContent=t+' copied';toast.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>toast.classList.remove('show'),1500);
-  if(el){document.querySelectorAll('.copied').forEach(s=>{s.classList.remove('copied');clearTimeout(s._ct);});el.classList.add('copied');el._ct=setTimeout(()=>el.classList.remove('copied'),1500);}
+  if(el){if(ultimoCopiado&&ultimoCopiado!==el){ultimoCopiado.classList.remove('copied');clearTimeout(ultimoCopiado._ct);}
+    ultimoCopiado=el;el.classList.add('copied');clearTimeout(el._ct);el._ct=setTimeout(()=>el.classList.remove('copied'),1500);}
 }
-const CB='<span class="cbadge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10" /></svg>Copied</span>';
-const TAG='<span class="copied-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10" /></svg>Copied</span>';
+const CB='<span class="cbadge">'+ico('check',12)+'Copied</span>';
+const TAG='<span class="copied-tag">'+ico('check',12)+'Copied</span>';
 
 /* Paint styles do arquivo do DS (846TBAvKcegMbCmPcNb1En). Lineares, verticais, topo -> base. */
 const gradients=[
@@ -1221,8 +1217,8 @@ document.getElementById('gradients').innerHTML=gradients.map(g=>{
 /* Mapa hex -> passo da paleta, montado do próprio array primitives: a tabela
    semântica passa a dizer QUAL primitivo cada token referencia, em vez de só
    o hex. Se a paleta mudar, o rótulo acompanha sozinho. */
-const SUN_S='<svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>';
-const MOON_S='<svg class="ic-s" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg>';
+const SUN_S=ico('sun',12,'ic-s');
+const MOON_S=ico('moon',12,'ic-s');
 const PRIM_DE={};primitives.forEach(f=>f.steps.forEach(([k,h])=>{const nome=`${f.name}/${k.split(' ')[0]}`;if(!PRIM_DE[h.toUpperCase()])PRIM_DE[h.toUpperCase()]=nome;}));
 const primDe=h=>PRIM_DE[String(h).toUpperCase()]||'';
 const celula=v=>`<div class="cell copyable" onclick="copy('${v}',this)" title="Copy ${v}">`+
@@ -1256,7 +1252,7 @@ const mobileSpacing=[['base unit','4 dp · 4 pt'],['scale','same as web'],['sour
 document.getElementById('mobile-spacing').innerHTML=mobileSpacing.map(([k,v])=>`<div class="row copyable" onclick="copy('${v}',this)" title="Copy ${v}"><span>${k}</span><span>${v}${TAG}</span></div>`).join('');
 
 const SVG=b=>`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${b}</svg>`;
-const DLB='<span class="dlbadge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>SVG</span>';
+const DLB='<span class="dlbadge">'+ico('download',12)+'SVG</span>';
 document.getElementById('icon-grid').innerHTML=icons.map(([label,tabler,body])=>`<a class="ico" href="icons/${tabler}.svg" download title="Download ${tabler}.svg">${SVG(body)}<span class="n">${label}</span>${DLB}</a>`).join('');
 const CHECK=icons.find(i=>i[1]==='check')[2];
 document.getElementById('icon-sizes').innerHTML=[12,16,20,24,32,40,48].map(n=>`<figure class="s"><svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CHECK}</svg><figcaption>${n}</figcaption></figure>`).join('')+`<div style="margin-left:auto;color:var(--muted-foreground);font-size:var(--text-sm);align-self:center">Outline · 12 / 16 / 20 / 24 / 32 / 40 / 48 · stroke is <span style="font-weight:var(--font-weight-semibold);color:var(--foreground)">currentColor</span></div>`;
@@ -1301,15 +1297,15 @@ function sweepReveal(){
 }
 let sweepT;
 addEventListener('scroll',()=>{clearTimeout(sweepT);sweepT=setTimeout(sweepReveal,90);},{passive:true});
-addEventListener('resize',sweepReveal,{passive:true});
+addEventListener('resize',()=>{clearTimeout(sweepT);sweepT=setTimeout(sweepReveal,90);},{passive:true});
 addEventListener('load',()=>{sweepReveal();setTimeout(sweepReveal,400);});
 sweepReveal();
 
 /* ---------- copiar em bloco ----------
    Cada fam-label ganha um botão que leva o bloco inteiro para a área de transferência,
    no formato em que o bloco é útil: CSS para tokens, lista para escalas e nomes. */
-const COPY_ICO='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>';
-const DONE_ICO='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10" /></svg>';
+const COPY_ICO=ico('copy',12);
+const DONE_ICO=ico('check',12);
 function copyAll(btn,label,text){
   navigator.clipboard&&navigator.clipboard.writeText(text).catch(()=>{});
   toastTxt.textContent=label+' copied';toast.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>toast.classList.remove('show'),1600);
@@ -1317,8 +1313,10 @@ function copyAll(btn,label,text){
   clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=COPY_ICO+btn.dataset.lbl;},1600);
 }
 const norm=t=>t.replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim();
+/* um índice só, em vez de 7 varreduras do documento a cada addCopyAll */
+const ROTULOS=[...document.querySelectorAll('.fam-label')].map(l=>[l,norm((l.querySelector('h4')||{}).textContent||'')]);
 function addCopyAll(headText,btnLabel,toastLabel,fn){
-  const lab=[...document.querySelectorAll('.fam-label')].find(l=>l.querySelector('h4')&&norm(l.querySelector('h4').textContent).startsWith(norm(headText)));
+  const lab=(ROTULOS.find(([,t])=>t.startsWith(norm(headText)))||[])[0];
   if(!lab)return;
   const sp=document.createElement('span');sp.className='spacer';lab.insertBefore(sp,lab.children[1]||null);
   const b=document.createElement('button');b.className='btn btn-outline btn-sm copy-all';b.dataset.lbl=btnLabel;b.innerHTML=COPY_ICO+btnLabel;
