@@ -400,6 +400,10 @@
   --t-fast:var(--motion-fast) var(--ease-standard);
   --t-base:var(--motion-base) var(--ease-standard);
   --t-slow:var(--motion-slow) var(--ease-standard);
+  /* Breakpoints: CSS não interpola var() em @media, então os números aparecem
+     crus nas queries — mas são os --breakpoint-sm/md/lg do DS (640/768/1024) e
+     só eles. Antes eram 9 números próprios (520·560·640·700·760·820·860·900·960)
+     que o DS nunca ouviu falar. */
   /* altura da topbar: o menu mobile e o scroll-padding derivam dela */
   --topbar-h:calc(var(--spacing) * 14);
   --reveal-shift:var(--spacing-6);
@@ -470,7 +474,7 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 
 .menu-btn{display:none}
 /* mobile/tablet: nav vira menu dropdown via hambúrguer */
-@media(max-width:960px){
+@media(max-width:1024px){
   .menu-btn{display:grid}
   .toggle{margin-left:auto}
   nav.sections{position:absolute;top:var(--topbar-h);left:0;right:0;margin:0;flex-direction:column;gap:0;background:var(--background);border-bottom:1px solid var(--border);box-shadow:var(--shadow-md);max-height:0;padding:0;overflow:hidden;transition:max-height var(--t-slow),padding var(--t-slow)}
@@ -493,13 +497,13 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 /* ---------- GRID / CARDS ---------- */
 .grid{display:grid;gap:var(--spacing-4)}
 .cols-4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:860px){.cols-4{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.cols-4{grid-template-columns:1fr}}
+@media(max-width:1024px){.cols-4{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.cols-4{grid-template-columns:1fr}}
 .card{background:var(--card);border:none;border-radius:var(--radius-sm);padding:var(--spacing-6);box-shadow:var(--shadow-sm)}
 
 /* Mission / Vision / Model — label small, copy is the hero */
 .mvm{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-6)}
-@media(max-width:760px){.mvm{grid-template-columns:1fr}}
+@media(max-width:768px){.mvm{grid-template-columns:1fr}}
 .mvm .k{font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:var(--spacing-3)}
 .mvm p{font-size:var(--text-base);line-height:1.55;color:var(--muted-foreground)}
 
@@ -510,28 +514,31 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .value-card p{color:var(--muted-foreground);font-size:var(--text-base)}
 
 /* ---------- LOGO ---------- */
-@media(max-width:760px){.logo-board{grid-template-columns:1fr}}
+@media(max-width:768px){.logo-board{grid-template-columns:1fr}}
 .logo-matrix{display:grid;grid-template-columns:96px 1fr 200px;gap:var(--spacing-3);align-items:stretch;margin-top:var(--spacing-2)}
-@media(max-width:760px){.logo-matrix{grid-template-columns:1fr;gap:var(--spacing-2)}}
+@media(max-width:768px){.logo-matrix{grid-template-columns:1fr;gap:var(--spacing-2)}}
 .lm-row-label{display:flex;flex-direction:column;justify-content:center;font-size:var(--text-sm);font-weight:var(--font-weight-semibold);color:var(--foreground)}
 .lm-row-label span{font-size:var(--text-xs);font-weight:var(--font-weight-normal);color:var(--muted-foreground);margin-top:2px}
-@media(max-width:760px){.lm-row-label{flex-direction:row;gap:var(--spacing-2);align-items:baseline;margin-top:var(--spacing-4)}}
+@media(max-width:768px){.lm-row-label{flex-direction:row;gap:var(--spacing-2);align-items:baseline;margin-top:var(--spacing-4)}}
 .logo-matrix .logo-cell{min-height:118px;padding:var(--spacing-5)}
 .logo-matrix .logo-cell img{max-height:40px}
 .logo-matrix .logo-cell.icon img{max-height:56px}
 .logo-cell.on-grey{background:var(--gray-500);border-color:transparent}
 .logo-cell{position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-8);display:grid;place-items:center;min-height:150px}
-.dl{position:absolute;right:8px;bottom:8px;display:inline-flex;align-items:center;gap:var(--spacing-1);height:var(--spacing-6);padding:0 var(--spacing-2);
-  border-radius:var(--radius-full);border:1px solid var(--border);background:var(--card);
-  color:var(--muted-foreground);font-size:var(--text-xs);font-weight:var(--font-weight-semibold);letter-spacing:.03em;
-  opacity:0;transition:opacity var(--t-base),border-color var(--t-base),color var(--t-base)}
+/* .dl carrega btn/btn-outline/btn-xs no markup: aqui entra SÓ o que o Button
+   não tem — ancoragem no canto da célula e o revelar no hover. Antes esta regra
+   redeclarava altura, padding, raio, borda, fundo, cor, tamanho e peso, e
+   divergia em dois: peso 600 contra os 500 que a seção Botões documenta, e
+   --card contra o --background do .btn-outline. Um botão que finge seguir o
+   contrato e não segue é pior que um botão sem classe nenhuma. */
+.dl{position:absolute;right:var(--spacing-2);bottom:var(--spacing-2);letter-spacing:.03em;
+  opacity:0;transition:opacity var(--t-base),all var(--t-base)}
 .logo-cell:hover .dl,.dl:focus-visible{opacity:1}
-.dl:hover{border-color:var(--primary);color:var(--primary)}
 @media(hover:none){.dl{opacity:1}}
 .logo-cell.on-brand{background:var(--primary);border-color:transparent}
 .logo-cell img{max-height:54px} .logo-cell.icon img{max-height:72px}
 .clearspace{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-5);align-items:center;margin-top:var(--spacing-6)}
-@media(max-width:700px){.clearspace{grid-template-columns:1fr}}
+@media(max-width:768px){.clearspace{grid-template-columns:1fr}}
 .cs-visual{border:1px dashed var(--primary);border-radius:var(--radius-sm);padding:var(--spacing-10);display:grid;place-items:center;background:var(--secondary)}
 .cs-visual img{height:46px}
 .subhead{font-size:var(--text-base);font-weight:var(--font-weight-bold);margin-bottom:var(--spacing-2);color:var(--foreground)}
@@ -552,8 +559,8 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .fam-head h5{font-size:var(--text-sm);font-weight:var(--font-weight-bold);color:var(--foreground);font-variant-numeric:tabular-nums}
 .fam-head span{font-size:var(--text-xs);color:var(--muted-foreground)}
 .ramp{display:grid;grid-template-columns:repeat(11,1fr);gap:var(--spacing-1)}
-@media(max-width:900px){.ramp{grid-template-columns:repeat(6,1fr)}}
-@media(max-width:560px){.ramp{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1024px){.ramp{grid-template-columns:repeat(6,1fr)}}
+@media(max-width:640px){.ramp{grid-template-columns:repeat(3,1fr)}}
 .ramp .step{position:relative;appearance:none;border:1px solid var(--border);background:var(--card);border-radius:var(--radius-sm);padding:0 0 var(--spacing-2);cursor:pointer;font-family:var(--font-sans);text-align:center;overflow:hidden;transition:transform var(--t-base),border-color var(--t-base)}
 .ramp .step:hover{transform:translateY(-3px);border-color:var(--primary)}
 .ramp .step .sw{display:block;height:46px;border-bottom:1px solid color-mix(in srgb,var(--border) 55%,transparent)}
@@ -563,8 +570,9 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .ramp .step.is-main b::after{content:" ★";color:var(--primary);font-size:var(--text-xs);vertical-align:1px}
 .ramp .step.copied{border-color:var(--success-foreground)}
 .ramp .step.copied b{color:var(--success-foreground)}
-/* mesma grade de 3 colunas; os pontos de colapso seguem diferentes de propósito */
-.grad-row,@media(max-width:860px){.grad-row{grid-template-columns:1fr}}
+/* mesma grade de 3 colunas, um degrau de colapso cada */
+.grad-row,.weights{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-4)}
+@media(max-width:1024px){.grad-row{grid-template-columns:1fr}}
 .grad{position:relative;overflow:hidden;height:120px;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--spacing-4);color:var(--white);font-weight:var(--font-weight-bold);cursor:pointer}
 .grad b{font-size:var(--text-sm)}
 .grad small{display:block;margin-top:6px;font-weight:var(--font-weight-normal);opacity:.92;font-size:var(--text-xs);letter-spacing:.01em}
@@ -596,14 +604,14 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .tok .cell .copied-tag{position:absolute;right:0;top:50%;transform:translateY(-50%);margin:0;background:var(--card);padding-left:var(--spacing-1)}
 .tok .dot{width:22px;height:22px;border-radius:var(--radius-sm);border:1px solid var(--border);flex:none}
 .rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-4);margin-top:var(--spacing-8)}
-@media(max-width:700px){.rules{grid-template-columns:1fr}}
+@media(max-width:768px){.rules{grid-template-columns:1fr}}
 .rule{border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-5);display:flex;gap:var(--spacing-4);align-items:flex-start}
 .rule .pill{flex:none;width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--white);font-weight:var(--font-weight-bold)}
 .rule h5{font-size:var(--text-base);font-weight:var(--font-weight-bold);margin-bottom:4px} .rule p{font-size:var(--text-sm);color:var(--muted-foreground)}
 
 /* plain-language explainer (for non-designers) */
 .howto{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-4);margin:var(--spacing-6) 0 var(--spacing-8);background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-6)}
-@media(max-width:700px){.howto{grid-template-columns:1fr}}
+@media(max-width:768px){.howto{grid-template-columns:1fr}}
 .howto-card .step{display:inline-flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:var(--spacing-2)}
 .howto-card .step .no{width:20px;height:20px;border-radius:var(--radius-full);background:var(--primary);color:var(--primary-foreground);display:grid;place-items:center;font-size:var(--text-xs)}
 .howto-card h5{font-size:var(--text-base);font-weight:var(--font-weight-bold);color:var(--foreground);margin-bottom:6px}
@@ -633,7 +641,7 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .metric .row{display:flex;justify-content:space-between;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent);padding:var(--spacing-1) 0}
 .metric .row span:first-child{color:var(--muted-foreground)} .metric .row span:last-child{font-weight:var(--font-weight-bold)}
 .radius-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--spacing-3);margin-top:var(--spacing-4)}
-@media(max-width:560px){.radius-scale{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.radius-scale{grid-template-columns:repeat(3,1fr)}}
 .radius-scale .rr{position:relative;cursor:pointer;text-align:center}
 .radius-scale .rr .b{height:54px;background:var(--accent);border:2px solid var(--primary);border-bottom:none;border-radius:var(--rv) var(--rv) 0 0;transition:background var(--t-base)}
 .radius-scale .rr:hover .b{background:color-mix(in srgb,var(--primary) 18%,transparent)}
@@ -645,7 +653,7 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .sizes-row .ic{background:var(--accent);border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--primary)}
 .sizes-row figcaption{font-size:var(--text-xs);color:var(--muted-foreground);text-align:center;margin-top:6px}
 .plat-cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-10);align-items:start;margin-top:var(--spacing-4)}
-@media(max-width:760px){.plat-cols{grid-template-columns:1fr;gap:var(--spacing-8)}}
+@media(max-width:768px){.plat-cols{grid-template-columns:1fr;gap:var(--spacing-8)}}
 .size-label{color:var(--muted-foreground);font-size:var(--text-xs);margin:var(--spacing-5) 0 8px}
 .size-label:first-of-type{margin-top:var(--spacing-2)}
 /* web = azul (default) · mobile = verde */
@@ -656,8 +664,8 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 
 /* ---------- ICONS ---------- */
 .icon-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--spacing-2)}
-@media(max-width:860px){.icon-grid{grid-template-columns:repeat(5,1fr)}}
-@media(max-width:560px){.icon-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1024px){.icon-grid{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:640px){.icon-grid{grid-template-columns:repeat(3,1fr)}}
 .ico{position:relative;display:block;overflow:hidden;border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-4) var(--spacing-2) 26px;text-align:center;transition:border-color var(--t-base),color var(--t-base)}
 .dlbadge{position:absolute;left:0;right:0;bottom:0;height:22px;display:flex;align-items:center;justify-content:center;gap:var(--spacing-1);
   font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.08em;color:var(--muted-foreground);
@@ -680,7 +688,7 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 
 /* ---------- MASCOT ---------- */
 .mascot-hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--spacing-10);align-items:center;margin-top:var(--spacing-6)}
-@media(max-width:820px){.mascot-hero{grid-template-columns:1fr}}
+@media(max-width:768px){.mascot-hero{grid-template-columns:1fr}}
 .mascot-stage{background:var(--accent);border-radius:var(--radius-sm);padding:var(--spacing-10);display:grid;place-items:center;min-height:260px}
 .mascot-stage img{height:210px;filter:var(--drop-shadow-2xl)}
 /* ---------- CALLOUT — contrato do Alert do DS (packages/ui/src/components/alert.tsx,
@@ -694,36 +702,36 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .dd ul{list-style:none;display:grid;gap:var(--spacing-1)} .dd li{font-size:var(--text-sm);color:var(--muted-foreground);padding-left:var(--spacing-5);position:relative}
 .dd li::before{content:"✓";position:absolute;left:0;color:var(--success-foreground)}
 .emotions{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--spacing-4);margin-top:var(--spacing-8)}
-@media(max-width:820px){.emotions{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:520px){.emotions{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.emotions{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.emotions{grid-template-columns:repeat(2,1fr)}}
 .emotion{background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-4);text-align:center;transition:opacity var(--t-base),transform var(--t-base),background var(--t-base),border-color var(--t-base),color var(--t-base)}
 .emotion:hover{transform:translateY(-4px);border-color:var(--primary)}
 .emotion img{height:84px;margin:0 auto var(--spacing-2)} .emotion span{font-size:var(--text-xs);color:var(--muted-foreground)}
 
 /* ---------- ILLUSTRATION ---------- */
 .illus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--spacing-4)}
-@media(max-width:760px){.illus-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.illus-grid{grid-template-columns:repeat(2,1fr)}}
 .illus{background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-6);display:grid;place-items:center;min-height:150px}
 .illus img{height:96px}
 
 /* ---------- PHOTOGRAPHY ---------- */
 .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-8)}
-@media(max-width:820px){.photo-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.photo-grid{grid-template-columns:1fr}}
+@media(max-width:768px){.photo-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.photo-grid{grid-template-columns:1fr}}
 .photo{position:relative;border-radius:var(--radius-sm);overflow:hidden;background:var(--secondary)}
 .photo img{aspect-ratio:4/3;object-fit:cover;width:100%;image-orientation:from-image;transition:transform var(--t-slow)}
 .photo:hover img{transform:scale(1.05)}
 .photo .cap{position:absolute;left:0;right:0;bottom:0;padding:var(--spacing-5) var(--spacing-4) var(--spacing-3);background:linear-gradient(transparent,color-mix(in srgb,var(--black) 78%,transparent));color:var(--white)}
 .photo .cap b{display:block;font-size:var(--text-base);font-weight:var(--font-weight-bold)} .photo .cap span{font-size:var(--text-xs);opacity:.85}
 .dodont{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-5);margin-top:var(--spacing-6)}
-@media(max-width:700px){.dodont{grid-template-columns:1fr}}
+@media(max-width:768px){.dodont{grid-template-columns:1fr}}
 .dd.dont{background:var(--error);border-color:var(--error-foreground)} .dd.dont .hd::before{content:"✕";color:var(--error-foreground)} .dd.dont li::before{content:"✕";color:var(--error-foreground)}
 
 code{font-family:var(--font-mono);font-size:var(--code-font-scale);background:var(--secondary);padding:var(--code-padding-y) var(--spacing-1);border-radius:var(--radius-xs)}
 
 /* ---------- VOICE ---------- */
 .voice-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-6) var(--spacing-5);margin-top:var(--spacing-8)}
-@media(max-width:700px){.voice-list{grid-template-columns:1fr}}
+@media(max-width:768px){.voice-list{grid-template-columns:1fr}}
 .vp{border-left:3px solid var(--primary);padding:2px 0 2px var(--spacing-5)}
 .vp h5{font-size:var(--text-base);font-weight:var(--font-weight-bold)} .vp p{font-size:var(--text-sm);color:var(--muted-foreground);margin-top:4px}
 
@@ -1106,38 +1114,68 @@ const CB='<span class="cbadge">'+ico('check',12)+'Copied</span>';
 const TAG='<span class="copied-tag">'+ico('check',12)+'Copied</span>';
 
 /* Paint styles do arquivo do DS (846TBAvKcegMbCmPcNb1En). Lineares, verticais, topo -> base. */
+/* ---------- FONTE ÚNICA DA VERDADE ----------
+   Os valores desta página existiam duas vezes: como token no :root e como
+   literal nestas arrays. Batiam hoje e nada garantia que continuassem — e as
+   TABELAS que a página renderiza liam da cópia, não do token. Num brandbook
+   isso é o único modo de falha que importa.
+   Agora as arrays trazem só NOMES e o valor sai do CSS.
+   ⚠ Lê das REGRAS do stylesheet, não de getComputedStyle(:root): o root carrega
+   o tema que estiver ligado, então a coluna "light" sairia escura quando a
+   pessoa está no dark. A regra declarada não depende disso. */
+const REGRAS=(()=>{
+  // a camada de tokens são QUATRO blocos :root (primitivos, semânticos, escalas,
+  // chrome) — casar só o primeiro deixa rampas, raios e spacing de fora
+  const light={}, dark={};
+  const guarda=(alvo,estilo)=>{for(const p of estilo){if(p.startsWith('--')&&!(p in alvo))alvo[p]=estilo.getPropertyValue(p).trim();}};
+  for(const folha of document.styleSheets){
+    let regras; try{regras=folha.cssRules;}catch(e){continue;}
+    for(const r of regras){
+      if(r.type!==1)continue;
+      const sel=(r.selectorText||'').split(',').map(x=>x.trim());
+      if(sel.includes(':root')) guarda(light,r.style);
+      if(sel.some(x=>x.includes('[data-theme="dark"]'))) guarda(dark,r.style);
+    }
+  }
+  return {light,dark};
+})();
+const tokenLight=n=>REGRAS.light['--'+n]||'';
+const tokenDark =n=>REGRAS.dark['--'+n]||tokenLight(n);
+const hex=v=>{const t=String(v).trim();return t.startsWith('#')?t.toUpperCase():t;};
+const px=v=>{const t=String(v).trim();return t.endsWith('rem')?Math.round(parseFloat(t)*16):Math.round(parseFloat(t));};
+
 const gradients=[
-  {name:'Gradient/brand-primary',stops:[['blue/700 (main)','#158CBA'],['indigo/700 (main)','#2547C0']]},
-  {name:'Gradient/brand-secondary',stops:[['emerald/600 (main)','#32A9A9'],['blue/800','#0F6485']]},
-  {name:'Gradient/brand-dark',stops:[['neutral (dark mode)/600','#525252'],['neutral (dark mode)/800','#262626']]}
-];
+  {name:'Gradient/brand-primary',stops:[['blue/700 (main)','blue-700'],['indigo/700 (main)','indigo-700']]},
+  {name:'Gradient/brand-secondary',stops:[['emerald/600 (main)','emerald-600'],['blue/800','blue-800']]},
+  {name:'Gradient/brand-dark',stops:[['neutral (dark mode)/600','neutral-600'],['neutral (dark mode)/800','neutral-800']]}
+].map(g=>({name:g.name,stops:g.stops.map(([rotulo,tok])=>[rotulo,hex(tokenLight(tok))])}));
 const primitives=[
-  {name:"blue",role:"Brand / identity",steps:[["50","#F1FAFD"],["100","#DFF3FB"],["200","#BFE8F8"],["300","#91D7F3"],["400","#63C6EE"],["500","#35B6E9"],["600","#18A1D8"],["700 (main)","#158CBA"],["800","#0F6485"],["900","#0A455C"],["950","#062937"]]},
-  {name:"green",role:"Action / CTA",steps:[["50","#F2FCF3"],["100","#E2F9E2"],["200","#C4F2C6"],["300","#9BE99D"],["400","#71E075"],["500","#47D74C"],["600","#28B62C"],["700 (main)","#239F27"],["800","#1B791E"],["900","#125415"],["950","#0B320C"]]},
-  {name:"indigo",role:"Brand gradient, second stop",steps:[["50","#F5F8FF"],["100","#E3ECFF"],["200","#C5D7FF"],["300","#9BB9FF"],["400","#749BFF"],["500","#537FFF"],["600","#3560ED"],["700 (main)","#2547C0"],["800","#19338A"],["900","#102361"],["950","#08143B"]]},
-  {name:"red",role:"Error / destructive",steps:[["50","#FCF3F3"],["100","#F8E4E2"],["200","#F1C9C6"],["300","#E7A39C"],["400","#DD7C73"],["500","#D3564A"],["600 (main)","#C73D31"],["700","#9C3026"],["800","#77241D"],["900","#521914"],["950","#310F0C"]]},
-  {name:"yellow",role:"Warning",steps:[["50","#FEF9F0"],["100","#FDF1DD"],["200","#FCE3BB"],["300","#F9CF8A"],["400","#F7BB59"],["500 (main)","#F5A623"],["600","#E5910B"],["700","#B97509"],["800","#8D5A07"],["900","#613E05"],["950","#3A2503"]]},
-  {name:"amber",role:"Rating star",steps:[["50","#FFFBEB"],["100","#FEF3C7"],["200","#FDE68A"],["300","#FCD34D"],["400","#FBBF24"],["500","#F59E0B"],["600","#D97706"],["700","#B45309"],["800","#92400E"],["900","#78350F"],["950","#451A03"]]},
-  {name:"emerald",role:"Support / data",steps:[["50","#F3FBFB"],["100","#E4F7F7"],["200","#C8EFEF"],["300","#A1E3E3"],["400","#79D7D7"],["500","#52CBCB"],["600 (main)","#32A9A9"],["700","#2D9595"],["800","#227272"],["900","#174F4F"],["950","#0E2F2F"]]},
-  {name:"rose",role:"Support / data",steps:[["50","#FDF2F5"],["100","#FAE0E7"],["200","#F5C2CE"],["300","#EE96AC"],["400","#E76A89"],["500 (main)","#E1476D"],["600","#CE224D"],["700","#A71B3E"],["800","#7F152F"],["900","#580E21"],["950","#350914"]]},
-  {name:"orange",role:"Support / data",steps:[["50","#FEF6F1"],["100","#FCE9DE"],["200","#FAD3BD"],["300","#F6B48E"],["400","#F2955F"],["500 (main)","#EF7C39"],["600","#DE5D12"],["700","#B34B0F"],["800","#89390B"],["900","#5E2708"],["950","#391805"]]},
-  {name:"purple",role:"Support / data",steps:[["50","#FAF5FF"],["100","#F3E8FF"],["200","#E9D5FF"],["300","#D8B4FE"],["400","#C084FC"],["500","#A855F7"],["600","#9333EA"],["700","#7E22CE"],["800","#6B21A8"],["900","#581C87"],["950","#3B0764"]]},
-  {name:"gray",role:"Text & surfaces \u2014 light theme",steps:[["50","#F5F7F8"],["100","#E8ECEF"],["200","#CFD6DB"],["300","#ABB6BE"],["400","#7E8C97"],["500","#677581"],["600","#4E5C66"],["700 (main)","#3F4A52"],["800","#2D353B"],["900","#1D2226"],["950","#121518"]]},
-  {name:"neutral (dark mode)",role:"The dark-theme ramp",steps:[["50","#FAFAFA"],["100","#F5F5F5"],["200","#E5E5E5"],["300","#D4D4D4"],["400","#A3A3A3"],["500","#737373"],["600","#525252"],["700","#404040"],["800","#262626"],["900","#171717"],["950","#0A0A0A"]]},
-  {name:"base",role:"\u26a0 \u201ctransparent\u201d is white @20%, not transparent",steps:[["white","#FFFFFF"],["black","#000000"],["transparent","#FFFFFF33"]]}
-];
+  {name:"blue",role:"Brand / identity",varPrefix:"blue",steps:["50","100","200","300","400","500","600","700 (main)","800","900","950"]},
+  {name:"green",role:"Action / CTA",varPrefix:"green",steps:["50","100","200","300","400","500","600","700 (main)","800","900","950"]},
+  {name:"indigo",role:"Brand gradient, second stop",varPrefix:"indigo",steps:["50","100","200","300","400","500","600","700 (main)","800","900","950"]},
+  {name:"red",role:"Error / destructive",varPrefix:"red",steps:["50","100","200","300","400","500","600 (main)","700","800","900","950"]},
+  {name:"yellow",role:"Warning",varPrefix:"yellow",steps:["50","100","200","300","400","500 (main)","600","700","800","900","950"]},
+  {name:"amber",role:"Rating star",varPrefix:"amber",steps:["50","100","200","300","400","500","600","700","800","900","950"]},
+  {name:"emerald",role:"Support / data",varPrefix:"emerald",steps:["50","100","200","300","400","500","600 (main)","700","800","900","950"]},
+  {name:"rose",role:"Support / data",varPrefix:"rose",steps:["50","100","200","300","400","500 (main)","600","700","800","900","950"]},
+  {name:"orange",role:"Support / data",varPrefix:"orange",steps:["50","100","200","300","400","500 (main)","600","700","800","900","950"]},
+  {name:"purple",role:"Support / data",varPrefix:"purple",steps:["50","100","200","300","400","500","600","700","800","900","950"]},
+  {name:"gray",role:"Text & surfaces — light theme",varPrefix:"gray",steps:["50","100","200","300","400","500","600","700 (main)","800","900","950"]},
+  {name:"neutral (dark mode)",role:"The dark-theme ramp",varPrefix:"neutral",steps:["50","100","200","300","400","500","600","700","800","900","950"]},
+  {name:"base",role:"⚠ “transparent” is white @20%, not transparent",varPrefix:"",steps:["white","black","transparent"]}
+].map(f=>({...f,steps:f.steps.map(k=>[k,hex(tokenLight((f.varPrefix?f.varPrefix+"-":"")+k.split(" ")[0]))])}));
 /* Tokens semânticos — packages/ui/src/styles/tokens.css, :root e .dark.
    Os mesmos nomes e os mesmos pares chegam ao Swift e ao Compose pelo mesmo gerador. */
 const semantic=[
-  {group:'Surface',tokens:[['background','#FFFFFF','#171717'],['card','#FFFFFF','#262626'],['popover','#FFFFFF','#262626'],['secondary','#F5F7F8','#262626'],['muted','#F5F7F8','#262626'],['accent','#F1FAFD','#062937'],['tooltip','#2D353B','#F5F5F5']]},
-  {group:'Text',tokens:[['foreground','#4E5C66','#FAFAFA'],['muted-foreground','#677581','#D4D4D4'],['card-foreground','#4E5C66','#FAFAFA'],['accent-foreground','#158CBA','#DFF3FB'],['primary-foreground','#FFFFFF','#FFFFFF'],['tooltip-foreground','#FFFFFF','#FFFFFF']]},
-  {group:'Action',tokens:[['primary','#158CBA','#158CBA'],['primary-cta','#239F27','#239F27'],['primary-cta-foreground','#FFFFFF','#FFFFFF'],['ring','#158CBA','#18A1D8']]},
-  {group:'Line',tokens:[['border','#CFD6DB','#404040'],['input','#CFD6DB','#404040'],['ring-offset','#FFFFFF','#171717']]},
-  {group:'Feedback',tokens:[['destructive','#C73D31','#C73D31'],['destructive-foreground','#FCF3F3','#FCF3F3'],['success-foreground','#239F27','#28B62C'],['warning-foreground','#F5A623','#F5A623'],['error-foreground','#C73D31','#D3564A']]},
-  {group:'Tag',tokens:[['tag-blue','#F1FAFD','#262626'],['tag-emerald','#F3FBFB','#262626'],['tag-rose','#FDF2F5','#262626']]},
-  {group:'Chart',tokens:[['chart-1','#158CBA','#35B6E9'],['chart-2','#32A9A9','#52CBCB'],['chart-3','#F5A623','#F7BB59'],['chart-4','#C73D31','#DD7C73'],['chart-5','#28B62C','#47D74C']]},
-  {group:'Sidebar',tokens:[['sidebar','#FFFFFF','#171717'],['sidebar-foreground','#4E5C66','#FAFAFA'],['sidebar-primary','#158CBA','#158CBA'],['sidebar-accent','#E8ECEF','#262626'],['sidebar-border','#CFD6DB','#404040']]}
-];
+  {group:"Surface",tokens:["background","card","popover","secondary","muted","accent","tooltip"]},
+  {group:"Text",tokens:["foreground","muted-foreground","card-foreground","accent-foreground","primary-foreground","tooltip-foreground"]},
+  {group:"Action",tokens:["primary","primary-cta","primary-cta-foreground","ring"]},
+  {group:"Line",tokens:["border","input","ring-offset"]},
+  {group:"Feedback",tokens:["destructive","destructive-foreground","success-foreground","warning-foreground","error-foreground"]},
+  {group:"Tag",tokens:["tag-blue","tag-emerald","tag-rose"]},
+  {group:"Chart",tokens:["chart-1","chart-2","chart-3","chart-4","chart-5"]},
+  {group:"Sidebar",tokens:["sidebar","sidebar-foreground","sidebar-primary","sidebar-accent","sidebar-border"]}
+].map(g=>({group:g.group,tokens:g.tokens.map(n=>[n,hex(tokenLight(n)),hex(tokenDark(n))])}));
 /* Escala semântica: [classe, mobile px/lh, @md px/lh, peso mobile, peso @md, px de amostra] */
 const typeScale=[
   ['heading-4xl','40 / 46','48 / 52',700,700,44],
@@ -1166,8 +1204,8 @@ const layoutClasses=[
   ['section-title-gap-lg','16 → 20 px'],['section-title-gap-xl','20 → 24 px'],
   ['breakpoint md','768 px'],['tracking','normal, on every class']
 ];
-const spacingWeb=[['1',4],['2',8],['3',12],['4',16],['5',20],['6',24],['8',32],['10',40],['12',48],['16',64]];
-const radiusScale=[['none',0],['xs',2],['sm',6],['md',8],['lg',10],['xl',14],['2xl',18],['3xl',22],['4xl',26],['full',9999]];
+const spacingWeb=['1','2','3','4','5','6','8','10','12','16'].map(k=>[k,px(tokenLight('spacing-'+k))]);
+const radiusScale=['none','xs','sm','md','lg','xl','2xl','3xl','4xl','full'].map(k=>[k,px(tokenLight('radius-'+k))]);
 const icons=[
   ["work exchange","briefcase","<path d=\"M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9\" /> <path d=\"M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2\" /> <path d=\"M12 12l0 .01\" /> <path d=\"M3 13a20 20 0 0 0 18 0\" />"],
   ["community","users","<path d=\"M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" /> <path d=\"M21 21v-2a4 4 0 0 0 -3 -3.85\" />"],
