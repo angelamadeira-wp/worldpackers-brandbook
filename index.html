@@ -11,404 +11,745 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
 <style>
 /* =========================================================================
-   TOKENS — Figma Foundation (3lHP9jd6bsiUrd5BJIpMCP), Primitives + Semantic
-   (modes Light + Dark). Mirror of ds-tokens.css. Inlined = self-contained.
+   TOKENS — espelho LITERAL de packages/ui/src/styles/tokens.css
+   (worldpackers_design_system, main @ 9beb875, medido em 20/09/2026)
+   + a coleção "1. TailwindCSS" do Figma 846TBAvKcegMbCmPcNb1En (135 cores).
+
+   Três camadas, na ordem em que o DS as define:
+     1. primitivos   — as 13 rampas Tailwind, 11 passos cada
+     2. semânticos   — tokens.css :root (light) e .dark, valor por valor
+     3. escalas      — radius / text / leading / peso / sombra / blur / breakpoint
+     4. chrome       — o que é da PÁGINA e não do DS, marcado como tal
+
+   Regra desta página: nenhum valor literal fora deste bloco.
    ========================================================================= */
+
+/* ---------- 1. PRIMITIVOS ---------- */
 :root{
-  --blue-extralight:#DFECF2; --blue-light:#7CB3C1; --blue-default:#158CBA; --blue-semidark:#1C6F8F; --blue-dark:#004363;
-  --green-extralight:#DFF0D8; --green-light:#6FC375; --green-default:#28B62C; --green-semidark:#379E3B; --green-dark:#005E00;
-  --red-extralight:#F2DEDE; --red-light:#FC595E; --red-default:#C73D31; --red-semidark:#BF5669; --red-dark:#660B0F;
-  --yellow-extralight:#FDF6E5; --yellow-light:#F7D892; --yellow-default:#FFC842; --yellow-semidark:#F5A623; --yellow-dark:#B37D00;
-  --emerald-extralight:#BFF8F8; --emerald-light:#6DDBDB; --emerald-default:#32A9A9; --emerald-semidark:#0F8A8A; --emerald-dark:#005A5A;
-  --grey-extralight:#F6F7F8; --grey-light:#D9D9D9; --grey-default-concrete:#718696; --grey-semidark-dark-concrete:#4E5C66; --grey-dark:#282B2F; --grey-ultradark:#202124;
-  --white:#FFFFFF; --black:#000000;
-  --g-blue-1:#2547C0; --g-blue-2:#158CBA; --g-em-1:#1C6F8F; --g-em-2:#32A9A9; --g-dark-1:#202124; --g-dark-2:#4E5C66;
-  --gradient-primary:linear-gradient(135deg,var(--g-blue-1),var(--g-blue-2));
-  --gradient-secondary:linear-gradient(135deg,var(--g-em-1),var(--g-em-2));
-
-  --bg-primary:var(--white); --bg-secondary:var(--grey-extralight); --bg-elevated:var(--white);
-  --bg-support:var(--blue-extralight);
-  --text-primary:var(--grey-semidark-dark-concrete); --text-secondary:var(--grey-default-concrete); --text-on:var(--white);
-  --cta-primary:var(--green-default); --cta-link:var(--blue-default); --cta-error:var(--red-default);
-  --border-default:var(--grey-light); --border-focus:var(--blue-light);
-  --brand-primary:var(--blue-default); --brand-secondary:var(--grey-default-concrete);
-  --bg-highlight:var(--blue-default);
-  --cta-on:var(--white); --border-on:var(--white); --brand-on:var(--white);
-  --highlight-primary:var(--green-light); --highlight-secondary:var(--blue-default);
-  /* feedback */
-  --notice-background:var(--green-extralight); --notice-text:var(--green-semidark);
-  --warning-background:var(--yellow-extralight); --warning-text:var(--yellow-semidark);
-  --error-background:var(--red-extralight); --error-text:var(--red-semidark);
-  /* support (dataviz) */
-  --support-red:var(--red-light); --support-yellow:var(--yellow-default); --support-emerald:var(--emerald-default); --support-blue:var(--blue-semidark);
-  /* shadow */
-  --shadow-default:0 2px 8px rgba(217,217,217,.6); --shadow-md:0 4px 16px rgba(80,92,102,.12); --shadow-lg:0 12px 32px rgba(80,92,102,.18);
-  /* system (invert light/dark) */
-  --system-white:var(--white); --system-black:var(--black);
-  --gradient-dark:linear-gradient(135deg,var(--g-dark-1),var(--g-dark-2));
-  --grey-default:var(--grey-default-concrete); --grey-semidark:var(--grey-semidark-dark-concrete);
-  --section-spacing:60px;
-
-  --font:'Source Sans 3',system-ui,sans-serif;
-  --w-light:300; --w-regular:400; --w-medium:500; --w-semibold:600; --w-bold:700;
-  /* "Source Sans 3" é o nome canônico do DS novo (ADR 2026-08-06-003). Light 300 sobrevive
-     só no nativo legado — no DS novo o corpo é Regular 400. */
-  /* Escala do DS novo — packages/ui/src/styles/{typography,tokens}.css.
-     Os valores abaixo são o passo @md (768px+); o passo mobile vive na tabela da seção 04. */
-  --type-display-1:48px; --lh-display-1:52px;     /* heading-4xl @md — Bold 700 */
-  --type-display-2:40px; --lh-display-2:46px;     /* heading-3xl @md — Bold 700 */
-  --type-h1:36px; --lh-h1:40px;                   /* heading-2xl @md — Bold 700 */
-  --type-h2:30px; --lh-h2:36px;                   /* heading-xl @md — SemiBold 600 */
-  --type-h3:24px; --lh-h3:32px;                   /* heading-lg @md — SemiBold 600 */
-  --type-h4:20px; --lh-h4:28px;                   /* heading-md @md — SemiBold 600 */
-  --type-h5:18px; --lh-h5:28px;                   /* heading-sm @md — SemiBold 600 */
-  --type-body-huge:24px;  --lh-body-huge:32px;    /* body-lg @md — Regular 400 */
-  --type-body-large:18px; --lh-body-large:28px;   /* body-md — Regular 400 */
-  --type-body:16px;       --lh-body:24px;         /* body-sm — o corpo padrão */
-  --type-body-small:14px; --lh-body-small:20px;   /* body-xs */
-  --type-caption:12px;    --lh-caption:16px;      /* text-xs */
-  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;--s12:48px;--s16:64px;--s20:80px;--s24:96px;
-  /* Raio do DS novo: escala de 10 degraus. O valor único de 5px não existe mais.
-     O chrome desta página passa a usar o degrau mais usado nos componentes (rounded-sm). */
-  --r:6px;
-  --r-none:0px; --r-xs:2px; --r-sm:6px; --r-md:8px; --r-lg:10px; --r-xl:14px;
-  --r-2xl:18px; --r-3xl:22px; --r-4xl:26px; --r-full:9999px;
-  --transition:180ms ease; --maxw:1180px;
+  /* blue — Brand / identity */
+  --blue-50:#F1FAFD; --blue-100:#DFF3FB; --blue-200:#BFE8F8; --blue-300:#91D7F3; --blue-400:#63C6EE; --blue-500:#35B6E9; --blue-600:#18A1D8; --blue-700:#158CBA; --blue-800:#0F6485; --blue-900:#0A455C; --blue-950:#062937;
+  /* green — Action / CTA */
+  --green-50:#F2FCF3; --green-100:#E2F9E2; --green-200:#C4F2C6; --green-300:#9BE99D; --green-400:#71E075; --green-500:#47D74C; --green-600:#28B62C; --green-700:#239F27; --green-800:#1B791E; --green-900:#125415; --green-950:#0B320C;
+  /* indigo — Brand gradient, second stop */
+  --indigo-50:#F5F8FF; --indigo-100:#E3ECFF; --indigo-200:#C5D7FF; --indigo-300:#9BB9FF; --indigo-400:#749BFF; --indigo-500:#537FFF; --indigo-600:#3560ED; --indigo-700:#2547C0; --indigo-800:#19338A; --indigo-900:#102361; --indigo-950:#08143B;
+  /* red — Error / destructive */
+  --red-50:#FCF3F3; --red-100:#F8E4E2; --red-200:#F1C9C6; --red-300:#E7A39C; --red-400:#DD7C73; --red-500:#D3564A; --red-600:#C73D31; --red-700:#9C3026; --red-800:#77241D; --red-900:#521914; --red-950:#310F0C;
+  /* yellow — Warning */
+  --yellow-50:#FEF9F0; --yellow-100:#FDF1DD; --yellow-200:#FCE3BB; --yellow-300:#F9CF8A; --yellow-400:#F7BB59; --yellow-500:#F5A623; --yellow-600:#E5910B; --yellow-700:#B97509; --yellow-800:#8D5A07; --yellow-900:#613E05; --yellow-950:#3A2503;
+  /* amber — Rating star */
+  --amber-50:#FFFBEB; --amber-100:#FEF3C7; --amber-200:#FDE68A; --amber-300:#FCD34D; --amber-400:#FBBF24; --amber-500:#F59E0B; --amber-600:#D97706; --amber-700:#B45309; --amber-800:#92400E; --amber-900:#78350F; --amber-950:#451A03;
+  /* emerald — Support / data */
+  --emerald-50:#F3FBFB; --emerald-100:#E4F7F7; --emerald-200:#C8EFEF; --emerald-300:#A1E3E3; --emerald-400:#79D7D7; --emerald-500:#52CBCB; --emerald-600:#32A9A9; --emerald-700:#2D9595; --emerald-800:#227272; --emerald-900:#174F4F; --emerald-950:#0E2F2F;
+  /* rose — Support / data */
+  --rose-50:#FDF2F5; --rose-100:#FAE0E7; --rose-200:#F5C2CE; --rose-300:#EE96AC; --rose-400:#E76A89; --rose-500:#E1476D; --rose-600:#CE224D; --rose-700:#A71B3E; --rose-800:#7F152F; --rose-900:#580E21; --rose-950:#350914;
+  /* orange — Support / data */
+  --orange-50:#FEF6F1; --orange-100:#FCE9DE; --orange-200:#FAD3BD; --orange-300:#F6B48E; --orange-400:#F2955F; --orange-500:#EF7C39; --orange-600:#DE5D12; --orange-700:#B34B0F; --orange-800:#89390B; --orange-900:#5E2708; --orange-950:#391805;
+  /* purple — Support / data */
+  --purple-50:#FAF5FF; --purple-100:#F3E8FF; --purple-200:#E9D5FF; --purple-300:#D8B4FE; --purple-400:#C084FC; --purple-500:#A855F7; --purple-600:#9333EA; --purple-700:#7E22CE; --purple-800:#6B21A8; --purple-900:#581C87; --purple-950:#3B0764;
+  /* gray — Text & surfaces — light theme */
+  --gray-50:#F5F7F8; --gray-100:#E8ECEF; --gray-200:#CFD6DB; --gray-300:#ABB6BE; --gray-400:#7E8C97; --gray-500:#677581; --gray-600:#4E5C66; --gray-700:#3F4A52; --gray-800:#2D353B; --gray-900:#1D2226; --gray-950:#121518;
+  /* neutral (dark mode) — The dark-theme ramp */
+  --neutral-50:#FAFAFA; --neutral-100:#F5F5F5; --neutral-200:#E5E5E5; --neutral-300:#D4D4D4; --neutral-400:#A3A3A3; --neutral-500:#737373; --neutral-600:#525252; --neutral-700:#404040; --neutral-800:#262626; --neutral-900:#171717; --neutral-950:#0A0A0A;
 }
-[data-theme="dark"]{
-  color-scheme:dark;
-  --text-primary:var(--white); --text-secondary:var(--grey-extralight);
-  --bg-primary:var(--grey-ultradark); --bg-secondary:var(--grey-dark); --bg-elevated:var(--grey-dark); --bg-support:var(--grey-dark);
-  --border-default:var(--grey-default-concrete); --cta-error:var(--red-light);
-  --notice-text:var(--green-light); --warning-background:var(--grey-dark);
-  --shadow-default:0 2px 8px rgba(0,0,0,.6); --shadow-md:0 4px 16px rgba(0,0,0,.4); --shadow-lg:0 12px 32px rgba(0,0,0,.55);
-  --system-white:var(--black); --system-black:var(--white);
+
+/* ---------- 2. SEMÂNTICOS — tokens.css :root ---------- */
+:root {
+  --background: #ffffff;
+  --foreground: #4e5c66;
+  --custom-foreground-10: #0a0a0a1a;
+  --card: #ffffff;
+  --card-foreground: #4e5c66;
+  --popover: #ffffff;
+  --popover-foreground: #4e5c66;
+  --tooltip: #2d353b;
+  --tooltip-foreground: #ffffff;
+  --primary: #158cba;
+  --primary-foreground: #ffffff;
+  --primary-cta: #239f27;
+  --primary-cta-foreground: #ffffff;
+  --secondary: #f5f7f8;
+  --secondary-foreground: #4e5c66;
+  --muted: #f5f7f8;
+  --muted-foreground: #677581;
+  --accent: #f1fafd;
+  --accent-foreground: #158cba;
+  --destructive: #c73d31;
+  --destructive-foreground: #fcf3f3;
+  --destructive-2: #fcf3f3;
+  --destructive-foreground-2: #c73d31;
+  --success: #f2fcf3;
+  --success-foreground: #239f27;
+  --warning: #fef9f0;
+  --warning-foreground: #f5a623;
+  --error: #fcf3f3;
+  --error-foreground: #c73d31;
+  --tag-blue: #f1fafd;
+  --tag-emerald: #f3fbfb;
+  --tag-rose: #fdf2f5;
+  --border: #cfd6db;
+  --input: #cfd6db;
+  --custom-input: #e5e5e5;
+  --ring: #158cba;
+  --ring-offset: #ffffff;
+  --chart-1: #158cba;
+  --chart-2: #32a9a9;
+  --chart-3: #f5a623;
+  --chart-4: #c73d31;
+  --chart-5: #28b62c;
+  --sidebar: #ffffff;
+  --sidebar-secondary: #f5f7f8;
+  --sidebar-foreground: #4e5c66;
+  --sidebar-primary: #158cba;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8ecef;
+  --sidebar-accent-foreground: #4e5c66;
+  --sidebar-border: #cfd6db;
+  --sidebar-ring: #158cba;
+  --custom-outline: #a3a3a380;
+  --custom-destructive-20-dark-40: #dc262633;
+  --custom-destructive-40-dark-40: #dc262666;
+  --alpha-20: #ffffffcc;
+  --alpha-30: #ffffffb2;
+  --alpha-50: #ffffff80;
+  --alpha-80: #ffffff33;
+  --alpha-80-white: #ffffff33;
+  --alpha-90-white: #ffffff1a;
+  --white: #ffffff;
+  --custom-background-dark-input-30: #ffffff;
+  --custom-alpha-30-dark-alpha-20: #ffffffb2;
+  --custom-destructive-10-dark-20: #dc26261a;
+  --custom-transparent-dark-input-30: #ffffff00;
+  --custom-ring-dark-input-dark: #158cba;
+  --custom-input-50-dark-input-80: #e5e5e580;
+  --custom-background-dark-calendar-30: #ffffff;
+  --blue-600: #18a1d8;
+  --alpha-10: #ffffffe5;
+  --custom-popover-70: #ffffffb2;
+  --black: #000000;
+  --amber-400: #fbbf24;
+  --gray-500: #677581;
+  --blue-700: #158cba;
+  --blue-800: #0f6485;
+  --emerald-600: #32a9a9;
+  --rose-500: #e1476d;
+  --transparent: #ffffff33;
+
+  /* Fonts (duplicadas do @theme — ver comentário de themeFontVars/rootFontVars acima) */
+  --font-sans: "Source Sans 3";
+  --font-serif: Georgia;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Letter spacing do Figma. Prefixo wpui- para não sequestrar o namespace
+     --tracking-* dos utilitários do Tailwind (ver rootTrackingVars no format). */
+  --wpui-tracking-tight: -0.4px;
+  --wpui-tracking-normal: 0px;
+  --wpui-tracking-wide: 0.4px;
+
+  /* Container sizes */
+  --container-3xs: 256px;
+  --container-2xs: 288px;
+  --container-xs: 320px;
+  --container-sm: 384px;
+  --container-md: 448px;
+  --container-lg: 512px;
+  --container-xl: 576px;
+  --container-2xl: 672px;
+  --container-3xl: 768px;
+  --container-4xl: 896px;
+  --container-5xl: 1024px;
+  --container-6xl: 1152px;
+  --container-7xl: 1280px;
+}
+
+/* ---------- 2b. SEMÂNTICOS — tokens.css .dark ---------- */
+[data-theme="dark"], .dark {
+  color-scheme: dark;
+  --background: #171717;
+  --foreground: #fafafa;
+  --custom-foreground-10: #fafafa1a;
+  --card: #262626;
+  --card-foreground: #fafafa;
+  --popover: #262626;
+  --popover-foreground: #fafafa;
+  --tooltip: #f5f5f5;
+  --tooltip-foreground: #ffffff;
+  --primary: #158cba;
+  --primary-foreground: #ffffff;
+  --primary-cta: #239f27;
+  --primary-cta-foreground: #ffffff;
+  --secondary: #262626;
+  --secondary-foreground: #fafafa;
+  --muted: #262626;
+  --muted-foreground: #d4d4d4;
+  --accent: #062937;
+  --accent-foreground: #dff3fb;
+  --destructive: #c73d31;
+  --destructive-foreground: #fcf3f3;
+  --destructive-2: #262626;
+  --destructive-foreground-2: #d3564a;
+  --success: #262626;
+  --success-foreground: #28b62c;
+  --warning: #262626;
+  --warning-foreground: #f5a623;
+  --error: #262626;
+  --error-foreground: #d3564a;
+  --tag-blue: #262626;
+  --tag-emerald: #262626;
+  --tag-rose: #262626;
+  --border: #404040;
+  --input: #404040;
+  --custom-input: #404040;
+  --ring: #18a1d8;
+  --ring-offset: #171717;
+  --chart-1: #35b6e9;
+  --chart-2: #52cbcb;
+  --chart-3: #f7bb59;
+  --chart-4: #dd7c73;
+  --chart-5: #47d74c;
+  --sidebar: #171717;
+  --sidebar-secondary: #262626;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #158cba;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #404040;
+  --sidebar-ring: #18a1d8;
+  --custom-outline: #73737380;
+  --custom-destructive-20-dark-40: #f8717166;
+  --custom-destructive-40-dark-40: #dc262666;
+  --alpha-20: #0a0a0acc;
+  --alpha-30: #0a0a0ab2;
+  --alpha-50: #0a0a0a80;
+  --alpha-80: #0a0a0a33;
+  --alpha-80-white: #ffffff33;
+  --alpha-90-white: #ffffff1a;
+  --white: #ffffff;
+  --custom-background-dark-input-30: #ffffff0b;
+  --custom-alpha-30-dark-alpha-20: #0a0a0acc;
+  --custom-destructive-10-dark-20: #f8717133;
+  --custom-transparent-dark-input-30: #ffffff0b;
+  --custom-ring-dark-input-dark: #404040;
+  --custom-input-50-dark-input-80: #ffffff26;
+  --custom-background-dark-calendar-30: #ffffff0b;
+  --blue-600: #18a1d8;
+  --alpha-10: #0a0a0ae5;
+  --custom-popover-70: #262626b2;
+  --black: #000000;
+  --amber-400: #fbbf24;
+  --gray-500: #677581;
+  --blue-700: #158cba;
+  --blue-800: #0f6485;
+  --emerald-600: #32a9a9;
+  --rose-500: #e1476d;
+  --transparent: #ffffff33;
+}
+
+/* ---------- 2c. GRADIENTES — os 3 paint styles do arquivo do DS ----------
+   Lineares VERTICAIS (180deg), stops nomeados por token. É o que a seção
+   Color desta página documenta; antes o chrome usava 135deg e a ordem trocada. */
+:root{
+  --gradient-brand-primary:linear-gradient(180deg,var(--blue-700) 0%,var(--indigo-700) 100%);
+  --gradient-brand-secondary:linear-gradient(180deg,var(--emerald-600) 0%,var(--blue-800) 100%);
+  --gradient-brand-dark:linear-gradient(180deg,var(--neutral-600) 0%,var(--neutral-800) 100%);
+  /* Capa: superfície sob a foto + véu de marca a 70% para o texto ter contraste. */
+  --cover-surface:var(--blue-900);
+  --scrim-from:color-mix(in srgb,var(--blue-700) 70%,transparent);
+  --scrim-to:color-mix(in srgb,var(--indigo-700) 70%,transparent);
+  --gradient-cover-scrim:linear-gradient(180deg,var(--scrim-from) 0%,var(--scrim-to) 100%);
+}
+[data-theme="dark"], .dark{
+  /* No dark a capa vira o brand-dark: neutral/600 -> neutral/800. */
+  --cover-surface:var(--neutral-900);
+  --scrim-from:color-mix(in srgb,var(--neutral-600) 70%,transparent);
+  --scrim-to:color-mix(in srgb,var(--neutral-800) 70%,transparent);
+}
+
+/* ---------- 3. ESCALAS — @theme do tokens.css ---------- */
+:root {
+  /* Colors */
+
+  /* Radius */
+  --radius-none: 0rem;
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.375rem;
+  --radius-4xl: 1.625rem;
+  --radius-full: 9999px;
+
+  /* Font sizes + line heights */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 2.875rem;
+  --text-6xl: 3rem;
+  --text-6xl--line-height: 3.25rem;
+  --text-7xl: 3.375rem;
+  --text-7xl--line-height: 3.375rem;
+  --text-8xl: 4.5rem;
+  --text-8xl--line-height: 4.5rem;
+  --text-9xl: 6rem;
+  --text-9xl--line-height: 6rem;
+
+  /* Standalone leading utilities */
+  --leading-none: 1;
+  --leading-xs: 1rem;
+  --leading-sm: 1.25rem;
+  --leading-base: 1.5rem;
+  --leading-lg: 1.75rem;
+  --leading-xl: 1.75rem;
+  --leading-2xl: 2rem;
+  --leading-3xl: 2.25rem;
+  --leading-4xl: 2.5rem;
+  --leading-5xl: 2.875rem;
+  --leading-6xl: 3.25rem;
+  --leading-7xl: 3.375rem;
+  --leading-8xl: 4.5rem;
+  --leading-9xl: 6rem;
+
+  /* Font weights: igual ao default do Tailwind hoje; no @theme para o Figma mandar */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Blur: igual ao default do Tailwind hoje; no @theme para o Figma mandar */
+  --blur-xs: 4px;
+  --blur-sm: 8px;
+  --blur-md: 12px;
+  --blur-lg: 16px;
+  --blur-xl: 24px;
+  --blur-2xl: 40px;
+  --blur-3xl: 64px;
+
+  /* Shadows */
+  --shadow-2xs: 0px 1px 0px 0px #0000000d;
+  --shadow-xs: 0px 1px 2px 0px #0000000d;
+  --shadow-sm: 0px 1px 2px -1px #0000001a, 0px 1px 3px 0px #0000001a;
+  --shadow-md: 0px 2px 4px -2px #0000001a, 0px 4px 6px -1px #0000001a;
+  --shadow-lg: 0px 4px 6px -4px #0000001a, 0px 10px 15px -3px #0000001a;
+  --shadow-xl: 0px 8px 10px -6px #0000001a, 0px 20px 25px -5px #0000001a;
+  --shadow-2xl: 0px 25px 50px -12px #00000040;
+  --drop-shadow-xs: 0px 1px 1px 0px #0000000d;
+  --drop-shadow-sm: 0px 1px 2px 0px #00000026;
+  --drop-shadow-md: 0px 3px 3px 0px #0000001f;
+  --drop-shadow-lg: 0px 4px 4px 0px #00000026;
+  --drop-shadow-xl: 0px 9px 7px 0px #0000001a;
+  --drop-shadow-2xl: 0px 25px 25px 0px #00000026;
+  --inset-shadow-2xs: inset 0px 1px 0px 0px #0000000d;
+  --inset-shadow-xs: inset 0px 1px 1px 0px #0000000d;
+  --inset-shadow-sm: inset 0px 2px 4px 0px #0000000d;
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* Spacing: o DS não sobrescreve o passo do Tailwind, então a base é 0.25rem.
+     Confere com a tabela "Web Spacing" desta página: 1=4px … 24=96px. */
+  --spacing:0.25rem;
+  --spacing-1:calc(var(--spacing) * 1); --spacing-2:calc(var(--spacing) * 2); --spacing-3:calc(var(--spacing) * 3); --spacing-4:calc(var(--spacing) * 4); --spacing-5:calc(var(--spacing) * 5); --spacing-6:calc(var(--spacing) * 6); --spacing-8:calc(var(--spacing) * 8); --spacing-10:calc(var(--spacing) * 10); --spacing-12:calc(var(--spacing) * 12); --spacing-16:calc(var(--spacing) * 16); --spacing-20:calc(var(--spacing) * 20); --spacing-24:calc(var(--spacing) * 24);
+}
+
+/* ---------- 4. CHROME DA PÁGINA (NÃO É DS) ----------
+   O tokens.css não tem escala de movimento nem de duração — esta é a única
+   camada inventada aqui, e existe porque a página precisa de UMA gramática de
+   animação. Se o DS ganhar tokens de motion, isto vira espelho também. */
+:root{
+  --motion-fast:120ms;
+  --motion-base:180ms;
+  --motion-slow:320ms;
+  --motion-reveal:600ms;
+  --ease-standard:cubic-bezier(.2,0,0,1);
+  --ease-entrance:cubic-bezier(.22,.61,.36,1);
+  --t-fast:var(--motion-fast) var(--ease-standard);
+  --t-base:var(--motion-base) var(--ease-standard);
+  --t-slow:var(--motion-slow) var(--ease-standard);
+  --reveal-shift:var(--spacing-6);
+  /* <code> inline: escala relativa ao texto que o cerca — o DS não tem passo
+     abaixo de --text-xs, e um chip de código não pode crescer dentro de um rótulo. */
+  --code-font-scale:.92em;
+  --code-padding-y:1px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{font-family:var(--font);font-weight:var(--w-regular);color:var(--text-primary);background:var(--bg-primary);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
-a{color:var(--cta-link);text-decoration:none}
+body{font-family:var(--font-sans);font-weight:var(--font-weight-normal);color:var(--foreground);background:var(--background);line-height:1.55;-webkit-font-smoothing:antialiased;transition:background var(--t-base),color var(--t-base)}
+a{color:var(--primary);text-decoration:none}
 img{max-width:100%;display:block}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--s6)}
+.wrap{max-width:var(--container-6xl);margin:0 auto;padding:0 var(--spacing-6)}
 /* divider entre seções fica DENTRO do max-width do conteúdo, nunca edge-to-edge */
-section{padding:var(--s20) 0}
-section+section .wrap{border-top:1px solid color-mix(in srgb,var(--border-default) 60%,transparent);padding-top:var(--s20)}
+section{padding:var(--spacing-20) 0}
+section+section .wrap{border-top:1px solid color-mix(in srgb,var(--border) 60%,transparent);padding-top:var(--spacing-20)}
 section+section{padding-top:0}
-.eyebrow{font-size:12px;font-weight:var(--w-bold);letter-spacing:.16em;text-transform:uppercase;color:var(--brand-primary);display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s4)}
-.eyebrow .num{color:var(--text-secondary)}
-h2.title{font-size:clamp(var(--type-h3),4vw,var(--type-h1));font-weight:var(--w-bold);line-height:1.15;letter-spacing:-.01em;color:var(--text-primary);max-width:20ch}
-.lead{font-size:var(--type-body-large);font-weight:var(--w-regular);color:var(--text-secondary);max-width:64ch;margin-top:var(--s4);line-height:var(--lh-body-large)}
-.tag-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:var(--w-bold);letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r);background:var(--bg-support);color:var(--brand-primary)}
-.tag-badge.m{background:color-mix(in srgb,var(--green-light) 30%,transparent);color:var(--green-semidark)}
+.eyebrow{font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.16em;text-transform:uppercase;color:var(--primary);display:flex;align-items:center;gap:var(--spacing-3);margin-bottom:var(--spacing-4)}
+.eyebrow .num{color:var(--muted-foreground)}
+h2.title{font-size:clamp(var(--text-2xl),4vw,var(--text-4xl));font-weight:var(--font-weight-bold);line-height:1.15;letter-spacing:-.01em;color:var(--foreground);max-width:20ch}
+.lead{font-size:var(--text-lg);font-weight:var(--font-weight-normal);color:var(--muted-foreground);max-width:64ch;margin-top:var(--spacing-4);line-height:var(--leading-lg)}
+.tag-badge{display:inline-flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.12em;text-transform:uppercase;padding:var(--spacing-1) var(--spacing-2);border-radius:var(--radius-sm);background:var(--accent);color:var(--primary)}
+.tag-badge.m{background:color-mix(in srgb,var(--green-400) 30%,transparent);color:var(--success-foreground)}
 
 /* ---------- TOP NAV (subtle) ---------- */
-header.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-primary) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--border-default) 50%,transparent)}
-.topbar .row{display:flex;align-items:center;gap:var(--s5);height:56px}
-.brandmark{display:flex;align-items:center;gap:11px;flex:none}
+header.topbar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--background) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent)}
+.topbar .row{display:flex;align-items:center;gap:var(--spacing-5);height:56px}
+.brandmark{display:flex;align-items:center;gap:var(--spacing-3);flex:none}
 .brandmark img{height:22px;width:auto}
 .brandmark .logo-d{display:none}
 [data-theme="dark"] .brandmark .logo-l{display:none} [data-theme="dark"] .brandmark .logo-d{display:block}
-.brandmark span{font-size:12px;color:var(--text-secondary);font-weight:var(--w-regular);padding-left:11px;border-left:1px solid var(--border-default)}
-nav.sections{margin-left:auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.brandmark span{font-size:var(--text-xs);color:var(--muted-foreground);font-weight:var(--font-weight-normal);padding-left:11px;border-left:1px solid var(--border)}
+nav.sections{margin-left:auto;display:flex;gap:var(--spacing-1);overflow-x:auto;scrollbar-width:none}
 nav.sections::-webkit-scrollbar{display:none}
 /* menu = comportamento do site real: 14px regular, hover muda cor, active = bold (sem pílula) */
-nav.sections a{font-size:14px;font-weight:var(--w-regular);color:var(--text-primary);padding:6px 9px;white-space:nowrap;transition:color var(--transition)}
-nav.sections a:hover{color:var(--brand-primary)}
-nav.sections a.active{color:var(--brand-primary);font-weight:var(--w-bold)}
-.toggle{flex:none;width:34px;height:34px;border-radius:var(--r);border:none;background:transparent;color:var(--text-secondary);cursor:pointer;display:grid;place-items:center;transition:color var(--transition),background var(--transition)}
-.toggle:hover{color:var(--brand-primary)}
-.menu-btn{display:none;flex:none;width:34px;height:34px;border-radius:var(--r);border:none;background:transparent;color:var(--text-primary);cursor:pointer;place-items:center}
-.menu-btn:hover{color:var(--brand-primary)}
+nav.sections a{font-size:var(--text-sm);font-weight:var(--font-weight-normal);color:var(--foreground);padding:var(--spacing-2) var(--spacing-2);white-space:nowrap;transition:color var(--t-base)}
+nav.sections a:hover{color:var(--primary)}
+nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
+/* ---------- BOTÕES — contrato do Button do DS (packages/ui/src/components/button.tsx,
+   Figma "USAR AQUI - DS NOVA" 296:5340). Pill em toda variante/tamanho/estado,
+   peso 500 (medium) no desktop, anel de foco de 3px em --custom-outline, svg 16.
+   Tamanhos: default h40/px24/text-base · sm h32/px16/text-sm · xs h24/px8/text-xs. */
+.btn{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  border:1px solid transparent;border-radius:var(--radius-full);background-clip:padding-box;
+  font-family:var(--font-sans);font-weight:var(--font-weight-medium);white-space:nowrap;
+  cursor:pointer;user-select:none;outline:none;transition:all var(--t-base)}
+.btn:focus-visible{box-shadow:0 0 0 3px var(--custom-outline)}
+.btn:active{opacity:.6}
+.btn svg{flex:none;pointer-events:none}
+.btn-default{height:calc(var(--spacing) * 10);gap:calc(var(--spacing) * 1.5);padding:0 var(--spacing-6);font-size:var(--text-base)}
+.btn-default svg{width:var(--spacing-4);height:var(--spacing-4)}
+.btn-sm{height:var(--spacing-8);gap:var(--spacing-1);padding:0 var(--spacing-4);font-size:var(--text-sm)}
+.btn-sm svg{width:calc(var(--spacing) * 3.5);height:calc(var(--spacing) * 3.5)}
+.btn-xs{height:var(--spacing-6);gap:var(--spacing-1);padding:0 var(--spacing-2);font-size:var(--text-xs)}
+.btn-xs svg{width:var(--spacing-3);height:var(--spacing-3)}
+.btn-icon-sm{width:var(--spacing-8);height:var(--spacing-8);padding:0;gap:0}
+/* variantes */
+.btn-outline{border-color:var(--border);background:var(--background);color:var(--muted-foreground)}
+.btn-outline:hover{border-color:var(--muted-foreground)}
+.btn-outline:active{border-color:var(--border)}
+.btn-cta{background:var(--primary-cta);color:var(--primary-cta-foreground)}
+.btn-cta:hover{background:color-mix(in srgb,var(--primary-cta),var(--white) 20%)}
+.btn-ghost{background:transparent;color:var(--muted-foreground)}
+.btn-ghost:hover{color:var(--primary)}
+.toggle{display:inline-flex}
+
+.menu-btn{display:none}
 /* mobile/tablet: nav vira menu dropdown via hambúrguer */
 @media(max-width:960px){
   .menu-btn{display:grid}
   .toggle{margin-left:auto}
-  nav.sections{position:absolute;top:56px;left:0;right:0;margin:0;flex-direction:column;gap:0;background:var(--bg-primary);border-bottom:1px solid var(--border-default);box-shadow:var(--shadow-md);max-height:0;padding:0;overflow:hidden;transition:max-height .28s ease,padding .28s ease}
-  nav.sections.open{max-height:calc(100vh - 56px);overflow:auto;padding:var(--s2) 0}
-  nav.sections a{padding:13px var(--s6);font-size:16px;border-radius:0;width:100%}
-  nav.sections a.active{background:var(--bg-secondary)}
+  nav.sections{position:absolute;top:56px;left:0;right:0;margin:0;flex-direction:column;gap:0;background:var(--background);border-bottom:1px solid var(--border);box-shadow:var(--shadow-md);max-height:0;padding:0;overflow:hidden;transition:max-height var(--t-slow),padding var(--t-slow)}
+  nav.sections.open{max-height:calc(100vh - 56px);overflow:auto;padding:var(--spacing-2) 0}
+  nav.sections a{padding:13px var(--spacing-6);font-size:var(--text-base);border-radius:var(--radius-none);width:100%}
+  nav.sections a.active{background:var(--secondary)}
 }
 
 /* ---------- HERO (video + blue filter) ---------- */
-.hero{position:relative;min-height:88vh;display:flex;align-items:center;color:#fff;overflow:hidden;background:var(--blue-dark);border-top:none}
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;color:var(--white);overflow:hidden;background:var(--cover-surface);border-top:none}
 .hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 /* filtro de capa PADRÃO do DS (#composition-cover): degradê da marca a 0.7, vertical */
-.hero .tint{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(21,140,186,.7) 0%,rgba(37,71,192,.7) 100%)}
-.hero .wrap{position:relative;z-index:2;padding-top:var(--s16);padding-bottom:var(--s16);text-align:center}
-.hero .logo-lockup img{height:50px;margin:0 auto var(--s8);filter:drop-shadow(0 2px 12px rgba(0,0,0,.25))}
-.hero h1{font-size:clamp(32px,6vw,var(--type-display-1));font-weight:var(--w-bold);line-height:1.1;letter-spacing:-.015em;margin:0 auto;text-shadow:0 2px 24px rgba(0,30,45,.35)}
-.hero p.sub{font-size:var(--type-body-large);line-height:var(--lh-body-large);font-weight:var(--w-regular);max-width:52ch;margin:var(--s6) auto 0;opacity:.96}
-.scrollcue{margin-top:var(--s12);font-size:12px;font-weight:var(--w-bold);letter-spacing:.16em;text-transform:uppercase;opacity:.85;display:inline-flex;gap:8px;align-items:center;justify-content:center}
+.hero .tint{position:absolute;inset:0;z-index:1;background:var(--gradient-cover-scrim)}
+.hero .wrap{position:relative;z-index:2;padding-top:var(--spacing-16);padding-bottom:var(--spacing-16);text-align:center}
+.hero .logo-lockup img{height:50px;margin:0 auto var(--spacing-8);filter:var(--drop-shadow-xl)}
+.hero h1{font-size:clamp(32px,6vw,var(--text-6xl));font-weight:var(--font-weight-bold);line-height:1.1;letter-spacing:-.015em;margin:0 auto;text-shadow:0 2px 24px color-mix(in srgb,var(--gray-950) 45%,transparent)}
+.hero p.sub{font-size:var(--text-lg);line-height:var(--leading-lg);font-weight:var(--font-weight-normal);max-width:52ch;margin:var(--spacing-6) auto 0;opacity:.96}
+.scrollcue{margin-top:var(--spacing-12);font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.16em;text-transform:uppercase;opacity:.85;display:inline-flex;gap:var(--spacing-2);align-items:center;justify-content:center}
 
 /* ---------- GRID / CARDS ---------- */
-.grid{display:grid;gap:var(--s4)}
+.grid{display:grid;gap:var(--spacing-4)}
 .cols-2{grid-template-columns:repeat(2,1fr)} .cols-3{grid-template-columns:repeat(3,1fr)} .cols-4{grid-template-columns:repeat(4,1fr)}
 @media(max-width:860px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr}}
-.card{background:var(--bg-elevated);border:none;border-radius:var(--r);padding:var(--s6);box-shadow:var(--shadow-default)}
+.card{background:var(--card);border:none;border-radius:var(--radius-sm);padding:var(--spacing-6);box-shadow:var(--shadow-sm)}
 
 /* Mission / Vision / Model — label small, copy is the hero */
-.mvm{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s6)}
+.mvm{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-6)}
 @media(max-width:760px){.mvm{grid-template-columns:1fr}}
-.mvm .item{background:var(--bg-elevated);border:none;border-radius:var(--r);padding:var(--s6);box-shadow:var(--shadow-default)}
-.mvm .k{font-size:12px;font-weight:var(--w-bold);letter-spacing:.14em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:var(--s3)}
-.mvm p{font-size:var(--type-body);line-height:1.55;color:var(--text-secondary)}
+.mvm .item{background:var(--card);border:none;border-radius:var(--radius-sm);padding:var(--spacing-6);box-shadow:var(--shadow-sm)}
+.mvm .k{font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:var(--spacing-3)}
+.mvm p{font-size:var(--text-base);line-height:1.55;color:var(--muted-foreground)}
 
 /* values */
 .value-card{text-align:center}
-.value-card .v-ico{display:block;color:var(--brand-primary);margin:0 auto var(--s4)}
-.value-card h3{font-size:var(--type-h4);font-weight:var(--w-bold);margin-bottom:var(--s2);color:var(--text-primary)}
-.value-card p{color:var(--text-secondary);font-size:16px}
+.value-card .v-ico{display:block;color:var(--primary);margin:0 auto var(--spacing-4)}
+.value-card h3{font-size:var(--text-xl);font-weight:var(--font-weight-bold);margin-bottom:var(--spacing-2);color:var(--foreground)}
+.value-card p{color:var(--muted-foreground);font-size:var(--text-base)}
 
 /* ---------- LOGO ---------- */
-.logo-board{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.logo-board{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4)}
 @media(max-width:760px){.logo-board{grid-template-columns:1fr}}
-.logo-matrix{display:grid;grid-template-columns:96px 1fr 200px;gap:var(--s3);align-items:stretch;margin-top:var(--s2)}
-@media(max-width:760px){.logo-matrix{grid-template-columns:1fr;gap:var(--s2)}}
-.lm-row-label{display:flex;flex-direction:column;justify-content:center;font-size:13px;font-weight:var(--w-semibold);color:var(--text-primary)}
-.lm-row-label span{font-size:11px;font-weight:var(--w-regular);color:var(--text-secondary);margin-top:2px}
-@media(max-width:760px){.lm-row-label{flex-direction:row;gap:6px;align-items:baseline;margin-top:var(--s4)}}
-.logo-matrix .logo-cell{min-height:118px;padding:var(--s5)}
+.logo-matrix{display:grid;grid-template-columns:96px 1fr 200px;gap:var(--spacing-3);align-items:stretch;margin-top:var(--spacing-2)}
+@media(max-width:760px){.logo-matrix{grid-template-columns:1fr;gap:var(--spacing-2)}}
+.lm-row-label{display:flex;flex-direction:column;justify-content:center;font-size:var(--text-sm);font-weight:var(--font-weight-semibold);color:var(--foreground)}
+.lm-row-label span{font-size:var(--text-xs);font-weight:var(--font-weight-normal);color:var(--muted-foreground);margin-top:2px}
+@media(max-width:760px){.lm-row-label{flex-direction:row;gap:var(--spacing-2);align-items:baseline;margin-top:var(--spacing-4)}}
+.logo-matrix .logo-cell{min-height:118px;padding:var(--spacing-5)}
 .logo-matrix .logo-cell img{max-height:40px}
 .logo-matrix .logo-cell.icon img{max-height:56px}
-.logo-cell.on-grey{background:#677581;border-color:transparent}
-.logo-cell{position:relative;border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s8);display:grid;place-items:center;min-height:150px}
-.dl{position:absolute;right:8px;bottom:8px;display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;
-  border-radius:var(--r-full);border:1px solid var(--border-default);background:var(--bg-elevated);
-  color:var(--text-secondary);font-size:11px;font-weight:var(--w-semibold);letter-spacing:.03em;
-  opacity:0;transition:opacity var(--transition),border-color var(--transition),color var(--transition)}
+.logo-cell.on-grey{background:var(--gray-500);border-color:transparent}
+.logo-cell{position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-8);display:grid;place-items:center;min-height:150px}
+.dl{position:absolute;right:8px;bottom:8px;display:inline-flex;align-items:center;gap:var(--spacing-1);height:var(--spacing-6);padding:0 var(--spacing-2);
+  border-radius:var(--radius-full);border:1px solid var(--border);background:var(--card);
+  color:var(--muted-foreground);font-size:var(--text-xs);font-weight:var(--font-weight-semibold);letter-spacing:.03em;
+  opacity:0;transition:opacity var(--t-base),border-color var(--t-base),color var(--t-base)}
 .logo-cell:hover .dl,.dl:focus-visible{opacity:1}
-.dl:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.dl:hover{border-color:var(--primary);color:var(--primary)}
 @media(hover:none){.dl{opacity:1}}
-.files{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);margin-top:var(--s2)}
+.files{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--spacing-3);margin-top:var(--spacing-2)}
 @media(max-width:760px){.files{grid-template-columns:1fr}}
-.file{display:block;border:1px solid var(--border-default);border-radius:var(--r);padding:12px 15px;transition:border-color var(--transition)}
-.file:hover{border-color:var(--brand-primary)}
-.file b{display:block;font-size:13px;font-weight:var(--w-semibold);color:var(--text-primary)}
-.file span{display:block;font-size:11.5px;color:var(--text-secondary);margin-top:3px}
-.logo-cell.on-brand{background:var(--brand-primary);border-color:transparent} .logo-cell.on-dark{background:var(--grey-ultradark);border-color:transparent} .logo-cell.on-photo{background:var(--gradient-secondary);border-color:transparent}
-[data-theme="dark"] .logo-cell.on-dark{border-color:color-mix(in srgb,#fff 16%,transparent)}
+.file{display:block;border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-3) var(--spacing-4);transition:border-color var(--t-base)}
+.file:hover{border-color:var(--primary)}
+.file b{display:block;font-size:var(--text-sm);font-weight:var(--font-weight-semibold);color:var(--foreground)}
+.file span{display:block;font-size:var(--text-xs);color:var(--muted-foreground);margin-top:3px}
+.logo-cell.on-brand{background:var(--primary);border-color:transparent} .logo-cell.on-dark{background:var(--neutral-900);border-color:transparent} .logo-cell.on-photo{background:var(--gradient-brand-secondary);border-color:transparent}
+[data-theme="dark"] .logo-cell.on-dark{border-color:color-mix(in srgb,var(--white) 16%,transparent)}
 .logo-cell img{max-height:54px} .logo-cell.icon img{max-height:72px}
-.clearspace{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center;margin-top:var(--s6)}
+.clearspace{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-5);align-items:center;margin-top:var(--spacing-6)}
 @media(max-width:700px){.clearspace{grid-template-columns:1fr}}
-.cs-visual{border:1px dashed var(--brand-primary);border-radius:var(--r);padding:var(--s10);display:grid;place-items:center;background:var(--bg-secondary)}
+.cs-visual{border:1px dashed var(--primary);border-radius:var(--radius-sm);padding:var(--spacing-10);display:grid;place-items:center;background:var(--secondary)}
 .cs-visual img{height:46px}
-.subhead{font-size:16px;font-weight:var(--w-bold);margin-bottom:var(--s2);color:var(--text-primary)}
+.subhead{font-size:var(--text-base);font-weight:var(--font-weight-bold);margin-bottom:var(--spacing-2);color:var(--foreground)}
 
 /* ---------- COLOR ---------- */
-.fam-label{display:flex;align-items:baseline;justify-content:space-between;margin:var(--s8) 0 var(--s3);gap:var(--s4)}
-.fam-label h4{font-size:16px;font-weight:var(--w-bold)} .fam-label span{font-size:12px;color:var(--text-secondary)}
+.fam-label{display:flex;align-items:baseline;justify-content:space-between;margin:var(--spacing-8) 0 var(--spacing-3);gap:var(--spacing-4)}
+.fam-label h4{font-size:var(--text-base);font-weight:var(--font-weight-bold)} .fam-label span{font-size:var(--text-xs);color:var(--muted-foreground)}
 .fam-label .spacer{flex:1}
-.copy-all{flex:none;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border:1px solid var(--border-default);border-radius:var(--r-full);background:var(--bg-elevated);color:var(--text-secondary);font-family:var(--font);font-size:12px;font-weight:var(--w-semibold);cursor:pointer;transition:border-color var(--transition),color var(--transition)}
-.copy-all:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
-.copy-all.copied{border-color:var(--green-semidark);color:var(--green-semidark)}
+.copy-all{flex:none}
+.copy-all:hover{color:var(--primary)}
+.copy-all.copied{border-color:var(--success-foreground);color:var(--success-foreground)}
 .copy-all svg{flex:none}
 .grad{cursor:pointer}
 .ico{cursor:pointer}
-.ico.copied{border-color:var(--green-semidark);color:var(--green-semidark)}
-.ico.copied .n{color:var(--green-semidark)}
-.palette{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.ico.copied{border-color:var(--success-foreground);color:var(--success-foreground)}
+.ico.copied .n{color:var(--success-foreground)}
+.palette{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--spacing-2)}
 @media(max-width:860px){.palette{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.palette{grid-template-columns:repeat(2,1fr)}}
-.fam-head{display:flex;align-items:baseline;gap:var(--s3);margin:var(--s6) 0 7px}
-.fam-head h5{font-size:14px;font-weight:var(--w-bold);color:var(--text-primary);font-variant-numeric:tabular-nums}
-.fam-head span{font-size:12px;color:var(--text-secondary)}
-.ramp{display:grid;grid-template-columns:repeat(11,1fr);gap:4px}
+.fam-head{display:flex;align-items:baseline;gap:var(--spacing-3);margin:var(--spacing-6) 0 7px}
+.fam-head h5{font-size:var(--text-sm);font-weight:var(--font-weight-bold);color:var(--foreground);font-variant-numeric:tabular-nums}
+.fam-head span{font-size:var(--text-xs);color:var(--muted-foreground)}
+.ramp{display:grid;grid-template-columns:repeat(11,1fr);gap:var(--spacing-1)}
 @media(max-width:900px){.ramp{grid-template-columns:repeat(6,1fr)}}
 @media(max-width:560px){.ramp{grid-template-columns:repeat(3,1fr)}}
-.ramp .step{position:relative;appearance:none;border:1px solid var(--border-default);background:var(--bg-elevated);border-radius:var(--r);padding:0 0 6px;cursor:pointer;font-family:var(--font);text-align:center;overflow:hidden;transition:transform var(--transition),border-color var(--transition)}
-.ramp .step:hover{transform:translateY(-3px);border-color:var(--brand-primary)}
-.ramp .step .sw{display:block;height:46px;border-bottom:1px solid color-mix(in srgb,var(--border-default) 55%,transparent)}
-.ramp .step b{display:block;font-size:12px;font-weight:var(--w-semibold);color:var(--text-primary);margin-top:5px;font-variant-numeric:tabular-nums}
-.ramp .step i{display:block;font-style:normal;font-size:9.5px;letter-spacing:.01em;color:var(--text-secondary);text-transform:uppercase}
-.ramp .step.is-main{border-color:var(--brand-primary);box-shadow:inset 0 0 0 1px var(--brand-primary)}
-.ramp .step.is-main b::after{content:" ★";color:var(--brand-primary);font-size:9px;vertical-align:1px}
-.ramp .step.copied{border-color:var(--green-semidark)}
-.ramp .step.copied b{color:var(--green-semidark)}
-.swatch{cursor:pointer;border-radius:var(--r);overflow:hidden;border:1px solid var(--border-default);background:var(--bg-elevated);transition:transform var(--transition)}
+.ramp .step{position:relative;appearance:none;border:1px solid var(--border);background:var(--card);border-radius:var(--radius-sm);padding:0 0 var(--spacing-2);cursor:pointer;font-family:var(--font-sans);text-align:center;overflow:hidden;transition:transform var(--t-base),border-color var(--t-base)}
+.ramp .step:hover{transform:translateY(-3px);border-color:var(--primary)}
+.ramp .step .sw{display:block;height:46px;border-bottom:1px solid color-mix(in srgb,var(--border) 55%,transparent)}
+.ramp .step b{display:block;font-size:var(--text-xs);font-weight:var(--font-weight-semibold);color:var(--foreground);margin-top:5px;font-variant-numeric:tabular-nums}
+.ramp .step i{display:block;font-style:normal;font-size:var(--text-xs);letter-spacing:.01em;color:var(--muted-foreground);text-transform:uppercase}
+.ramp .step.is-main{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.ramp .step.is-main b::after{content:" ★";color:var(--primary);font-size:var(--text-xs);vertical-align:1px}
+.ramp .step.copied{border-color:var(--success-foreground)}
+.ramp .step.copied b{color:var(--success-foreground)}
+.swatch{cursor:pointer;border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border);background:var(--card);transition:transform var(--t-base)}
 .swatch:hover{transform:translateY(-3px)}
 .swatch .chip{height:70px}
-.swatch .meta{padding:8px 9px}
-.swatch .meta .n{font-size:12px;font-weight:var(--w-bold);color:var(--text-primary)}
-.swatch .meta .h{display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:12px;color:var(--text-secondary);text-transform:uppercase}
-.swatch .copied-tag{display:inline-flex;align-items:center;gap:3px;color:var(--green-semidark);font-weight:var(--w-bold);text-transform:none;opacity:0;transform:translateX(-3px);transition:opacity 150ms ease,transform 150ms ease}
+.swatch .meta{padding:var(--spacing-2) var(--spacing-2)}
+.swatch .meta .n{font-size:var(--text-xs);font-weight:var(--font-weight-bold);color:var(--foreground)}
+.swatch .meta .h{display:flex;align-items:center;flex-wrap:wrap;gap:var(--spacing-1);font-size:var(--text-xs);color:var(--muted-foreground);text-transform:uppercase}
+.swatch .copied-tag{display:inline-flex;align-items:center;gap:var(--spacing-1);color:var(--success-foreground);font-weight:var(--font-weight-bold);text-transform:none;opacity:0;transform:translateX(-3px);transition:opacity var(--t-fast),transform var(--t-fast)}
 .swatch.copied .copied-tag{opacity:1;transform:none}
-.grad-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+.grad-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-4)}
 @media(max-width:860px){.grad-row{grid-template-columns:1fr}}
-.grad-card p{font-size:11.5px;line-height:1.5;color:var(--text-secondary);margin-top:9px}
-.grad{position:relative;overflow:hidden;height:120px;border-radius:var(--r);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--s4);color:#fff;font-weight:var(--w-bold);cursor:pointer}
-.grad b{font-size:14px}
-.grad small{display:block;margin-top:6px;font-weight:var(--w-regular);opacity:.92;font-size:11px;letter-spacing:.01em}
-.grad.copied{outline:2px solid var(--green-semidark);outline-offset:2px}
-.semantic-group{margin-top:var(--s6)}
-.semantic-group h4{font-size:14px;font-weight:var(--w-bold);text-transform:uppercase;letter-spacing:.08em;color:var(--text-secondary);margin-bottom:var(--s2)}
-.tok{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--s3);align-items:center;padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--border-default) 60%,transparent)}
-.tok .name{font-size:14px;font-weight:var(--w-bold)}
-.tok .cell{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-secondary)}
+.grad-card p{font-size:var(--text-xs);line-height:1.5;color:var(--muted-foreground);margin-top:9px}
+.grad{position:relative;overflow:hidden;height:120px;border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:var(--spacing-4);color:var(--white);font-weight:var(--font-weight-bold);cursor:pointer}
+.grad b{font-size:var(--text-sm)}
+.grad small{display:block;margin-top:6px;font-weight:var(--font-weight-normal);opacity:.92;font-size:var(--text-xs);letter-spacing:.01em}
+.grad.copied{outline:2px solid var(--success-foreground);outline-offset:2px}
+.semantic-group{margin-top:var(--spacing-6)}
+.semantic-group h4{font-size:var(--text-sm);font-weight:var(--font-weight-bold);text-transform:uppercase;letter-spacing:.08em;color:var(--muted-foreground);margin-bottom:var(--spacing-2)}
+.tok{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--spacing-3);align-items:center;padding:var(--spacing-2) 0;border-bottom:1px solid color-mix(in srgb,var(--border) 60%,transparent)}
+.tok .name{font-size:var(--text-sm);font-weight:var(--font-weight-bold)}
+.tok .cell{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);color:var(--muted-foreground)}
 /* Selo de "Copied" para os alvos gráficos (swatch, gradiente, ícone, raio),
    onde não cabe a tag inline usada nas linhas de token. Mesmo vocabulário visual. */
-.cbadge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:5px;
-  background:color-mix(in srgb,var(--bg-elevated) 92%,transparent);color:var(--green-semidark);
-  font-size:11px;font-weight:var(--w-bold);letter-spacing:.02em;
-  opacity:0;pointer-events:none;transition:opacity 140ms ease}
+.cbadge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:var(--spacing-1);
+  background:color-mix(in srgb,var(--card) 92%,transparent);color:var(--success-foreground);
+  font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.02em;
+  opacity:0;pointer-events:none;transition:opacity var(--t-fast)}
 .cbadge svg{flex:none}
 .copied>.cbadge,.copied .cbadge{opacity:1}
-.copyable{cursor:pointer;border-radius:4px;transition:background var(--transition)}
-.copyable:hover{color:var(--brand-primary)}
-.copyable .copied-tag{display:inline-flex;align-items:center;gap:3px;margin-left:7px;color:var(--green-semidark);font-weight:var(--w-bold);font-size:12px;opacity:0;transform:translateX(-3px);transition:opacity 150ms ease,transform 150ms ease}
+.copyable{cursor:pointer;border-radius:var(--radius-sm);transition:background var(--t-base)}
+.copyable:hover{color:var(--primary)}
+.copyable .copied-tag{display:inline-flex;align-items:center;gap:var(--spacing-1);margin-left:7px;color:var(--success-foreground);font-weight:var(--font-weight-bold);font-size:var(--text-xs);opacity:0;transform:translateX(-3px);transition:opacity var(--t-fast),transform var(--t-fast)}
 .copyable.copied .copied-tag{opacity:1;transform:none}
-.tok .dot{width:22px;height:22px;border-radius:var(--r);border:1px solid var(--border-default);flex:none}
-.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s8)}
+.tok .dot{width:22px;height:22px;border-radius:var(--radius-sm);border:1px solid var(--border);flex:none}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-4);margin-top:var(--spacing-8)}
 @media(max-width:700px){.rules{grid-template-columns:1fr}}
-.rule{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s5);display:flex;gap:var(--s4);align-items:flex-start}
-.rule .pill{flex:none;width:40px;height:40px;border-radius:var(--r);display:grid;place-items:center;color:#fff;font-weight:var(--w-bold)}
-.rule h5{font-size:var(--type-body);font-weight:var(--w-bold);margin-bottom:4px} .rule p{font-size:var(--type-body-small);color:var(--text-secondary)}
+.rule{border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-5);display:flex;gap:var(--spacing-4);align-items:flex-start}
+.rule .pill{flex:none;width:40px;height:40px;border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--white);font-weight:var(--font-weight-bold)}
+.rule h5{font-size:var(--text-base);font-weight:var(--font-weight-bold);margin-bottom:4px} .rule p{font-size:var(--text-sm);color:var(--muted-foreground)}
 
 /* plain-language explainer (for non-designers) */
-.howto{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin:var(--s6) 0 var(--s8);background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s6)}
+.howto{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-4);margin:var(--spacing-6) 0 var(--spacing-8);background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-6)}
 @media(max-width:700px){.howto{grid-template-columns:1fr}}
-.howto-card .step{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:var(--w-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:var(--s2)}
-.howto-card .step .no{width:20px;height:20px;border-radius:50%;background:var(--brand-primary);color:#fff;display:grid;place-items:center;font-size:12px}
-.howto-card h5{font-size:16px;font-weight:var(--w-bold);color:var(--text-primary);margin-bottom:6px}
-.howto-card p{font-size:14px;color:var(--text-secondary);line-height:1.55}
-.howto-card .eg{margin-top:var(--s3);font-size:12px;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border-default);border-radius:var(--r);padding:8px 11px}
-.howto-card .eg b{color:var(--text-primary)}
-.howto-why{grid-column:1/-1;font-size:14px;color:var(--text-primary);background:var(--bg-support);border-radius:var(--r);padding:12px 15px;line-height:1.55}
-.howto-why b{color:var(--text-primary);font-weight:var(--w-bold)}
+.howto-card .step{display:inline-flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:var(--spacing-2)}
+.howto-card .step .no{width:20px;height:20px;border-radius:var(--radius-full);background:var(--primary);color:var(--primary-foreground);display:grid;place-items:center;font-size:var(--text-xs)}
+.howto-card h5{font-size:var(--text-base);font-weight:var(--font-weight-bold);color:var(--foreground);margin-bottom:6px}
+.howto-card p{font-size:var(--text-sm);color:var(--muted-foreground);line-height:1.55}
+.howto-card .eg{margin-top:var(--spacing-3);font-size:var(--text-xs);color:var(--muted-foreground);background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-2) var(--spacing-3)}
+.howto-card .eg b{color:var(--foreground)}
+.howto-why{grid-column:1/-1;font-size:var(--text-sm);color:var(--foreground);background:var(--accent);border-radius:var(--radius-sm);padding:var(--spacing-3) var(--spacing-4);line-height:1.55}
+.howto-why b{color:var(--foreground);font-weight:var(--font-weight-bold)}
 
 /* ---------- TYPE ---------- */
-.specimen{border:1px solid var(--border-default);border-radius:var(--r);overflow:hidden}
-.spec-row{display:grid;grid-template-columns:190px 1fr;gap:var(--s5);padding:var(--s5);border-bottom:1px solid color-mix(in srgb,var(--border-default) 60%,transparent);align-items:baseline}
+.specimen{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+.spec-row{display:grid;grid-template-columns:190px 1fr;gap:var(--spacing-5);padding:var(--spacing-5);border-bottom:1px solid color-mix(in srgb,var(--border) 60%,transparent);align-items:baseline}
 .spec-row:last-child{border-bottom:none}
-.spec-row .meta{font-size:12px;color:var(--text-secondary)} .spec-row .meta b{display:block;color:var(--text-primary);font-size:14px;font-weight:var(--w-bold)}
-.spec-row .sample{color:var(--text-primary);line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:640px){.spec-row{grid-template-columns:1fr;gap:var(--s2)}.spec-row .sample{white-space:normal}}
-.weights{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+.spec-row .meta{font-size:var(--text-xs);color:var(--muted-foreground)} .spec-row .meta b{display:block;color:var(--foreground);font-size:var(--text-sm);font-weight:var(--font-weight-bold)}
+.spec-row .sample{color:var(--foreground);line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:640px){.spec-row{grid-template-columns:1fr;gap:var(--spacing-2)}.spec-row .sample{white-space:normal}}
+.weights{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-4)}
 @media(max-width:640px){.weights{grid-template-columns:1fr}}
-.weight{border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s5)}
-.weight .big{font-size:var(--type-display-2);line-height:1;color:var(--text-primary)} .weight .lbl{margin-top:var(--s3);font-size:12px;color:var(--text-secondary)}
+.weight{border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-5)}
+.weight .big{font-size:var(--text-5xl);line-height:1;color:var(--foreground)} .weight .lbl{margin-top:var(--spacing-3);font-size:var(--text-xs);color:var(--muted-foreground)}
 
 /* ---------- SPACING / SIZES ---------- */
-.split{display:grid;grid-template-columns:1fr;gap:var(--s12);align-items:start;margin-top:var(--s6)}
-@media(max-width:820px){.split{grid-template-columns:1fr;gap:var(--s12)}}
-.scale-row{display:flex;align-items:center;gap:var(--s4);padding:7px 0}
-.scale-row .bar{height:14px;background:var(--brand-primary);border-radius:var(--r)}
-.scale-row .lbl{font-size:12px;color:var(--text-secondary);width:130px}
-.metric{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2) var(--s6);font-size:14px;margin-top:var(--s2)}
-.metric .row{display:flex;justify-content:space-between;border-bottom:1px solid color-mix(in srgb,var(--border-default) 50%,transparent);padding:5px 0}
-.metric .row span:first-child{color:var(--text-secondary)} .metric .row span:last-child{font-weight:var(--w-bold)}
-.radius-demo{display:flex;gap:var(--s5);align-items:flex-end;margin-top:var(--s4)}
-.radius-demo .box{width:96px;height:72px;background:var(--bg-support);border:2px solid var(--brand-primary);border-radius:var(--r-sm)}
-.radius-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3);margin-top:var(--s4)}
+.split{display:grid;grid-template-columns:1fr;gap:var(--spacing-12);align-items:start;margin-top:var(--spacing-6)}
+@media(max-width:820px){.split{grid-template-columns:1fr;gap:var(--spacing-12)}}
+.scale-row{display:flex;align-items:center;gap:var(--spacing-4);padding:var(--spacing-2) 0}
+.scale-row .bar{height:14px;background:var(--primary);border-radius:var(--radius-sm)}
+.scale-row .lbl{font-size:var(--text-xs);color:var(--muted-foreground);width:130px}
+.metric{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-2) var(--spacing-6);font-size:var(--text-sm);margin-top:var(--spacing-2)}
+.metric .row{display:flex;justify-content:space-between;border-bottom:1px solid color-mix(in srgb,var(--border) 50%,transparent);padding:var(--spacing-1) 0}
+.metric .row span:first-child{color:var(--muted-foreground)} .metric .row span:last-child{font-weight:var(--font-weight-bold)}
+.radius-demo{display:flex;gap:var(--spacing-5);align-items:flex-end;margin-top:var(--spacing-4)}
+.radius-demo .box{width:96px;height:72px;background:var(--accent);border:2px solid var(--primary);border-radius:var(--radius-sm)}
+.radius-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--spacing-3);margin-top:var(--spacing-4)}
 @media(max-width:560px){.radius-scale{grid-template-columns:repeat(3,1fr)}}
 .radius-scale .rr{position:relative;cursor:pointer;text-align:center}
-.radius-scale .rr .b{height:54px;background:var(--bg-support);border:2px solid var(--brand-primary);border-bottom:none;border-radius:var(--rv) var(--rv) 0 0;transition:background var(--transition)}
-.radius-scale .rr:hover .b{background:color-mix(in srgb,var(--brand-primary) 18%,transparent)}
-.radius-scale .rr figcaption{font-size:11px;color:var(--text-secondary);margin-top:6px;line-height:1.35}
-.radius-scale .rr figcaption b{display:block;color:var(--text-primary);font-weight:var(--w-semibold)}
-.radius-scale .rr.copied figcaption b{color:var(--green-semidark)}
-.sizes-row{display:flex;gap:var(--s5);align-items:flex-end;flex-wrap:wrap;margin-top:var(--s4)}
-.sizes-row .av{background:var(--brand-primary);border-radius:50%}
-.sizes-row .ic{background:var(--bg-support);border-radius:var(--r);display:grid;place-items:center;color:var(--brand-primary)}
-.sizes-row figcaption{font-size:12px;color:var(--text-secondary);text-align:center;margin-top:6px}
-.plat-cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--s10);align-items:start;margin-top:var(--s4)}
-@media(max-width:760px){.plat-cols{grid-template-columns:1fr;gap:var(--s8)}}
-.size-label{color:var(--text-secondary);font-size:12px;margin:var(--s5) 0 8px}
-.size-label:first-of-type{margin-top:var(--s2)}
+.radius-scale .rr .b{height:54px;background:var(--accent);border:2px solid var(--primary);border-bottom:none;border-radius:var(--rv) var(--rv) 0 0;transition:background var(--t-base)}
+.radius-scale .rr:hover .b{background:color-mix(in srgb,var(--primary) 18%,transparent)}
+.radius-scale .rr figcaption{font-size:var(--text-xs);color:var(--muted-foreground);margin-top:6px;line-height:1.35}
+.radius-scale .rr figcaption b{display:block;color:var(--foreground);font-weight:var(--font-weight-semibold)}
+.radius-scale .rr.copied figcaption b{color:var(--success-foreground)}
+.sizes-row{display:flex;gap:var(--spacing-5);align-items:flex-end;flex-wrap:wrap;margin-top:var(--spacing-4)}
+.sizes-row .av{background:var(--primary);border-radius:var(--radius-full)}
+.sizes-row .ic{background:var(--accent);border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--primary)}
+.sizes-row figcaption{font-size:var(--text-xs);color:var(--muted-foreground);text-align:center;margin-top:6px}
+.plat-cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-10);align-items:start;margin-top:var(--spacing-4)}
+@media(max-width:760px){.plat-cols{grid-template-columns:1fr;gap:var(--spacing-8)}}
+.size-label{color:var(--muted-foreground);font-size:var(--text-xs);margin:var(--spacing-5) 0 8px}
+.size-label:first-of-type{margin-top:var(--spacing-2)}
 /* web = azul (default) · mobile = verde */
-.plat.mobile .sizes-row .ic{color:var(--green-default);background:color-mix(in srgb,var(--green-default) 14%,transparent)}
-.plat.mobile .sizes-row .av{background:var(--green-default)}
-.plat.mobile .metric .row span:last-child{color:var(--green-semidark)}
-.sizes-row .s.copyable.copied figcaption{color:var(--green-semidark);font-weight:var(--w-bold)}
+.plat.mobile .sizes-row .ic{color:var(--green-600);background:color-mix(in srgb,var(--green-600) 14%,transparent)}
+.plat.mobile .sizes-row .av{background:var(--green-600)}
+.plat.mobile .metric .row span:last-child{color:var(--success-foreground)}
+.sizes-row .s.copyable.copied figcaption{color:var(--success-foreground);font-weight:var(--font-weight-bold)}
 
 /* ---------- ICONS ---------- */
-.icon-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s2)}
+.icon-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--spacing-2)}
 @media(max-width:860px){.icon-grid{grid-template-columns:repeat(5,1fr)}}
 @media(max-width:560px){.icon-grid{grid-template-columns:repeat(3,1fr)}}
-.ico{position:relative;display:block;overflow:hidden;border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s4) var(--s2) 26px;text-align:center;transition:border-color var(--transition),color var(--transition)}
-.dlbadge{position:absolute;left:0;right:0;bottom:0;height:22px;display:flex;align-items:center;justify-content:center;gap:4px;
-  font-size:10px;font-weight:var(--w-bold);letter-spacing:.08em;color:var(--text-secondary);
-  background:var(--bg-secondary);border-top:1px solid color-mix(in srgb,var(--border-default) 55%,transparent);
-  opacity:0;transition:opacity var(--transition)}
-.ico:hover .dlbadge,.ico:focus-visible .dlbadge{opacity:1;color:var(--brand-primary)}
+.ico{position:relative;display:block;overflow:hidden;border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-4) var(--spacing-2) 26px;text-align:center;transition:border-color var(--t-base),color var(--t-base)}
+.dlbadge{position:absolute;left:0;right:0;bottom:0;height:22px;display:flex;align-items:center;justify-content:center;gap:var(--spacing-1);
+  font-size:var(--text-xs);font-weight:var(--font-weight-bold);letter-spacing:.08em;color:var(--muted-foreground);
+  background:var(--secondary);border-top:1px solid color-mix(in srgb,var(--border) 55%,transparent);
+  opacity:0;transition:opacity var(--t-base)}
+.ico:hover .dlbadge,.ico:focus-visible .dlbadge{opacity:1;color:var(--primary)}
 @media(hover:none){.dlbadge{opacity:1}}
-.ico:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
-.ico>svg{color:var(--text-primary);display:block;margin:0 auto} .ico:hover>svg{color:var(--brand-primary)}
+.ico:hover{border-color:var(--primary);color:var(--primary)}
+.ico>svg{color:var(--foreground);display:block;margin:0 auto} .ico:hover>svg{color:var(--primary)}
 .dlbadge svg{margin:0;flex:none}
-.ico .n{display:block;font-size:12px;color:var(--text-secondary);margin-top:8px;overflow:hidden;text-overflow:ellipsis}
-.icon-sizes{display:flex;gap:var(--s6);align-items:flex-end;margin-top:var(--s5);padding:var(--s5);border:1px solid var(--border-default);border-radius:var(--r)}
+.ico .n{display:block;font-size:var(--text-xs);color:var(--muted-foreground);margin-top:8px;overflow:hidden;text-overflow:ellipsis}
+.icon-sizes{display:flex;gap:var(--spacing-6);align-items:flex-end;margin-top:var(--spacing-5);padding:var(--spacing-5);border:1px solid var(--border);border-radius:var(--radius-sm)}
 .icon-sizes{flex-wrap:wrap}
-.icon-sizes .s{text-align:center;color:var(--brand-primary)} .icon-sizes .s svg{display:block;margin:0 auto} .icon-sizes .s figcaption{font-size:12px;color:var(--text-secondary);margin-top:8px}
+.icon-sizes .s{text-align:center;color:var(--primary)} .icon-sizes .s svg{display:block;margin:0 auto} .icon-sizes .s figcaption{font-size:var(--text-xs);color:var(--muted-foreground);margin-top:8px}
 /* link pra biblioteca-fonte no Figma */
 /* botão padrão WP — .btn.secondary.size-mid (pill outline) */
-.ds-source{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:var(--s6);height:40px;padding:0 16px;border:1px solid var(--border-default);border-radius:999px;font-family:var(--font);font-size:16px;line-height:22px;font-weight:var(--w-regular);color:var(--text-secondary);background:var(--bg-elevated);transition:border-color var(--transition)}
-.ds-source:hover{border-color:var(--text-secondary)}
-.ds-source.primary{color:var(--brand-primary);border-color:var(--brand-primary);margin-right:var(--s3)}
-.ds-source.primary:hover{background:var(--bg-support)}
+.ds-source{margin-top:var(--spacing-6)}
+.ds-source.primary{margin-right:var(--spacing-3)}
 .ds-source svg{flex:none}
 
 /* ---------- MASCOT ---------- */
-.mascot-hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--s10);align-items:center;margin-top:var(--s6)}
+.mascot-hero{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--spacing-10);align-items:center;margin-top:var(--spacing-6)}
 @media(max-width:820px){.mascot-hero{grid-template-columns:1fr}}
-.mascot-stage{background:var(--bg-support);border-radius:var(--r);padding:var(--s10);display:grid;place-items:center;min-height:260px}
-.mascot-stage img{height:210px;filter:drop-shadow(0 14px 26px rgba(0,0,0,.12))}
-.dd{border-radius:var(--r);padding:var(--s5);border:1px solid var(--notice-text);background:var(--notice-background)}
-.dd.do{background:var(--notice-background)}
-.dd .hd{display:flex;align-items:center;gap:9px;font-weight:var(--w-bold);margin-bottom:var(--s3);color:var(--notice-text)}
-.dd ul{list-style:none;display:grid;gap:8px} .dd li{font-size:14px;color:var(--notice-text);padding-left:22px;position:relative}
-.dd li::before{content:"✓";position:absolute;left:0;color:var(--notice-text);font-weight:var(--w-bold)}
-.emotions{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s4);margin-top:var(--s8)}
+.mascot-stage{background:var(--accent);border-radius:var(--radius-sm);padding:var(--spacing-10);display:grid;place-items:center;min-height:260px}
+.mascot-stage img{height:210px;filter:var(--drop-shadow-2xl)}
+/* ---------- CALLOUT — contrato do Alert do DS (packages/ui/src/components/alert.tsx,
+   Figma "USAR AQUI - DS NOVA" 25737:104867). As variantes mudam SÓ fundo e borda:
+   o título é sempre --foreground e a descrição sempre --muted-foreground; só o
+   ícone recebe o tom da variante. rounded-lg, px-3 py-2.5, text-sm, gap-0.5. */
+.dd{border-radius:var(--radius-lg);padding:calc(var(--spacing) * 2.5) var(--spacing-3);border:1px solid var(--success-foreground);background:var(--success);font-size:var(--text-sm);text-align:left}
+.dd.do{background:var(--success)}
+.dd .hd{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-base);font-weight:var(--font-weight-normal);margin-bottom:calc(var(--spacing) * 0.5);color:var(--foreground)}
+/* slot de ícone do Alert: o glifo é decorativo, sai do texto e vira ::before */
+.dd .hd::before{content:"✓";color:var(--success-foreground);font-weight:var(--font-weight-medium)}
+.dd ul{list-style:none;display:grid;gap:var(--spacing-1)} .dd li{font-size:var(--text-sm);color:var(--muted-foreground);padding-left:var(--spacing-5);position:relative}
+.dd li::before{content:"✓";position:absolute;left:0;color:var(--success-foreground)}
+.emotions{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--spacing-4);margin-top:var(--spacing-8)}
 @media(max-width:820px){.emotions{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:520px){.emotions{grid-template-columns:repeat(2,1fr)}}
-.emotion{background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s4);text-align:center;transition:var(--transition)}
-.emotion:hover{transform:translateY(-4px);border-color:var(--brand-primary)}
-.emotion img{height:84px;margin:0 auto var(--s2)} .emotion span{font-size:12px;color:var(--text-secondary)}
+.emotion{background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-4);text-align:center;transition:opacity var(--t-base),transform var(--t-base),background var(--t-base),border-color var(--t-base),color var(--t-base)}
+.emotion:hover{transform:translateY(-4px);border-color:var(--primary)}
+.emotion img{height:84px;margin:0 auto var(--spacing-2)} .emotion span{font-size:var(--text-xs);color:var(--muted-foreground)}
 
 /* ---------- ILLUSTRATION ---------- */
-.illus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+.illus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--spacing-4)}
 @media(max-width:760px){.illus-grid{grid-template-columns:repeat(2,1fr)}}
-.illus{background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:var(--s6);display:grid;place-items:center;min-height:150px}
+.illus{background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-6);display:grid;place-items:center;min-height:150px}
 .illus img{height:96px}
 
 /* ---------- PHOTOGRAPHY ---------- */
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s8)}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-4);margin-top:var(--spacing-8)}
 @media(max-width:820px){.photo-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.photo-grid{grid-template-columns:1fr}}
-.photo{position:relative;border-radius:var(--r);overflow:hidden;background:var(--bg-secondary)}
-.photo img{aspect-ratio:4/3;object-fit:cover;width:100%;image-orientation:from-image;transition:transform 400ms ease}
+.photo{position:relative;border-radius:var(--radius-sm);overflow:hidden;background:var(--secondary)}
+.photo img{aspect-ratio:4/3;object-fit:cover;width:100%;image-orientation:from-image;transition:transform var(--t-slow)}
 .photo:hover img{transform:scale(1.05)}
-.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:var(--s5) var(--s4) var(--s3);background:linear-gradient(transparent,rgba(0,0,0,.78));color:#fff}
-.photo .cap b{display:block;font-size:16px;font-weight:var(--w-bold)} .photo .cap span{font-size:12px;opacity:.85}
-.dodont{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);margin-top:var(--s6)}
+.photo .cap{position:absolute;left:0;right:0;bottom:0;padding:var(--spacing-5) var(--spacing-4) var(--spacing-3);background:linear-gradient(transparent,color-mix(in srgb,var(--black) 78%,transparent));color:var(--white)}
+.photo .cap b{display:block;font-size:var(--text-base);font-weight:var(--font-weight-bold)} .photo .cap span{font-size:var(--text-xs);opacity:.85}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-5);margin-top:var(--spacing-6)}
 @media(max-width:700px){.dodont{grid-template-columns:1fr}}
-.dd.dont{background:var(--error-background);border-color:var(--error-text)} .dd.dont .hd{color:var(--error-text)} .dd.dont li{color:var(--error-text)} .dd.dont li::before{content:"✕";color:var(--error-text)}
+.dd.dont{background:var(--error);border-color:var(--error-foreground)} .dd.dont .hd::before{content:"✕";color:var(--error-foreground)} .dd.dont li::before{content:"✕";color:var(--error-foreground)}
 
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--bg-secondary);padding:1px 5px;border-radius:var(--r-xs)}
+code{font-family:var(--font-mono);font-size:var(--code-font-scale);background:var(--secondary);padding:var(--code-padding-y) var(--spacing-1);border-radius:var(--radius-xs)}
 
 /* ---------- VOICE ---------- */
-.voice-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--s6) var(--s5);margin-top:var(--s8)}
+.voice-list{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-6) var(--spacing-5);margin-top:var(--spacing-8)}
 @media(max-width:700px){.voice-list{grid-template-columns:1fr}}
-.vp{border-left:3px solid var(--brand-primary);padding:2px 0 2px var(--s5)}
-.vp h5{font-size:16px;font-weight:var(--w-bold)} .vp p{font-size:14px;color:var(--text-secondary);margin-top:4px}
-.phrases{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s6)}
-.phrase{background:var(--bg-secondary);border:1px solid var(--border-default);border-radius:var(--r);padding:9px 15px;font-size:14px;font-weight:var(--w-bold)}
-.phrase::before{content:"\201C";color:var(--brand-primary)} .phrase::after{content:"\201D";color:var(--brand-primary)}
+.vp{border-left:3px solid var(--primary);padding:2px 0 2px var(--spacing-5)}
+.vp h5{font-size:var(--text-base);font-weight:var(--font-weight-bold)} .vp p{font-size:var(--text-sm);color:var(--muted-foreground);margin-top:4px}
+.phrases{display:flex;flex-wrap:wrap;gap:var(--spacing-2);margin-top:var(--spacing-6)}
+.phrase{background:var(--secondary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:var(--spacing-2) var(--spacing-4);font-size:var(--text-sm);font-weight:var(--font-weight-bold)}
+.phrase::before{content:"\201C";color:var(--primary)} .phrase::after{content:"\201D";color:var(--primary)}
 
 /* footer */
-footer.foot{background:var(--blue-dark);color:#fff;border-top:none;padding:var(--s16) 0}
-footer.foot .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:var(--s6)}
+footer.foot{background:var(--cover-surface);color:var(--white);border-top:none;padding:var(--spacing-16) 0}
+footer.foot .wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:var(--spacing-6)}
 footer.foot img{height:28px;margin-bottom:12px}
-footer.foot p{opacity:.78;font-size:12px;max-width:52ch;line-height:1.5}
-footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opacity:1}
+footer.foot p{opacity:.78;font-size:var(--text-xs);max-width:52ch;line-height:1.5}
+footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);opacity:1}
 
-#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--grey-ultradark);color:#fff;padding:11px 18px;border-radius:var(--r);font-size:14px;font-weight:var(--w-bold);opacity:0;pointer-events:none;transition:all 240ms ease;z-index:99;display:flex;align-items:center;gap:9px}
-#toast svg{color:var(--green-light);flex:none}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--gray-800);color:var(--white);padding:var(--spacing-3) var(--spacing-5);border-radius:var(--radius-sm);font-size:var(--text-sm);font-weight:var(--font-weight-bold);opacity:0;pointer-events:none;transition:opacity var(--t-base),transform var(--t-base);z-index:99;display:flex;align-items:center;gap:var(--spacing-2)}
+#toast svg{color:var(--green-400);flex:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
+.reveal{opacity:0;transform:translateY(var(--reveal-shift));transition:opacity var(--motion-reveal) var(--ease-entrance),transform var(--motion-reveal) var(--ease-entrance);will-change:opacity,transform}
 .reveal.in{opacity:1;transform:none}
 /* staggered cascade for card grids */
-.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,.61,.36,1) var(--d,0ms),transform .6s cubic-bezier(.22,.61,.36,1) var(--d,0ms);will-change:opacity,transform}
+.stagger>*{opacity:0;transform:translateY(var(--reveal-shift));transition:opacity var(--motion-reveal) var(--ease-entrance) var(--d,0ms),transform var(--motion-reveal) var(--ease-entrance) var(--d,0ms);will-change:opacity,transform}
 .stagger.in>*{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal,.stagger>*{opacity:1!important;transform:none!important}*{scroll-behavior:auto!important}}
 </style>
@@ -423,8 +764,8 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
       <a href="#spacing">Spacing</a><a href="#icons">Icons</a><a href="#mascot">Ben</a><a href="#illustration">Illustration</a>
       <a href="#photography">Photography</a><a href="#voice">Voice</a>
     </nav>
-    <button class="toggle" id="themeToggle" aria-label="Toggle light / dark"></button>
-    <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <button class="btn btn-ghost btn-icon-sm toggle" id="themeToggle" aria-label="Toggle light / dark"></button>
+    <button class="btn btn-ghost btn-icon-sm menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
 </header>
 
@@ -434,7 +775,7 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
     <source src="media/hero.mp4" type="video/mp4" />
   </video>
   <div class="tint"></div>
-  <div class="wrap">
+  <div class="wrap stagger">
     <div class="logo-lockup"><img src="logos/logo-wp-horizontal-white.svg" alt="Worldpackers"/></div>
     <h1>Traveling changes people.<br/>People change the world.</h1>
     <p class="sub">The Worldpackers brand system — the colors, type, logo, icons, mascot and voice that make us recognizable everywhere we show up.</p>
@@ -475,31 +816,31 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
     <div class="fam-label"><h4>The set</h4><span>three treatments × two lockups · hover a cell to download</span></div>
     <div class="logo-matrix">
       <div class="lm-row-label">Brand</div>
-      <div class="logo-cell"><img src="logos/logo-wp-horizontal-brand.svg" alt="Horizontal, brand blue"/><a class="dl" href="logos/logo-wp-horizontal-brand.svg" download title="Download logos/logo-wp-horizontal-brand.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
-      <div class="logo-cell icon"><img src="logos/logo-wp-icon-brand.svg" alt="Icon, brand blue"/><a class="dl" href="logos/logo-wp-icon-brand.svg" download title="Download logos/logo-wp-icon-brand.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell"><img src="logos/logo-wp-horizontal-brand.svg" alt="Horizontal, brand blue"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-horizontal-brand.svg" download title="Download logos/logo-wp-horizontal-brand.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell icon"><img src="logos/logo-wp-icon-brand.svg" alt="Icon, brand blue"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-icon-brand.svg" download title="Download logos/logo-wp-icon-brand.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
 
       <div class="lm-row-label">Mono</div>
-      <div class="logo-cell"><img src="logos/logo-wp-horizontal-mono.svg" alt="Horizontal, mono grey"/><a class="dl" href="logos/logo-wp-horizontal-mono.svg" download title="Download logos/logo-wp-horizontal-mono.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
-      <div class="logo-cell icon"><img src="logos/logo-wp-icon-mono.svg" alt="Icon, mono grey"/><a class="dl" href="logos/logo-wp-icon-mono.svg" download title="Download logos/logo-wp-icon-mono.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell"><img src="logos/logo-wp-horizontal-mono.svg" alt="Horizontal, mono grey"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-horizontal-mono.svg" download title="Download logos/logo-wp-horizontal-mono.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell icon"><img src="logos/logo-wp-icon-mono.svg" alt="Icon, mono grey"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-icon-mono.svg" download title="Download logos/logo-wp-icon-mono.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
 
       <div class="lm-row-label">Reversed <span>on grey</span></div>
-      <div class="logo-cell on-grey"><img src="logos/logo-wp-horizontal-white.svg" alt="Horizontal, reversed on grey"/><a class="dl" href="logos/logo-wp-horizontal-white.svg" download title="Download logos/logo-wp-horizontal-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
-      <div class="logo-cell icon on-grey"><img src="logos/logo-wp-icon-white.svg" alt="Icon, reversed on grey"/><a class="dl" href="logos/logo-wp-icon-white.svg" download title="Download logos/logo-wp-icon-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell on-grey"><img src="logos/logo-wp-horizontal-white.svg" alt="Horizontal, reversed on grey"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-horizontal-white.svg" download title="Download logos/logo-wp-horizontal-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell icon on-grey"><img src="logos/logo-wp-icon-white.svg" alt="Icon, reversed on grey"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-icon-white.svg" download title="Download logos/logo-wp-icon-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
 
       <div class="lm-row-label">Reversed <span>on brand</span></div>
-      <div class="logo-cell on-brand"><img src="logos/logo-wp-horizontal-white.svg" alt="Horizontal, reversed on brand"/><a class="dl" href="logos/logo-wp-horizontal-white.svg" download title="Download logos/logo-wp-horizontal-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
-      <div class="logo-cell icon on-brand"><img src="logos/logo-wp-icon-white.svg" alt="Icon, reversed on brand"/><a class="dl" href="logos/logo-wp-icon-white.svg" download title="Download logos/logo-wp-icon-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell on-brand"><img src="logos/logo-wp-horizontal-white.svg" alt="Horizontal, reversed on brand"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-horizontal-white.svg" download title="Download logos/logo-wp-horizontal-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
+      <div class="logo-cell icon on-brand"><img src="logos/logo-wp-icon-white.svg" alt="Icon, reversed on brand"/><a class="btn btn-outline btn-xs dl" href="logos/logo-wp-icon-white.svg" download title="Download logos/logo-wp-icon-white.svg"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</a></div>
     </div>
     <div class="clearspace reveal">
       <div>
         <div class="subhead">Clear space &amp; minimum size</div>
-        <p style="color:var(--text-secondary);font-size:16px">Keep clear space around the logo equal to the height of the globe symbol. Minimum size: <b>24&nbsp;px</b> tall for the icon, <b>120&nbsp;px</b> wide for the horizontal lockup on screen.</p>
+        <p style="color:var(--muted-foreground);font-size:var(--text-base)">Keep clear space around the logo equal to the height of the globe symbol. Minimum size: <b>24&nbsp;px</b> tall for the icon, <b>120&nbsp;px</b> wide for the horizontal lockup on screen.</p>
       </div>
       <div class="cs-visual"><img src="logos/logo-wp-horizontal-brand.svg" alt="Clear space"/></div>
     </div>
     <div class="dodont reveal">
-      <div class="dd do"><div class="hd">✓ Do</div><ul><li>Use the master files at full color, mono or reversed white.</li><li>Give the logo room and strong background contrast.</li><li>Use the icon alone for avatars, app icons and favicons.</li></ul></div>
-      <div class="dd dont"><div class="hd">✕ Don't</div><ul><li>Recolor, add gradients, shadows or outlines.</li><li>Stretch, rotate, or rebuild the wordmark in another font.</li><li>Place it on a busy photo without the reversed version.</li></ul></div>
+      <div class="dd do"><div class="hd">Do</div><ul><li>Use the master files at full color, mono or reversed white.</li><li>Give the logo room and strong background contrast.</li><li>Use the icon alone for avatars, app icons and favicons.</li></ul></div>
+      <div class="dd dont"><div class="hd">Don't</div><ul><li>Recolor, add gradients, shadows or outlines.</li><li>Stretch, rotate, or rebuild the wordmark in another font.</li><li>Place it on a busy photo without the reversed version.</li></ul></div>
     </div>
   </div>
 </section>
@@ -528,22 +869,22 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
     </div>
 
     <div class="fam-label"><h4>Base palette</h4><span>135 colours · 13 families · click any step to copy</span></div>
-    <p style="font-size:13px;color:var(--text-secondary);margin:0 0 var(--s2);max-width:78ch">The Figma collection <b>“1. TailwindCSS”</b>. Named the Tailwind way — <code>tailwind colors/&lt;family&gt;/&lt;step&gt;</code>, eleven steps from 50 to 950, with <b>★</b> marking each family's main step — but the values are Worldpackers', not Tailwind's stock ones. Only <b>amber</b>, <b>purple</b> and <b>neutral</b> are stock Tailwind, step for step; the other ten are Worldpackers'. The collection is <b>single-mode</b>: one value per step, and dark mode reuses it — which is why there is a separate <b>neutral (dark mode)</b> ramp instead of a dark variant of <b>gray</b>.</p>
+    <p style="font-size:var(--text-sm);color:var(--muted-foreground);margin:0 0 var(--spacing-2);max-width:78ch">The Figma collection <b>“1. TailwindCSS”</b>. Named the Tailwind way — <code>tailwind colors/&lt;family&gt;/&lt;step&gt;</code>, eleven steps from 50 to 950, with <b>★</b> marking each family's main step — but the values are Worldpackers', not Tailwind's stock ones. Only <b>amber</b>, <b>purple</b> and <b>neutral</b> are stock Tailwind, step for step; the other ten are Worldpackers'. The collection is <b>single-mode</b>: one value per step, and dark mode reuses it — which is why there is a separate <b>neutral (dark mode)</b> ramp instead of a dark variant of <b>gray</b>.</p>
     <div id="primitives"></div>
 
     <div class="fam-label"><h4>Gradients</h4><span>paint styles · click to copy the CSS</span></div>
-    <p style="font-size:13px;color:var(--text-secondary);margin:0 0 var(--s3);max-width:78ch">Three styles, all <b>linear and vertical, top to bottom</b>, and every stop is a step of the base palette — no loose hex. They carry the brand on success and celebration screens, the Android splash, full headers and landing covers.</p>
+    <p style="font-size:var(--text-sm);color:var(--muted-foreground);margin:0 0 var(--spacing-3);max-width:78ch">Three styles, all <b>linear and vertical, top to bottom</b>, and every stop is a step of the base palette — no loose hex. They carry the brand on success and celebration screens, the Android splash, full headers and landing covers.</p>
     <div class="grad-row reveal" id="gradients"></div>
-    <p style="font-size:12px;color:var(--text-secondary);margin-top:var(--s3);max-width:78ch">In the dark theme the primary and the secondary collapse into the <b>same</b> pair — there is one dark gradient, not two.</p>
+    <p style="font-size:var(--text-xs);color:var(--muted-foreground);margin-top:var(--spacing-3);max-width:78ch">In the dark theme the primary and the secondary collapse into the <b>same</b> pair — there is one dark gradient, not two.</p>
 
     <div class="fam-label"><h4>Semantic tokens</h4><span><svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg> Light / <svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg> Dark — flips with the theme toggle</span></div>
     <div id="semantic"></div>
 
     <div class="rules">
-      <div class="rule"><div class="pill" style="background:var(--blue-default)">B</div><div><h5>Blue · #158CBA — Identity</h5><p>The brand color. Logo, links, focus, brand surfaces.</p></div></div>
-      <div class="rule"><div class="pill" style="background:#239F27">A</div><div><h5>Green · #239F27 — Action</h5><p>Primary buttons and the single most important action. Production still ships <b>#28B62C</b> on web and Android and <b>#2BBE2D</b> on iOS — three greens, one role.</p></div></div>
-      <div class="rule"><div class="pill" style="background:#677581">N</div><div><h5>Neutrals — Text &amp; surface</h5><p>Body text <b>#4E5C66</b>, secondary text <b>#677581</b>, borders <b>#CFD6DB</b>, surfaces <b>#F5F7F8</b>.</p></div></div>
-      <div class="rule"><div class="pill" style="background:var(--yellow-default);color:var(--grey-dark)">F</div><div><h5>Red / Yellow / Emerald — Feedback</h5><p>Error, warning, success &amp; data. Functional only.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--primary)">B</div><div><h5>Blue · #158CBA — Identity</h5><p>The brand color. Logo, links, focus, brand surfaces.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--primary-cta)">A</div><div><h5>Green · #239F27 — Action</h5><p>Primary buttons and the single most important action. Production still ships <b>#28B62C</b> on web and Android and <b>#2BBE2D</b> on iOS — three greens, one role.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--gray-500)">N</div><div><h5>Neutrals — Text &amp; surface</h5><p>Body text <b>#4E5C66</b>, secondary text <b>#677581</b>, borders <b>#CFD6DB</b>, surfaces <b>#F5F7F8</b>.</p></div></div>
+      <div class="rule"><div class="pill" style="background:var(--warning-foreground);color:var(--gray-900)">F</div><div><h5>Red / Yellow / Emerald — Feedback</h5><p>Error, warning, success &amp; data. Functional only.</p></div></div>
     </div>
 
   </div>
@@ -564,7 +905,7 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
     </div>
 
     <div class="fam-label"><h4>Semantic scale</h4><span>class · mobile → @md 768px · weight</span></div>
-    <p style="font-size:13px;color:var(--text-secondary);margin:0 0 var(--s3);max-width:74ch">You do not pick a pixel size. You pick a <b>role</b> — <code>heading-lg</code>, <code>body-sm</code> — and the class carries its own responsive step. Same names in every platform.</p>
+    <p style="font-size:var(--text-sm);color:var(--muted-foreground);margin:0 0 var(--spacing-3);max-width:74ch">You do not pick a pixel size. You pick a <b>role</b> — <code>heading-lg</code>, <code>body-sm</code> — and the class carries its own responsive step. Same names in every platform.</p>
     <div class="specimen reveal" id="specimen"></div>
 
     <div class="fam-label"><h4>Subtitles</h4><span>SemiBold 600 · sits between heading and body</span></div>
@@ -595,9 +936,9 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
             <div class="sizes-row" id="web-icons"></div>
             <div class="size-label">Avatar — px</div>
             <div class="sizes-row" id="web-avatars"></div>
-            <div class="fam-label" style="margin-top:var(--s8)"><h4>Corner radius</h4><span>ten steps · tap to copy</span></div>
+            <div class="fam-label" style="margin-top:var(--spacing-8)"><h4>Corner radius</h4><span>ten steps · tap to copy</span></div>
             <div class="radius-scale" id="radius-scale"></div>
-            <p style="font-size:12px;color:var(--text-secondary);margin-top:var(--s3);max-width:44ch"><b style="color:var(--text-primary)">Buttons are the exception.</b> Every button variant, size and state is a full pill — <code>rounded-full</code> — not a step on this scale. Read the component, not the token.</p>
+            <p style="font-size:var(--text-xs);color:var(--muted-foreground);margin-top:var(--spacing-3);max-width:44ch"><b style="color:var(--foreground)">Buttons are the exception.</b> Every button variant, size and state is a full pill — <code>rounded-full</code> — not a step on this scale. Read the component, not the token.</p>
           </div>
         </div>
       </div>
@@ -628,12 +969,11 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
     <p class="lead">The design system ships <b>Tabler 3.46.0</b> — <b>6,184 icons</b> (5,130 outline, 1,054 filled) across 41 categories, vendored into the repository so nothing is fetched at runtime. Outline is the default; filled is for selected and active states. A representative selection below.</p>
 
     <div class="icon-sizes reveal" id="icon-sizes"></div>
-    <p style="font-size:13px;color:var(--text-secondary);margin-top:var(--s4);max-width:74ch">Download the whole library below, or click any single icon to get its SVG. Drawn on a <b>24×24</b> grid with a <b>2px</b> stroke and round caps and joins. Single-colour: the stroke is <code>currentColor</code>, so an icon inherits the text colour of whatever it sits in — never hard-code a fill. Below 24px the stroke stays 2px; it is not scaled down.</p>
 
-    <div class="icon-grid stagger" id="icon-grid" style="margin-top:var(--s6)"></div>
-    <a class="ds-source primary" href="icons/tabler-icons-3.46.0-svg.zip" download><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>Download all 6,184 as SVG (2.7 MB .zip)</a>
-    <a class="ds-source" href="https://tabler.io/icons" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Browse all 6,184 icons</a>
-    <p style="font-size:12px;color:var(--text-secondary);margin-top:var(--s4);max-width:74ch">The legacy Worldpackers icon font is still shipped by the apps in production today. It is not part of the new system, and nothing new should be built with it.</p>
+    <div class="icon-grid stagger" id="icon-grid" style="margin-top:var(--spacing-6)"></div>
+    <a class="btn btn-cta btn-default ds-source primary" href="icons/tabler-icons-3.46.0-svg.zip" download><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>Download all 6,184 as SVG (2.7 MB .zip)</a>
+    <a class="btn btn-outline btn-default ds-source" href="https://tabler.io/icons" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Browse all 6,184 icons</a>
+    <p style="font-size:var(--text-xs);color:var(--muted-foreground);margin-top:var(--spacing-4);max-width:74ch">The legacy Worldpackers icon font is still shipped by the apps in production today. It is not part of the new system, and nothing new should be built with it.</p>
   </div>
 </section>
 
@@ -646,7 +986,7 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
       <div class="mascot-stage reveal"><img src="illustrations/ben/ben-happy.svg" alt="Ben the cat"/></div>
       <div>
         <p class="lead" style="margin-top:0">Ben is our friendly guide — the warm, human face of the product. He welcomes, encourages, explains and celebrates: onboarding, empty states, tips and wins. He gives Worldpackers personality without ever getting in the way of the task.</p>
-        <div class="dd do" style="margin-top:var(--s5)"><div class="hd">✓ Use Ben for</div><ul><li>Onboarding &amp; first-time empty states</li><li>Encouragement, tips &amp; celebrations</li><li>Lightening friendly, low-stakes moments</li></ul></div>
+        <div class="dd do" style="margin-top:var(--spacing-5)"><div class="hd">Use Ben for</div><ul><li>Onboarding &amp; first-time empty states</li><li>Encouragement, tips &amp; celebrations</li><li>Lightening friendly, low-stakes moments</li></ul></div>
       </div>
     </div>
     <div class="fam-label"><h4>Emotional range</h4><span>Always the circle-avatar treatment</span></div>
@@ -681,7 +1021,7 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
       <div class="illus"><img src="illustrations/elementos/community.svg" alt="Community"/></div>
       <div class="illus"><img src="illustrations/elementos/food.svg" alt="Food"/></div>
     </div>
-    <a class="ds-source" href="https://www.figma.com/design/PK9WXf4tRrNk7GABwWMwf9/Assets---Externo?node-id=71-0" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Open the illustration library in Figma</a>
+    <a class="btn btn-outline btn-default ds-source" href="https://www.figma.com/design/PK9WXf4tRrNk7GABwWMwf9/Assets---Externo?node-id=71-0" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>Open the illustration library in Figma</a>
   </div>
 </section>
 
@@ -701,8 +1041,8 @@ footer.foot .big{font-size:var(--type-body-large);font-weight:var(--w-bold);opac
       <div class="photo"><img src="worldpackers_images/worldpackers_images/000706682_miriam/listing_180_img_03.jpg" alt="" loading="lazy"/><div class="cap"><b>Urban landscapes &amp; stays</b><span>Hostels, cities, the places we live</span></div></div>
     </div>
     <div class="dodont reveal">
-      <div class="dd do"><div class="hd">✓ Do</div><ul><li>Show authentic people and unposed moments</li><li>Embrace diversity of people, places &amp; cultures</li><li>Favor natural light and a sense of place</li></ul></div>
-      <div class="dd dont"><div class="hd">✕ Don't</div><ul><li>Use generic, posed corporate stock</li><li>Over-filter or heavily color-grade</li><li>Crop people out of their context</li></ul></div>
+      <div class="dd do"><div class="hd">Do</div><ul><li>Show authentic people and unposed moments</li><li>Embrace diversity of people, places &amp; cultures</li><li>Favor natural light and a sense of place</li></ul></div>
+      <div class="dd dont"><div class="hd">Don't</div><ul><li>Use generic, posed corporate stock</li><li>Over-filter or heavily color-grade</li><li>Crop people out of their context</li></ul></div>
     </div>
   </div>
 </section>
@@ -903,7 +1243,7 @@ const SVG=b=>`<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke
 const DLB='<span class="dlbadge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>SVG</span>';
 document.getElementById('icon-grid').innerHTML=icons.map(([label,tabler,body])=>`<a class="ico" href="icons/${tabler}.svg" download title="Download ${tabler}.svg">${SVG(body)}<span class="n">${label}</span>${DLB}</a>`).join('');
 const CHECK=icons.find(i=>i[1]==='check')[2];
-document.getElementById('icon-sizes').innerHTML=[12,16,20,24,32,40,48].map(n=>`<figure class="s"><svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CHECK}</svg><figcaption>${n}</figcaption></figure>`).join('')+`<div style="margin-left:auto;color:var(--text-secondary);font-size:14px;align-self:center">Outline · 12 / 16 / 20 / 24 / 32 / 40 / 48 · stroke is <span style="font-weight:var(--w-semibold);color:var(--text-primary)">currentColor</span></div>`;
+document.getElementById('icon-sizes').innerHTML=[12,16,20,24,32,40,48].map(n=>`<figure class="s"><svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CHECK}</svg><figcaption>${n}</figcaption></figure>`).join('')+`<div style="margin-left:auto;color:var(--muted-foreground);font-size:var(--text-sm);align-self:center">Outline · 12 / 16 / 20 / 24 / 32 / 40 / 48 · stroke is <span style="font-weight:var(--font-weight-semibold);color:var(--foreground)">currentColor</span></div>`;
 
 
 
@@ -912,7 +1252,11 @@ const navObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){l
 document.querySelectorAll('section[id]').forEach(s=>navObs.observe(s));
 /* consistência: todo filho direto de seção que ainda não anima recebe reveal */
 document.querySelectorAll('section:not(.hero) > .wrap > *').forEach(el=>{if(!el.classList.contains('reveal')&&!el.classList.contains('stagger'))el.classList.add('reveal');});
-document.querySelectorAll('.stagger').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--d',Math.min(i*70,560)+'ms'));});
+/* Um passo só de cascata para a página inteira, capa incluída. */
+const STAGGER_STEP=70, STAGGER_CAP=560;
+document.querySelectorAll('.stagger').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--d',Math.min(i*STAGGER_STEP,STAGGER_CAP)+'ms'));});
+/* A capa está acima da dobra: revela no load, não por interseção. */
+requestAnimationFrame(()=>document.querySelector('.hero .stagger')?.classList.add('in'));
 const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting||e.boundingClientRect.top<0){e.target.classList.add('in');revObs.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal,.stagger').forEach(el=>revObs.observe(el));
 /* Rede de segurança. O IntersectionObserver não dispara para quem passou INTEIRO
@@ -946,14 +1290,12 @@ function addCopyAll(headText,btnLabel,toastLabel,fn){
   const lab=[...document.querySelectorAll('.fam-label')].find(l=>l.querySelector('h4')&&norm(l.querySelector('h4').textContent).startsWith(norm(headText)));
   if(!lab)return;
   const sp=document.createElement('span');sp.className='spacer';lab.insertBefore(sp,lab.children[1]||null);
-  const b=document.createElement('button');b.className='copy-all';b.dataset.lbl=btnLabel;b.innerHTML=COPY_ICO+btnLabel;
+  const b=document.createElement('button');b.className='btn btn-outline btn-sm copy-all';b.dataset.lbl=btnLabel;b.innerHTML=COPY_ICO+btnLabel;
   b.addEventListener('click',()=>copyAll(b,toastLabel,fn()));
   lab.appendChild(b);
 }
 const pad=(k,w)=>k+' '.repeat(Math.max(1,w-k.length));
 
-addCopyAll('Base palette','Copy all 135','Base palette',()=>
-  primitives.map(f=>`# ${f.name} — ${f.role}\n`+f.steps.map(([k,h])=>`tailwind colors/${f.name}/${k}  ${h}`).join('\n')).join('\n\n'));
 addCopyAll('Gradients','Copy as CSS','Gradients',()=>
   gradients.map(g=>`/* ${g.name} — ${g.stops.map(st=>st[0]).join(' -> ')} */\nlinear-gradient(180deg, ${g.stops[0][1]} 0%, ${g.stops[1][1]} 100%);`).join('\n\n'));
 
@@ -983,15 +1325,6 @@ addCopyAll('Corner radius','Copy scale','Radius scale',()=>
 /* Spacing e ícones: os fam-labels trazem badge dentro do h4, então casam pelo prefixo do texto. */
 addCopyAll('Web Spacing','Copy scale','Spacing scale',()=>
   spacingWeb.map(([k,v])=>`${pad(k,4)}${v}px`).join('\n'));
-
-(function(){
-  const grid=document.getElementById('icon-grid');
-  if(!grid)return;
-  const b=document.createElement('button');b.className='copy-all';b.dataset.lbl='Copy icon names';b.innerHTML=COPY_ICO+'Copy icon names';
-  b.style.margin='var(--s5) 0 0';
-  b.addEventListener('click',()=>copyAll(b,'Icon names',icons.map(i=>i[1]).join('\n')));
-  grid.parentNode.insertBefore(b,grid);
-})();
 </script>
 </body>
 </html>
