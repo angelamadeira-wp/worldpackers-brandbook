@@ -583,9 +583,11 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .grad.copied{outline:2px solid var(--success-foreground);outline-offset:2px}
 .semantic-group{margin-top:var(--spacing-6)}
 .semantic-group h4{font-size:var(--text-sm);font-weight:var(--font-weight-bold);text-transform:uppercase;letter-spacing:.08em;color:var(--muted-foreground);margin-bottom:var(--spacing-2)}
-.tok{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--spacing-3);align-items:center;padding:var(--spacing-2) 0;border-bottom:1px solid color-mix(in srgb,var(--border) 60%,transparent)}
-.tok .name{font-size:var(--text-sm);font-weight:var(--font-weight-bold)}
-.tok .cell{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);color:var(--muted-foreground)}
+.tok{display:grid;grid-template-columns:1.4fr minmax(0,1fr) minmax(0,1fr);gap:var(--spacing-3);align-items:center;padding:var(--spacing-2) 0;border-bottom:1px solid color-mix(in srgb,var(--border) 60%,transparent)}
+.tok .name{font-size:var(--text-sm);font-weight:var(--font-weight-bold);min-width:0;overflow-wrap:anywhere}
+/* minmax(0,1fr) + min-width:0: sem isso o min-content da célula (bolinha + hex + selo
+   "Copied") empurra a tabela e a página ganha 13px de rolagem lateral a 390px. */
+.tok .cell{display:flex;align-items:center;gap:var(--spacing-2);font-size:var(--text-xs);color:var(--muted-foreground);min-width:0;position:relative}
 /* Selo de "Copied" para os alvos gráficos (swatch, gradiente, ícone, raio),
    onde não cabe a tag inline usada nas linhas de token. Mesmo vocabulário visual. */
 .cbadge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:var(--spacing-1);
@@ -598,6 +600,7 @@ nav.sections a.active{color:var(--primary);font-weight:var(--font-weight-bold)}
 .copyable:hover{color:var(--primary)}
 .copyable .copied-tag{display:inline-flex;align-items:center;gap:var(--spacing-1);margin-left:7px;color:var(--success-foreground);font-weight:var(--font-weight-bold);font-size:var(--text-xs);opacity:0;transform:translateX(-3px);transition:opacity var(--t-fast),transform var(--t-fast)}
 .copyable.copied .copied-tag{opacity:1;transform:none}
+.tok .cell .copied-tag{position:absolute;right:0;top:50%;transform:translateY(-50%);margin:0;background:var(--card);padding-left:var(--spacing-1)}
 .tok .dot{width:22px;height:22px;border-radius:var(--radius-sm);border:1px solid var(--border);flex:none}
 .rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-4);margin-top:var(--spacing-8)}
 @media(max-width:700px){.rules{grid-template-columns:1fr}}
@@ -1041,7 +1044,7 @@ footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);op
       <div class="photo"><img src="photography/social-activities.jpg" alt="" loading="lazy"/><div class="cap"><b>Social activities</b><span>Collaboration in action</span></div></div>
       <div class="photo"><img src="photography/ecological-activities.jpg" alt="" loading="lazy"/><div class="cap"><b>Ecological activities</b><span>Hands-on impact</span></div></div>
       <div class="photo"><img src="photography/natural-landscapes.jpg" alt="" loading="lazy"/><div class="cap"><b>Natural landscapes</b><span>The world as our home</span></div></div>
-      <div class="photo"><img src="photography/stays-and-cities.jpg" alt="" loading="lazy"/><div class="cap"><b>Stays &amp; shared spaces</b><span>Hostels and the places we live</span></div></div></div>
+      <div class="photo"><img src="photography/work-exchange.jpg" alt="" loading="lazy"/><div class="cap"><b>Work exchange</b><span>The hours that pay for the stay</span></div></div>
     </div>
     <div class="dodont reveal">
       <div class="dd do"><div class="hd">Do</div><ul><li>Show authentic people and unposed moments</li><li>Embrace diversity of people, places &amp; cultures</li><li>Favor natural light and a sense of place</li></ul></div>
