@@ -169,14 +169,17 @@
 }
 
 /* ---------- 2b. SEMÂNTICOS — tokens.css .dark ---------- */
+/* 25/09/2026: background, ring-offset, sidebar, card e popover seguem o Figma (2. Theme), À FRENTE do
+   tokens.css (que ainda tem #171717/#262626). Correção da colisão card = secondary no dark.
+   Quando o sync regenerar o tokens.css, conferir que bate e remover este aviso e a nota da seção Color. */
 [data-theme="dark"], .dark {
   color-scheme: dark;
-  --background: #171717;
+  --background: #0a0a0a;
   --foreground: #fafafa;
   --custom-foreground-10: #fafafa1a;
-  --card: #262626;
+  --card: #171717;
   --card-foreground: #fafafa;
-  --popover: #262626;
+  --popover: #171717;
   --popover-foreground: #fafafa;
   --tooltip: #f5f5f5;
   --tooltip-foreground: #ffffff;
@@ -207,13 +210,13 @@
   --input: #404040;
   --custom-input: #404040;
   --ring: #18a1d8;
-  --ring-offset: #171717;
+  --ring-offset: #0a0a0a;
   --chart-1: #35b6e9;
   --chart-2: #52cbcb;
   --chart-3: #f7bb59;
   --chart-4: #dd7c73;
   --chart-5: #47d74c;
-  --sidebar: #171717;
+  --sidebar: #0a0a0a;
   --sidebar-secondary: #262626;
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #158cba;
@@ -262,7 +265,7 @@
   /* Capa: superfície sob a foto + véu de marca a 70% para o texto ter contraste. */
   --cover-surface:var(--blue-900);
   /* Rodapé é FAIXA DE MARCA: não acompanha o tema, senão no dark ele empata com
-     --background (#171717) e o bloco some. Fica azul profundo nos dois modos. */
+     --background (#0a0a0a) e o bloco some. Fica azul profundo nos dois modos. */
   --footer-surface:var(--blue-900);
   --scrim-from:color-mix(in srgb,var(--blue-700) 70%,transparent);
   --scrim-to:color-mix(in srgb,var(--indigo-700) 70%,transparent);
@@ -880,6 +883,7 @@ footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);op
 
     <div class="fam-label"><h4>Semantic tokens</h4><span><svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg> Light / <svg class="ic-s" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" /></svg> Dark — flips with the theme toggle</span></div>
     <div id="semantic"></div>
+    <p style="font-size:var(--text-xs);color:var(--muted-foreground);margin-top:var(--spacing-3);max-width:78ch">Dark theme, updated 25 September 2026: <b>background</b>, <b>ring-offset</b> and <b>sidebar</b> moved to #0A0A0A, <b>card</b> and <b>popover</b> to #171717, so a secondary or muted surface (#262626) reads again on top of a card. These values come from the Figma file and are <b>ahead of the code</b> — the design system package still ships the previous ones until the next token sync.</p>
 
     <div class="rules">
       <div class="rule"><div class="pill" style="background:var(--primary)">B</div><div><h5>Blue · #158CBA — Identity</h5><p>The brand color. Logo, links, focus, brand surfaces.</p></div></div>
@@ -1072,7 +1076,7 @@ footer.foot .big{font-size:var(--text-lg);font-weight:var(--font-weight-bold);op
   <div class="wrap">
     <div>
       <img src="logos/logo-wp-horizontal-white.svg" alt="Worldpackers"/>
-      <p>Brandbook — living document. Brand content from worldpackers.com · base palette, gradients and semantic tokens read from the Figma file <b>Design System Worldpackers</b> · type scale and radius measured in the design system monorepo · icons from Tabler 3.46.0.<br/>Last updated 20 September 2026.</p>
+      <p>Brandbook — living document. Brand content from worldpackers.com · base palette, gradients and semantic tokens read from the Figma file <b>Design System Worldpackers</b> · type scale and radius measured in the design system monorepo · icons from Tabler 3.46.0.<br/>Last updated 25 September 2026.</p>
     </div>
     <p class="big">Traveling changes people.<br/>People change the world.</p>
   </div>
